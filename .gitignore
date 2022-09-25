@@ -1,0 +1,10 @@
+vendor/
+storage/
+
+.phpunit.result.cache
+composer.lock
+phpcs.xml
+phpstan.neon
+phpunit.xml
+
+.DS_Store
