@@ -2,6 +2,9 @@
 
 namespace MiBo\Properties\Units\ElectricCurrent;
 
+use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Prefixes\Yotta;
+
 /**
  * Class YottaAmpere
  *
@@ -11,7 +14,10 @@ namespace MiBo\Properties\Units\ElectricCurrent;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class YottaAmpere
+class YottaAmpere extends Ampere
 {
+    use Yotta;
 
+    /** @inheritdoc */
+    protected static ?Unit $instance = null;
 }

@@ -17,7 +17,6 @@ use Stringable;
 abstract class Unit implements Stringable, UsedInSystem
 {
     use HasSymbol,
-        HasMultiplier,
         HasName;
 
     /** @var string */

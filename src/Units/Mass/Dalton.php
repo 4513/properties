@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\Mass;
 
 use MiBo\Properties\Contracts\IsSI;
+use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Quantities\Mass;
 
@@ -17,7 +18,7 @@ use MiBo\Properties\Quantities\Mass;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class Dalton extends Unit
+class Dalton extends NumericalUnit
 {
     use IsSI;
 

@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\ElectricCurrent;
 
 use MiBo\Properties\Contracts\IsSI;
+use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Quantities\ElectricCurrent;
 
@@ -15,7 +16,7 @@ use MiBo\Properties\Quantities\ElectricCurrent;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class Ampere extends Unit
+class Ampere extends NumericalUnit
 {
     use IsSI;
 

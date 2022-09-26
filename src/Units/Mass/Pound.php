@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\Mass;
 
 use MiBo\Properties\Contracts\IsImperial;
+use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Quantities\Mass;
 
@@ -15,7 +16,7 @@ use MiBo\Properties\Quantities\Mass;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class Pound extends Unit
+class Pound extends NumericalUnit
 {
     use IsImperial;
 

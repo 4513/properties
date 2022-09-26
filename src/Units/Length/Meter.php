@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\Length;
 
 use MiBo\Properties\Contracts\IsSI;
+use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Quantities\Length;
 
@@ -31,7 +32,7 @@ use MiBo\Properties\Quantities\Length;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class Meter extends Unit
+class Meter extends NumericalUnit
 {
     use IsSI;
 

@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\Time;
 
 use MiBo\Properties\Contracts\IsSI;
+use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Quantities\Time;
 
@@ -15,7 +16,7 @@ use MiBo\Properties\Quantities\Time;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class Hour extends Unit
+class Hour extends NumericalUnit
 {
     use IsSI;
 

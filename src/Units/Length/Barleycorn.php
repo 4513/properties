@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\Length;
 
 use MiBo\Properties\Contracts\IsImperial;
+use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Quantities\Length;
 
@@ -19,7 +20,7 @@ use MiBo\Properties\Quantities\Length;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class Barleycorn extends Unit
+class Barleycorn extends NumericalUnit
 {
     use IsImperial;
 
