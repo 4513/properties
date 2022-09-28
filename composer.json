@@ -14,12 +14,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "MiBo\\Properties\\": "src/"
+            "\\MiBo\\Properties\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MiBo\\Properties\\Tests\\": [
+            "\\MiBo\\Properties\\Tests\\": [
                 "tests/Core/",
                 "tests/"
             ]
@@ -37,6 +37,6 @@
     },
     "config": {
         "platform-check": true,
-        "lock": false
+        "lock": true
     }
 }

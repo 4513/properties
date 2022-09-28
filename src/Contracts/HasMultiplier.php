@@ -20,12 +20,20 @@ trait HasMultiplier
      *  Returns the multiplier, that if applied, user gets the main unit of that velocity.
      * For example, millimeter has a multiplier 10^-3, meaning, a millimeter * 10^-3 = value in meters.
      *
+     * @return float|int
+     */
+    public function getMultiplier(): float|int
+    {
+        return $this->multiplier;
+    }
+
+    /**
      * @param float|int $value
      *
      * @return float|int
      */
-    public function getMultiplier(float|int $value): float|int
+    public function useMultiplier(float|int $value): float|int
     {
-        return $value * $this->multiplier;
+        return $value * $this->getMultiplier();
     }
 }

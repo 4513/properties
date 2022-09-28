@@ -29,4 +29,9 @@ class Area implements Derived
     {
         return "A";
     }
+
+    public function getEquation(): string
+    {
+        return "(l) * (l)";
+    }
 }

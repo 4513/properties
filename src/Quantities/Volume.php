@@ -5,6 +5,7 @@ namespace MiBo\Properties\Quantities;
 use MiBo\Properties\Contracts\Derived;
 use MiBo\Properties\Contracts\IsDerived;
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Units\Volume\CubicMeter;
 
 /**
  * Class Volume
@@ -21,7 +22,7 @@ class Volume implements Derived
 
     public function getDefaultUnit(): Unit
     {
-
+        return CubicMeter::get();
     }
 
     public function getSymbol(): string

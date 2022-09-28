@@ -17,7 +17,8 @@ use Stringable;
 abstract class Unit implements Stringable, UsedInSystem
 {
     use HasSymbol,
-        HasName;
+        HasName,
+        HasMultiplier;
 
     /** @var string */
     protected string $code;
@@ -98,5 +99,15 @@ abstract class Unit implements Stringable, UsedInSystem
     public function isSI(): bool
     {
         return false;
+    }
+
+    public function isDimensional(): bool
+    {
+        return false;
+    }
+
+    public static function getQuantity(): string
+    {
+        return static::QUANTITY;
     }
 }
