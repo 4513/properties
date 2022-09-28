@@ -40,7 +40,7 @@ trait Nano
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "n" . $this->contractGetSymbol();
     }

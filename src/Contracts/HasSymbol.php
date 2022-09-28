@@ -13,9 +13,6 @@ namespace MiBo\Properties\Contracts;
  */
 trait HasSymbol
 {
-    /** @var string  */
-    protected string $symbol;
-
     /**
      * Returns the unit's symbol (e.g. 'm' for meter, or '$' for the US dollar).
      *

@@ -5,6 +5,7 @@ namespace MiBo\Properties\Quantities;
 use MiBo\Properties\Contracts\Derived;
 use MiBo\Properties\Contracts\IsDerived;
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Property;
 use MiBo\Properties\Units\Volume\CubicMeter;
 
 /**
@@ -16,17 +17,27 @@ class Volume implements Derived
 {
     use IsDerived;
 
-    protected array $requiredQuantities = [
+    protected static array $requiredQuantities = [
         Length::class,
     ];
 
-    public function getDefaultUnit(): Unit
+    public static function getDefaultUnit(): Unit
     {
         return CubicMeter::get();
     }
 
-    public function getSymbol(): string
+    public static function getSymbol(): string
     {
         return "V";
+    }
+
+    public static function getDefaultProperty(): string
+    {
+        return Property::class;
+    }
+
+    public static function getEquation(): string
+    {
+        return "(l) * (A)";
     }
 }

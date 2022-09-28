@@ -32,7 +32,7 @@ trait Exbi
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "Ei" . $this->contractGetSymbol();
     }

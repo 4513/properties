@@ -4,6 +4,7 @@ namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Property;
 use MiBo\Properties\Units\Temperature\Kelvin;
 
 /**
@@ -17,13 +18,18 @@ use MiBo\Properties\Units\Temperature\Kelvin;
  */
 class Temperature implements Quantity
 {
-    public function getDefaultUnit(): Unit
+    public static function getDefaultUnit(): Unit
     {
         return Kelvin::get();
     }
 
-    public function getSymbol(): string
+    public static function getSymbol(): string
     {
         return "T";
+    }
+
+    public static function getDefaultProperty(): string
+    {
+        return Property::class;
     }
 }

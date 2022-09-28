@@ -2,6 +2,7 @@
 
 namespace MiBo\Properties\Units\Length;
 
+use MiBo\Properties\Contracts\HasSymbol;
 use MiBo\Properties\Contracts\IsSI;
 use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
@@ -34,7 +35,8 @@ use MiBo\Properties\Quantities\Length;
  */
 class Meter extends NumericalUnit
 {
-    use IsSI;
+    use IsSI,
+        HasSymbol;
 
     /** @inheritdoc */
     protected string $name = "meter";

@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\Area;
 
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Suffixes\Cubic;
 use MiBo\Properties\Units\Length\Meter;
 
@@ -18,6 +19,8 @@ use MiBo\Properties\Units\Length\Meter;
 class SquareMeter extends Meter
 {
     use Cubic;
+
+    protected const QUANTITY = Area::class;
 
     /** @inheritdoc */
     protected static ?Unit $instance = null;

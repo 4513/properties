@@ -4,6 +4,7 @@ namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Property;
 use MiBo\Properties\Units\Length\Meter;
 
 /**
@@ -15,13 +16,18 @@ use MiBo\Properties\Units\Length\Meter;
  */
 class Length implements Quantity
 {
-    public function getDefaultUnit(): Unit
+    public static function getDefaultUnit(): Unit
     {
         return Meter::get();
     }
 
-    public function getSymbol(): string
+    public static function getSymbol(): string
     {
         return "l";
+    }
+
+    public static function getDefaultProperty(): string
+    {
+        return Property::class;
     }
 }

@@ -32,7 +32,7 @@ trait Pebi
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "Pi" . $this->contractGetSymbol();
     }

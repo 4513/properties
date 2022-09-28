@@ -39,7 +39,7 @@ trait Zepto
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "z" . $this->contractGetSymbol();
     }

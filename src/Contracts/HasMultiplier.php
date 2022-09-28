@@ -13,9 +13,6 @@ namespace MiBo\Properties\Contracts;
  */
 trait HasMultiplier
 {
-    /** @var int|float  */
-    protected int|float $multiplier = 1;
-
     /**
      *  Returns the multiplier, that if applied, user gets the main unit of that velocity.
      * For example, millimeter has a multiplier 10^-3, meaning, a millimeter * 10^-3 = value in meters.
@@ -24,7 +21,7 @@ trait HasMultiplier
      */
     public function getMultiplier(): float|int
     {
-        return $this->multiplier;
+        return $this->multiplier ?? 1;
     }
 
     /**

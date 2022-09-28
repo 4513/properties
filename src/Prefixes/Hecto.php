@@ -44,7 +44,7 @@ trait Hecto
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "h" . $this->contractGetSymbol();
     }

@@ -44,7 +44,7 @@ trait Pico
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "p" . $this->contractGetSymbol();
     }

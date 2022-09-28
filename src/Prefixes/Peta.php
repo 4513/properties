@@ -40,7 +40,7 @@ trait Peta
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "P" . $this->contractGetSymbol();
     }

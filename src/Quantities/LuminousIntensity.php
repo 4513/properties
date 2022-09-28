@@ -4,6 +4,7 @@ namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Property;
 use MiBo\Properties\Units\LuminousIntensity\Candela;
 
 /**
@@ -17,13 +18,18 @@ use MiBo\Properties\Units\LuminousIntensity\Candela;
  */
 class LuminousIntensity implements Quantity
 {
-    public function getDefaultUnit(): Unit
+    public static function getDefaultUnit(): Unit
     {
         return Candela::get();
     }
 
-    public function getSymbol(): string
+    public static function getSymbol(): string
     {
         return "J";
+    }
+
+    public static function getDefaultProperty(): string
+    {
+        return Property::class;
     }
 }

@@ -49,7 +49,7 @@ trait Micro
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "μ" . $this->contractGetSymbol();
     }

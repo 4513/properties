@@ -42,7 +42,7 @@ trait Mega
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "M" . $this->contractGetSymbol();
     }

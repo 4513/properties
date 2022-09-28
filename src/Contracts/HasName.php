@@ -13,9 +13,6 @@ namespace MiBo\Properties\Contracts;
  */
 trait HasName
 {
-    /** @var string  */
-    protected string $name;
-
     /**
      * Returns the name of the unit (e.g. meter).
      *

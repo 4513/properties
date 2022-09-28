@@ -2,6 +2,8 @@
 
 namespace MiBo\Properties\Contracts;
 
+use MiBo\Properties\Property;
+
 /**
  * Interface Quantity
  *
@@ -14,7 +16,9 @@ interface Quantity
     /**
      * @return \MiBo\Properties\Contracts\Unit
      */
-    public function getDefaultUnit(): Unit;
+    public static function getDefaultUnit(): Unit;
 
-    public function getSymbol(): string;
+    public static function getSymbol(): string;
+
+    public static function getDefaultProperty(): string;
 }

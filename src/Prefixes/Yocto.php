@@ -42,7 +42,7 @@ trait Yocto
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "y" . $this->contractGetSymbol();
     }

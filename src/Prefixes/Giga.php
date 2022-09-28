@@ -43,7 +43,7 @@ trait Giga
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "G" . $this->contractGetSymbol();
     }

@@ -127,6 +127,8 @@ class QuantityMath
                     static::isEquation($q->getEquation(), $equation2)) {
                     $quantity = $q;
 
+                    $unit = $unit ?: $q::getDefaultUnit();
+
                     break;
                 }
             }
@@ -137,45 +139,50 @@ class QuantityMath
 
             $quantity = new class($first, $second, $unit) implements Derived {
 
-                protected Unit $unit;
-                protected Property $first;
-                protected Property $second;
+                protected static Unit $unit;
+                protected static Property $first;
+                protected static Property $second;
 
                 public function __construct(Property $first, Property $second, Unit $unit)
                 {
-                    $this->unit = $unit;
-                    $this->first = $first;
-                    $this->second = $second;
+                    self::$unit = $unit;
+                    self::$first = $first;
+                    self::$second = $second;
                 }
 
-                public function getRequiredQuantities(): array
+                public static function getRequiredQuantities(): array
                 {
                     return [
-                        $this->first->getQuantityClass(),
-                        $this->second->getQuantityClass(),
+                        self::$first->getQuantityClass(),
+                        self::$second->getQuantityClass(),
                     ];
                 }
 
-                public function getEquation(): string
+                public static function getEquation(): string
                 {
                     return strtr(
                         "(%first%) * (%second%)",
                         [
-                            "%first%" => $this->first->getQuantityClass()->getSymbol(),
-                            "%second%" => $this->second->getQuantityClass()->getSymbol(),
+                            "%first%" => self::$first->getQuantityClass()->getSymbol(),
+                            "%second%" => self::$second->getQuantityClass()->getSymbol(),
                         ]
                     );
                 }
 
-                public function getDefaultUnit(): Unit
+                public static function getDefaultUnit(): Unit
                 {
-                    return $this->unit;
+                    return self::$unit;
                 }
 
-                public function getSymbol(): string
+                public static function getSymbol(): string
                 {
-                    return $this->first->getQuantityClass()->getSymbol() .
-                        "*" . $this->second->getQuantityClass()->getSymbol();
+                    return self::$first->getQuantityClass()->getSymbol() .
+                        "*" . self::$second->getQuantityClass()->getSymbol();
+                }
+
+                public static function getDefaultProperty(): string
+                {
+                    return Property::class;
                 }
             };
         }
@@ -183,10 +190,105 @@ class QuantityMath
         if (!$unit instanceof NoUnit && $unit::getQuantity() !== get_class($quantity)) {
             throw new \ValueError(); // incorrect unit
         }
-        
+
         $property = self::create(
             Property::class,
             $first->getUnit()->useMultiplier($first->getValue()) *
+            $second->getUnit()->useMultiplier($second->getValue()),
+            $quantity->getDefaultUnit()
+        );
+
+        if ($quantity->getDefaultUnit()->getMultiplier() === $unit->getMultiplier()) {
+            return $property;
+        }
+
+        return self::convertUnit($property, $unit);
+    }
+
+    public static function ratio(Property $first, Property $second, ?Unit $unit = null)
+    {
+        static::init();
+
+        $quantity = null;
+
+        foreach (static::$quantities as $q) {
+            if ($q instanceof Derived) {
+                $equation = strtr(
+                    "(%first%) / (%second%)",
+                    [
+                        "%first%"  => $first->getQuantityClass()->getSymbol(),
+                        "%second%" => $second->getQuantityClass()->getSymbol(),
+                    ]
+                );
+
+                if (static::isEquation($q->getEquation(), $equation)) {
+                    $quantity = $q;
+
+                    break;
+                }
+            }
+        }
+
+        if ($quantity === null) {
+            $unit = NoUnit::get();
+
+            $quantity = new class($first, $second, $unit) implements Derived {
+
+                protected static Unit $unit;
+                protected static Property $first;
+                protected static Property $second;
+
+                public function __construct(Property $first, Property $second, Unit $unit)
+                {
+                    self::$unit = $unit;
+                    self::$first = $first;
+                    self::$second = $second;
+                }
+
+                public static function getRequiredQuantities(): array
+                {
+                    return [
+                        self::$first->getQuantityClass(),
+                        self::$second->getQuantityClass(),
+                    ];
+                }
+
+                public static function getEquation(): string
+                {
+                    return strtr(
+                        "(%first%) / (%second%)",
+                        [
+                            "%first%" => self::$first->getQuantityClass()->getSymbol(),
+                            "%second%" => self::$second->getQuantityClass()->getSymbol(),
+                        ]
+                    );
+                }
+
+                public static function getDefaultUnit(): Unit
+                {
+                    return self::$unit;
+                }
+
+                public static function getSymbol(): string
+                {
+                    return self::$first->getQuantityClass()->getSymbol() .
+                        "/" . self::$second->getQuantityClass()->getSymbol();
+                }
+
+                public static function getDefaultProperty(): string
+                {
+                    return Property::class;
+                }
+            };
+        }
+
+        if (!$unit instanceof NoUnit && $unit::getQuantity() !== get_class($quantity)) {
+            throw new \ValueError(); // incorrect unit
+        }
+
+        $property = self::create(
+            Property::class,
+            $first->getUnit()->useMultiplier($first->getValue()) /
             $second->getUnit()->useMultiplier($second->getValue()),
             $quantity->getDefaultUnit()
         );

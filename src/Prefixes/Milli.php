@@ -41,7 +41,7 @@ trait Milli
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "m" . $this->contractGetSymbol();
     }

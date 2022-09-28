@@ -45,7 +45,7 @@ trait Deci
     /**
      * @inheritdoc
      */
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return "d" . $this->contractGetSymbol();
     }
