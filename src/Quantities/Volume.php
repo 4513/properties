@@ -36,8 +36,10 @@ class Volume implements Derived
         return Property::class;
     }
 
-    public static function getEquation(): string
+    public static function getEquations(): array
     {
-        return "(l) * (A)";
+        return [
+            "(l) * (A)",
+        ];
     }
 }

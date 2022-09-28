@@ -2,6 +2,7 @@
 
 namespace MiBo\Properties\Quantities;
 
+use MiBo\Properties\Contracts\Derivable;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Property;
@@ -14,7 +15,7 @@ use MiBo\Properties\Units\Length\Meter;
  *
  * @author Michal Boris <michal.boris@gmail.com>
  */
-class Length implements Quantity
+class Length implements Quantity, Derivable
 {
     public static function getDefaultUnit(): Unit
     {
@@ -29,5 +30,12 @@ class Length implements Quantity
     public static function getDefaultProperty(): string
     {
         return Property::class;
+    }
+
+    public static function getEquations(): array
+    {
+        return [
+            "(A) / (l)",
+        ];
     }
 }

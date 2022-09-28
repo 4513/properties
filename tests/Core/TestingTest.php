@@ -5,6 +5,7 @@ namespace MiBo\Properties\Tests;
 use MiBo\Properties\Property;
 use MiBo\Properties\Units\Length\Meter;
 use MiBo\Properties\Units\Length\MilliMeter;
+use MiBo\Properties\Units\Volume\CubicMeter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -118,6 +119,26 @@ class TestingTest extends TestCase
         $this->assertSame(10, $x->getValue());
 
         $area = $x->multiply($x);
+
+        $this->assertSame(100, $area->getValue());
+    }
+
+    /**
+     * @small
+     *
+     * @covers ::divide
+     *
+     * @return void
+     */
+    public function testDivide()
+    {
+        $x = new Property(10000, CubicMeter::get());
+
+        $x->divide(10);
+
+        $this->assertSame(1000, $x->getValue());
+
+        $area = $x->divide(new Property(10, Meter::get()));
 
         $this->assertSame(100, $area->getValue());
     }

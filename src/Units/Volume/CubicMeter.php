@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Units\Volume;
 
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Quantities\Volume;
 use MiBo\Properties\Suffixes\Cubic;
 use MiBo\Properties\Units\Length\Meter;
 
@@ -18,6 +19,8 @@ use MiBo\Properties\Units\Length\Meter;
 class CubicMeter extends Meter
 {
     use Cubic;
+
+    protected const QUANTITY = Volume::class;
 
     /** @inheritdoc */
     protected static ?Unit $instance = null;

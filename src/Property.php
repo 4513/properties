@@ -3,6 +3,7 @@
 namespace MiBo\Properties;
 
 use CompileError;
+use MiBo\Properties\Contracts\Math;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\QuantityMath;
 use MiBo\Properties\Contracts\Unit;
@@ -125,5 +126,33 @@ class Property
         }
 
         return QuantityMath::ratio($this, $divisor);
+    }
+
+    public function abs(): static
+    {
+        $this->value = Math::absolute($this->value);
+
+        return $this;
+    }
+
+    public function ceil(): static
+    {
+        $this->value = Math::ceil($this->value);
+
+        return $this;
+    }
+
+    public function floor(): static
+    {
+        $this->value = Math::floor($this->value);
+
+        return $this;
+    }
+
+    public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): static
+    {
+        $this->value = Math::round($this->value, $precision, $mode);
+
+        return $this;
     }
 }

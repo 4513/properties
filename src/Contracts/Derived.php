@@ -13,5 +13,5 @@ interface Derived extends Quantity
 {
     public static function getRequiredQuantities(): array;
 
-    public static function getEquation(): string;
+    public static function getEquations(): array;
 }

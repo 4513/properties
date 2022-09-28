@@ -9,5 +9,5 @@ namespace MiBo\Properties\Contracts;
  */
 interface Derivable extends Quantity
 {
-
+    public static function getEquations(): array;
 }

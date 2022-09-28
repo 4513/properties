@@ -2,6 +2,7 @@
 
 namespace MiBo\Properties\Quantities;
 
+use MiBo\Properties\Contracts\Derivable;
 use MiBo\Properties\Contracts\Derived;
 use MiBo\Properties\Contracts\IsDerived;
 use MiBo\Properties\Contracts\Unit;
@@ -13,7 +14,7 @@ use MiBo\Properties\Units\Area\SquareMeter;
  *
  * @package MiBo\Properties\Quantities
  */
-class Area implements Derived
+class Area implements Derived, Derivable
 {
     use IsDerived;
 
@@ -31,9 +32,12 @@ class Area implements Derived
         return "A";
     }
 
-    public static function getEquation(): string
+    public static function getEquations(): array
     {
-        return "(l) * (l)";
+        return [
+            "(l) * (l)",
+            "(V) / (l)",
+        ];
     }
 
     public static function getDefaultProperty(): string

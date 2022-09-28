@@ -32,7 +32,12 @@ class QuantityMath
 
     public static array $quantities = [];
 
-    public static function sum(Property $first, Property $second, ?Unit $unit = null, int $mode = self::CONVERT_TO_SMALLEST)
+    public static function sum(
+        Property $first,
+        Property $second,
+        ?Unit $unit = null,
+        int $mode = self::CONVERT_TO_SMALLEST
+    )
     {
         self::validateInput($first, $second, $unit);
 
@@ -66,7 +71,12 @@ class QuantityMath
         );
     }
 
-    public static function subtract(Property $first, Property $second, ?Unit $unit = null, int $mode = self::CONVERT_TO_SMALLEST)
+    public static function subtract(
+        Property $first,
+        Property $second,
+        ?Unit $unit = null,
+        int $mode = self::CONVERT_TO_SMALLEST
+    )
     {
         self::validateInput($first, $second, $unit);
 
@@ -100,7 +110,11 @@ class QuantityMath
         );
     }
 
-    public static function product(Property $first, Property $second, ?Unit $unit = null)
+    public static function product(
+        Property $first,
+        Property $second,
+        ?Unit $unit = null
+    )
     {
         static::init();
 
@@ -123,8 +137,8 @@ class QuantityMath
                     ]
                 );
 
-                if (static::isEquation($q->getEquation(), $equation1) ||
-                    static::isEquation($q->getEquation(), $equation2)) {
+                if (static::isEquation($q->getEquations(), $equation1) ||
+                    static::isEquation($q->getEquations(), $equation2)) {
                     $quantity = $q;
 
                     $unit = $unit ?: $q::getDefaultUnit();
@@ -158,15 +172,17 @@ class QuantityMath
                     ];
                 }
 
-                public static function getEquation(): string
+                public static function getEquations(): array
                 {
-                    return strtr(
-                        "(%first%) * (%second%)",
-                        [
-                            "%first%" => self::$first->getQuantityClass()->getSymbol(),
-                            "%second%" => self::$second->getQuantityClass()->getSymbol(),
-                        ]
-                    );
+                    return [
+                        strtr(
+                            "(%first%) * (%second%)",
+                            [
+                                "%first%" => self::$first->getQuantityClass()->getSymbol(),
+                                "%second%" => self::$second->getQuantityClass()->getSymbol(),
+                            ]
+                        )
+                    ];
                 }
 
                 public static function getDefaultUnit(): Unit
@@ -205,27 +221,35 @@ class QuantityMath
         return self::convertUnit($property, $unit);
     }
 
-    public static function ratio(Property $first, Property $second, ?Unit $unit = null)
+    public static function ratio(
+        Property $first,
+        Property $second,
+        ?Unit $unit = null
+    )
     {
         static::init();
 
         $quantity = null;
 
         foreach (static::$quantities as $q) {
-            if ($q instanceof Derived) {
-                $equation = strtr(
-                    "(%first%) / (%second%)",
-                    [
-                        "%first%"  => $first->getQuantityClass()->getSymbol(),
-                        "%second%" => $second->getQuantityClass()->getSymbol(),
-                    ]
-                );
+            if (!$q instanceof Derivable) {
+                continue;
+            }
 
-                if (static::isEquation($q->getEquation(), $equation)) {
-                    $quantity = $q;
+            $equation = strtr(
+                "(%first%) / (%second%)",
+                [
+                    "%first%"  => $first->getQuantityClass()->getSymbol(),
+                    "%second%" => $second->getQuantityClass()->getSymbol(),
+                ]
+            );
 
-                    break;
-                }
+            if (static::isEquation($q->getEquations(), $equation)) {
+                $quantity = $q;
+
+                $unit = $unit ?: $q::getDefaultUnit();
+
+                break;
             }
         }
 
@@ -253,15 +277,17 @@ class QuantityMath
                     ];
                 }
 
-                public static function getEquation(): string
+                public static function getEquations(): array
                 {
-                    return strtr(
-                        "(%first%) / (%second%)",
-                        [
-                            "%first%" => self::$first->getQuantityClass()->getSymbol(),
-                            "%second%" => self::$second->getQuantityClass()->getSymbol(),
-                        ]
-                    );
+                    return [
+                        strtr(
+                            "(%first%) / (%second%)",
+                            [
+                                "%first%" => self::$first->getQuantityClass()->getSymbol(),
+                                "%second%" => self::$second->getQuantityClass()->getSymbol(),
+                            ]
+                        )
+                    ];
                 }
 
                 public static function getDefaultUnit(): Unit
@@ -311,7 +337,11 @@ class QuantityMath
         }
     }
 
-    protected static function create(string|Property $propertyName, int|float $value, Unit $unit)
+    protected static function create(
+        string|Property $propertyName,
+        int|float $value,
+        Unit $unit
+    )
     {
         if ($propertyName instanceof Property) {
             $propertyName = get_class($propertyName);
@@ -388,18 +418,20 @@ class QuantityMath
         );
     }
 
-    protected static function isEquation(string $expected, string $actual): bool
+    protected static function isEquation(array $possibles, string $actual): bool
     {
-        $expected = trim($expected);
-        $actual = trim($actual);
+        foreach ($possibles as $expected) {
+            $expected = trim($expected);
+            $actual = trim($actual);
 
-        if ($expected === $actual) {
-            return true;
-        }
-
-        if (count($division = explode("/", $actual)) === 2) {
-            if (trim($division[0]) === trim($division[1]) && in_array($expected, ["", "1"])) {
+            if ($expected === $actual) {
                 return true;
+            }
+
+            if (count($division = explode("/", $actual)) === 2) {
+                if (trim($division[0]) === trim($division[1]) && in_array($expected, ["", "1"])) {
+                    return true;
+                }
             }
         }
 
