@@ -35,8 +35,10 @@ class Area implements Derived, Derivable
     public static function getEquations(): array
     {
         return [
-            "(l) * (l)",
-            "(V) / (l)",
+            "(l) * (l)", // length
+            "(V) / (l)", // value / length
+            "(A) / ()",  // itself
+            "(A) * ()",  // itself
         ];
     }
 

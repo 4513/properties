@@ -35,7 +35,10 @@ class Length implements Quantity, Derivable
     public static function getEquations(): array
     {
         return [
-            "(A) / (l)",
+            "(A) / (l)", // area
+            "(l) * ()",  // itself
+            "(l) / ()",  // itself
+            "(v) * (t)", // velocity
         ];
     }
 }

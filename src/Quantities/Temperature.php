@@ -4,7 +4,7 @@ namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
-use MiBo\Properties\Property;
+use MiBo\Properties\Temperature as TemperatureProperty;
 use MiBo\Properties\Units\Temperature\Kelvin;
 
 /**
@@ -30,6 +30,6 @@ class Temperature implements Quantity
 
     public static function getDefaultProperty(): string
     {
-        return Property::class;
+        return TemperatureProperty::class;
     }
 }

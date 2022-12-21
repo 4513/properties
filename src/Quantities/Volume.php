@@ -39,7 +39,9 @@ class Volume implements Derived
     public static function getEquations(): array
     {
         return [
-            "(l) * (A)",
+            "(l) * (A)", // length * area
+            "(V) * ()",  // itself
+            "(V) / ()",  // itself
         ];
     }
 }
