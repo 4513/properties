@@ -3,6 +3,7 @@
 namespace MiBo\Properties\Contracts;
 
 use Error;
+use MiBo\Properties\Quantities\NoQuantity;
 use Stringable;
 
 /**
@@ -26,7 +27,7 @@ abstract class Unit implements Stringable, UsedInSystem
     /** @var static|null */
     protected static ?Unit $instance = null;
 
-    protected const QUANTITY = "";
+    protected const QUANTITY = NoQuantity::class;
 
     /**
      * @see \MiBo\Properties\Contracts\Unit::get

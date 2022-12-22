@@ -22,12 +22,12 @@ class Math
     /**
      * <i>e</i> constant
      */
-    public const E   = M_E;
+    public const E = M_E;
 
     /**
      * &pi; constant
      */
-    public const PI  = M_PI;
+    public const PI = M_PI;
 
     /**
      * The infinite

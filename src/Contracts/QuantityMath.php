@@ -15,6 +15,7 @@ use MiBo\Properties\Quantities\Temperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
 use MiBo\Properties\Units\NoQuantity\NoUnit;
+use ValueError;
 
 /**
  * Class QuantityMath
@@ -204,7 +205,7 @@ class QuantityMath
         }
 
         if (!$unit instanceof NoUnit && $unit::getQuantity() !== get_class($quantity)) {
-            throw new \ValueError(); // incorrect unit
+            throw new ValueError(); // incorrect unit
         }
 
         $property = self::create(
@@ -309,7 +310,7 @@ class QuantityMath
         }
 
         if (!$unit instanceof NoUnit && $unit::getQuantity() !== get_class($quantity)) {
-            throw new \ValueError(); // incorrect unit
+            throw new ValueError(); // incorrect unit
         }
 
         $property = self::create(
@@ -329,11 +330,11 @@ class QuantityMath
     private static function validateInput(Property $first, Property $second, ?Unit $unit): void
     {
         if ($first->getQuantity() !== $second->getQuantity()) {
-            throw new \ValueError();
+            throw new ValueError();
         }
 
         if ($unit !== null && $first->getQuantity() !== $unit::getQuantity()) {
-            throw new \ValueError();
+            throw new ValueError();
         }
     }
 
@@ -371,10 +372,12 @@ class QuantityMath
         switch ($mode) {
             case self::CONVERT_TO_FIRST:
                 $second = self::convertUnit($second, $first->getUnit());
-                break;
+            break;
+
             case self::CONVERT_TO_SECOND:
                 $first = self::convertUnit($first, $second->getUnit());
-                break;
+            break;
+
             case self::CONVERT_TO_SMALLEST:
                 if ($first->getUnit()->useMultiplier($first->getValue()) >
                     $second->getUnit()->useMultiplier($second->getValue())) {
@@ -382,12 +385,13 @@ class QuantityMath
                 } else {
                     $second = self::convertUnit($second, $first->getUnit());
                 }
-                break;
+            break;
+
             default:
             case self::CONVERT_TO_FINAL:
                 $first = self::convertUnit($first, $unit);
                 $second = self::convertUnit($second, $unit);
-                break;
+            break;
         }
 
         return [
@@ -404,7 +408,7 @@ class QuantityMath
     public static function convertUnit(Property $property, Unit $unit)
     {
         if ($property->getUnit()::getQuantity() !== $unit::getQuantity()) {
-            throw new \ValueError();
+            throw new ValueError();
         }
 
         if ($property->getUnit()->getMultiplier() === $unit->getMultiplier()) {

@@ -52,6 +52,13 @@ class Property
         return $this->value;
     }
 
+    /**
+     * @template T of static
+     *
+     * @param int|float|T $addend
+     *
+     * @return static
+     */
     public function add(int|float|Property $addend): static
     {
         if (is_int($addend) || is_float($addend)) {
