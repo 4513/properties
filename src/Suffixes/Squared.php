@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MiBo\Properties\Suffixes;
 
 use MiBo\Properties\Contracts\HasMultiplier;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MiBo\Properties\Units\AmountOfSubstance;
 
 use MiBo\Properties\Contracts\IsSI;

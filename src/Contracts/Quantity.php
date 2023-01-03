@@ -1,8 +1,8 @@
 <?php
 
-namespace MiBo\Properties\Contracts;
+declare(strict_types=1);
 
-use MiBo\Properties\Property;
+namespace MiBo\Properties\Contracts;
 
 /**
  * Interface Quantity

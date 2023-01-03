@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MiBo\Properties\Contracts;
 
 use JetBrains\PhpStorm\ArrayShape;
@@ -444,6 +446,10 @@ class QuantityMath
 
     protected static function init()
     {
+        if (!empty(self::$quantities)) {
+            return;
+        }
+
         self::$quantities = [
             new AmountOfSubstance(),
             new Area(),

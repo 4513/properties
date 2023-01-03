@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\Derivable;

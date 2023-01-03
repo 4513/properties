@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MiBo\Properties\Units\Acceleration;
 
 use MiBo\Properties\Contracts\Unit;
