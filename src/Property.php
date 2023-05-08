@@ -12,14 +12,26 @@ use MiBo\Properties\Contracts\Unit;
  * Class Property
  *
  * @package MiBo\Properties
+ *
+ * @author Michal Boris <michal.boris27@gmail.com>
+ *
+ * @since 0.1
+ *
+ * @template TUnit of \MiBo\Properties\Contracts\Unit
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 class Property
 {
     /** @var int|float $value */
-    protected $value = 0;
+    protected int|float $value = 0;
 
+    /** @var TUnit */
     protected $unit;
 
+    /**
+     * @return TUnit
+     */
     public function getUnit(): Unit
     {
         return $this->unit;
@@ -38,10 +50,14 @@ class Property
         return new ($this->getQuantity());
     }
 
-    public function __construct($value, Unit $unit)
+    /**
+     * @param int|float $value
+     * @param TUnit $unit
+     */
+    public function __construct(int|float $value, $unit)
     {
         $this->value = $value;
-        $this->unit = $unit;
+        $this->unit  = $unit;
     }
 
     /**

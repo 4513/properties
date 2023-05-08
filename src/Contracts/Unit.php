@@ -9,13 +9,17 @@ use MiBo\Properties\Quantities\NoQuantity;
 use Stringable;
 
 /**
- * Abstract Class Unit
+ * Class Unit
  *
  * @package MiBo\Properties\Contracts
  *
+ * @author Michal Boris <michal.boris27@gmail.com>
+ *
  * @since 0.1
  *
- * @author Michal Boris <michal.boris@gmail.com>
+ * @template TQuantity of \MiBo\Properties\Contracts\Quantity
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 abstract class Unit implements Stringable, UsedInSystem
 {
@@ -29,6 +33,7 @@ abstract class Unit implements Stringable, UsedInSystem
     /** @var static|null */
     protected static ?Unit $instance = null;
 
+    /** @var class-string<TQuantity> */
     protected const QUANTITY = NoQuantity::class;
 
     /**
@@ -109,6 +114,9 @@ abstract class Unit implements Stringable, UsedInSystem
         return false;
     }
 
+    /**
+     * @return class-string<TQuantity>
+     */
     public static function getQuantity(): string
     {
         return static::QUANTITY;
