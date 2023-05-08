@@ -36,33 +36,27 @@ use MiBo\Properties\Traits\UnitHelper;
  */
 trait Micro
 {
-    use UnitHelper {
-        getSymbol as contractGetSymbol;
-        getMultiplier as contractGetMultiplier;
-        getName as contractGetName;
+    /**
+     * @inheritdoc
+     */
+    protected function getSymbolPrefix(): string
+    {
+        return "μ";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierPrefix(): float|int
     {
-        return "μ" . $this->contractGetSymbol();
+        return 10 ** -6;
     }
 
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    protected function getNamePrefix(): string
     {
-        return 10 ** -6 * $this->contractGetMultiplier();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "micro" . $this->contractGetName();
+        return "micro";
     }
 }

@@ -20,32 +20,34 @@ use MiBo\Properties\Traits\UnitHelper;
 trait Cubic
 {
     use UnitHelper {
-        getSymbol as contractGetSymbol;
         getMultiplier as contractGetMultiplier;
-        getName as contractGetName;
+    }
+
+    /**
+     * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
+     *
+     * @return string
+     */
+    protected function getSymbolSuffix(): string
+    {
+        return "³";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierSuffix(): float|int
     {
-        return $this->contractGetSymbol() . "³";
+        return 3;
     }
 
     /**
-     * @inheritdoc
+     * @see \MiBo\Properties\Traits\UnitHelper::getName
+     *
+     * @return string
      */
-    public function getMultiplier(): float|int
+    protected function getNameSuffix(): string
     {
-        return $this->contractGetMultiplier() ** 3;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "cubic " . $this->contractGetName();
+        return "cubic";
     }
 }

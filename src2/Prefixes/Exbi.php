@@ -19,33 +19,27 @@ use MiBo\Properties\Traits\UnitHelper;
  */
 trait Exbi
 {
-    use UnitHelper {
-        getSymbol as contractGetSymbol;
-        getMultiplier as contractGetMultiplier;
-        getName as contractGetName;
+    /**
+     * @inheritdoc
+     */
+    protected function getSymbolPrefix(): string
+    {
+        return "Ei";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierPrefix(): float|int
     {
-        return "Ei" . $this->contractGetSymbol();
+        return 2 ** 60;
     }
 
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    protected function getNamePrefix(): string
     {
-        return 2 ** 60 * $this->contractGetMultiplier();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "exbi" . $this->contractGetName();
+        return "exbi";
     }
 }

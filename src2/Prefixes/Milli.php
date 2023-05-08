@@ -29,32 +29,34 @@ use MiBo\Properties\Traits\UnitHelper;
 trait Milli
 {
     use UnitHelper {
-        getSymbol as contractGetSymbol;
         getMultiplier as contractGetMultiplier;
-        getName as contractGetName;
+    }
+
+    /**
+     * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
+     *
+     * @return string
+     */
+    protected function getSymbolPrefix(): string
+    {
+        return "m";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierPrefix(): float|int
     {
-        return "m" . $this->contractGetSymbol();
+        return 10 ** -3;
     }
 
     /**
-     * @inheritdoc
+     * @see \MiBo\Properties\Traits\UnitHelper::getName
+     *
+     * @return string
      */
-    public function getMultiplier(): float|int
+    protected function getNamePrefix(): string
     {
-        return 10 ** -3 * $this->contractGetMultiplier();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "milli" . $this->contractGetName();
+        return "milli";
     }
 }

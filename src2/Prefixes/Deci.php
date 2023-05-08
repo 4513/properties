@@ -32,33 +32,27 @@ use MiBo\Properties\Traits\UnitHelper;
  */
 trait Deci
 {
-    use UnitHelper {
-        getSymbol as contractGetSymbol;
-        getMultiplier as contractGetMultiplier;
-        getName as contractGetName;
+    /**
+     * @inheritdoc
+     */
+    protected function getSymbolPrefix(): string
+    {
+        return "d";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierPrefix(): float|int
     {
-        return "d" . $this->contractGetSymbol();
+        return 10 ** -1;
     }
 
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    protected function getNamePrefix(): string
     {
-        return 10 ** -1 * $this->contractGetMultiplier();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "deci" . $this->contractGetName();
+        return "deci";
     }
 }

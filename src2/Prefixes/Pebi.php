@@ -19,33 +19,27 @@ use MiBo\Properties\Traits\UnitHelper;
  */
 trait Pebi
 {
-    use UnitHelper {
-        getSymbol as contractGetSymbol;
-        getMultiplier as contractGetMultiplier;
-        getName as contractGetName;
+    /**
+     * @inheritdoc
+     */
+    protected function getSymbolPrefix(): string
+    {
+        return "Pi";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierPrefix(): float|int
     {
-        return "Pi" . $this->contractGetSymbol();
+        return 2 ** 50;
     }
 
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    protected function getNamePrefix(): string
     {
-        return 2 ** 50 * $this->contractGetMultiplier();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "pebi" . $this->contractGetName();
+        return "pebi";
     }
 }

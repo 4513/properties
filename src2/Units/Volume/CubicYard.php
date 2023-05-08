@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace MiBo\Properties\Units\Volume;
 
-use MiBo\Properties\Prefixes\Centi;
-use MiBo\Properties\Prefixes\Milli;
+use MiBo\Properties\Suffixes\Cubic;
+use MiBo\Properties\Traits\NotEnglishUnit;
+use MiBo\Properties\Traits\UnitForVolume;
+use MiBo\Properties\Units\Length\Yard;
 
 /**
- * Class CubicMilliMeter
+ * Class CubicYard
  *
  * @package MiBo\Properties\Units\Volume
  *
@@ -18,7 +20,9 @@ use MiBo\Properties\Prefixes\Milli;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-class CubicMilliMeter extends CubicMeter
+class CubicYard extends Yard
 {
-    use Milli;
+    use Cubic;
+    use NotEnglishUnit;
+    use UnitForVolume;
 }

@@ -23,26 +23,26 @@ class SIPrefixesTest extends TestCase
     /**
      * @small
      *
-     * @covers \MiBo\Properties\Prefixes\Yotta::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Zetta::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Exa::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Peta::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Tera::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Giga::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Mega::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Kilo::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Hecto::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Deca::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Deci::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Centi::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Milli::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Micro::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Nano::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Pico::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Femto::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Atto::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Zepto::getMultiplier
-     * @covers \MiBo\Properties\Prefixes\Yocto::getMultiplier
+     * @covers \MiBo\Properties\Prefixes\Yotta::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Zetta::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Exa::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Peta::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Tera::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Giga::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Mega::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Kilo::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Hecto::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Deca::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Deci::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Centi::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Milli::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Micro::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Nano::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Pico::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Femto::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Atto::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Zepto::getMultiplierPrefix
+     * @covers \MiBo\Properties\Prefixes\Yocto::getMultiplierPrefix
      *
      * @return void
      */
@@ -73,26 +73,26 @@ class SIPrefixesTest extends TestCase
     /**
      * @small
      *
-     * @covers \MiBo\Properties\Prefixes\Yotta::getName
-     * @covers \MiBo\Properties\Prefixes\Zetta::getName
-     * @covers \MiBo\Properties\Prefixes\Exa::getName
-     * @covers \MiBo\Properties\Prefixes\Peta::getName
-     * @covers \MiBo\Properties\Prefixes\Tera::getName
-     * @covers \MiBo\Properties\Prefixes\Giga::getName
-     * @covers \MiBo\Properties\Prefixes\Mega::getName
-     * @covers \MiBo\Properties\Prefixes\Kilo::getName
-     * @covers \MiBo\Properties\Prefixes\Hecto::getName
-     * @covers \MiBo\Properties\Prefixes\Deca::getName
-     * @covers \MiBo\Properties\Prefixes\Deci::getName
-     * @covers \MiBo\Properties\Prefixes\Centi::getName
-     * @covers \MiBo\Properties\Prefixes\Milli::getName
-     * @covers \MiBo\Properties\Prefixes\Micro::getName
-     * @covers \MiBo\Properties\Prefixes\Nano::getName
-     * @covers \MiBo\Properties\Prefixes\Pico::getName
-     * @covers \MiBo\Properties\Prefixes\Femto::getName
-     * @covers \MiBo\Properties\Prefixes\Atto::getName
-     * @covers \MiBo\Properties\Prefixes\Zepto::getName
-     * @covers \MiBo\Properties\Prefixes\Yocto::getName
+     * @covers \MiBo\Properties\Prefixes\Yotta::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Zetta::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Exa::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Peta::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Tera::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Giga::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Mega::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Kilo::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Hecto::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Deca::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Deci::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Centi::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Milli::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Micro::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Nano::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Pico::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Femto::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Atto::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Zepto::getNamePrefix
+     * @covers \MiBo\Properties\Prefixes\Yocto::getNamePrefix
      *
      * @return void
      */
@@ -123,26 +123,26 @@ class SIPrefixesTest extends TestCase
     /**
      * @small
      *
-     * @covers \MiBo\Properties\Prefixes\Yotta::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Zetta::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Exa::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Peta::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Tera::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Giga::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Mega::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Kilo::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Hecto::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Deca::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Deci::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Centi::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Milli::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Micro::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Nano::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Pico::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Femto::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Atto::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Zepto::getSymbol
-     * @covers \MiBo\Properties\Prefixes\Yocto::getSymbol
+     * @covers \MiBo\Properties\Prefixes\Yotta::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Zetta::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Exa::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Peta::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Tera::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Giga::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Mega::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Kilo::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Hecto::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Deca::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Deci::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Centi::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Milli::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Micro::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Nano::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Pico::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Femto::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Atto::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Zepto::getSymbolPrefix
+     * @covers \MiBo\Properties\Prefixes\Yocto::getSymbolPrefix
      *
      * @return void
      */

@@ -22,7 +22,7 @@ trait Squared
     use UnitHelper {
         UnitHelper::getSymbol as contractGetSymbol;
         UnitHelper::getMultiplier as contractGetMultiplier;
-        UnitHelper::getName as contractGetName;
+//        UnitHelper::getName as contractGetName;
     }
 
     /**
@@ -36,9 +36,9 @@ trait Squared
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    public function getMultiplierSuffix(): float|int
     {
-        return $this->contractGetMultiplier() ** 2;
+        return 2;
     }
 
     /**
@@ -46,6 +46,6 @@ trait Squared
      */
     public function getName(): string
     {
-        return "square " . $this->contractGetName();
+        return "square " . parent::getName();
     }
 }

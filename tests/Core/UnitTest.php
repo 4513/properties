@@ -87,4 +87,9 @@ class UnitTest extends TestCase
         $barleycorn = Barleycorn::get();
         $this->assertTrue($barleycorn->isEnglish());
     }
+
+    public function testSIStaticCall(): void
+    {
+        
+    }
 }

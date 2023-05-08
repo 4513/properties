@@ -37,7 +37,17 @@ trait UnitHelper
      */
     public function getMultiplier(): int|float
     {
-        return $this->multiplier ?? 1;
+        $multiplier = $this->multiplier ?? 1;
+
+        if (method_exists($this, "getMultiplierPrefix")) {
+            $multiplier *= $this->getMultiplierPrefix();
+        }
+
+        if (method_exists($this, "getMultiplierSuffix")) {
+            $multiplier **= $this->getMultiplierSuffix();
+        }
+
+        return $multiplier;
     }
 
     /**
@@ -61,7 +71,17 @@ trait UnitHelper
      */
     public function getName(): string
     {
-        return $this->name;
+        $name = $this->name;
+
+        if (method_exists($this, "getNamePrefix")) {
+            $name = $this->getNamePrefix() . $name;
+        }
+
+        if (method_exists($this, "getNameSuffix")) {
+            $name = trim($this->getNameSuffix() . " " . $name);
+        }
+
+        return $name;
     }
 
     /**
@@ -69,6 +89,16 @@ trait UnitHelper
      */
     public function getSymbol(): string
     {
-        return $this->symbol;
+        $symbol = $this->symbol;
+
+        if (method_exists($this, "getSymbolPrefix")) {
+            $symbol = $this->getSymbolPrefix() . $symbol;
+        }
+
+        if (method_exists($this, "getSymbolSuffix")) {
+            $symbol .= $this->getSymbolSuffix();
+        }
+
+        return $symbol;
     }
 }
