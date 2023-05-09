@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace MiBo\Properties\Traits;
 
+use MiBo\Properties\Contracts\Unit;
+
 /**
  * Trait UnitHelper
  *
@@ -25,11 +27,11 @@ trait UnitHelper
      */
     public static function get(): static
     {
-        if (!key_exists(static::class, self::$instances)) {
+        if (true || !key_exists(static::class, self::$instances)) {
             self::$instances[static::class] = new static();
         }
 
-        return static::$instances[static::class];
+        return self::$instances[static::class];
     }
 
     /**
@@ -41,10 +43,6 @@ trait UnitHelper
 
         if (method_exists($this, "getMultiplierPrefix")) {
             $multiplier *= $this->getMultiplierPrefix();
-        }
-
-        if (method_exists($this, "getMultiplierSuffix")) {
-            $multiplier **= $this->getMultiplierSuffix();
         }
 
         return $multiplier;

@@ -48,7 +48,7 @@ interface Unit extends Stringable
      *
      * @return static New instance of the Unit.
      */
-    public static function get(): static;
+    public static function get();
 
     public function getSymbol(): string;
 

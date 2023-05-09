@@ -15,6 +15,11 @@ use MiBo\Properties\Units\Volume\ImperialGill;
 use MiBo\Properties\Units\Volume\ImperialPint;
 use MiBo\Properties\Units\Volume\ImperialQuart;
 use MiBo\Properties\Units\Volume\Liter;
+use MiBo\Properties\Units\Volume\USFluidOunce;
+use MiBo\Properties\Units\Volume\USGallon;
+use MiBo\Properties\Units\Volume\USGill;
+use MiBo\Properties\Units\Volume\USPint;
+use MiBo\Properties\Units\Volume\USQuart;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -47,6 +52,11 @@ class UnitTest extends TestCase
      * @covers \MiBo\Properties\Units\Volume\ImperialPint::__construct
      * @covers \MiBo\Properties\Units\Volume\ImperialQuart::__construct
      * @covers \MiBo\Properties\Units\Volume\Liter::__construct
+     * @covers \MiBo\Properties\Units\Volume\USFluidOunce::__construct
+     * @covers \MiBo\Properties\Units\Volume\USGallon::__construct
+     * @covers \MiBo\Properties\Units\Volume\USGill::__construct
+     * @covers \MiBo\Properties\Units\Volume\USPint::__construct
+     * @covers \MiBo\Properties\Units\Volume\USQuart::__construct
      *
      * @return void
      */
@@ -66,6 +76,11 @@ class UnitTest extends TestCase
         $this->assertSame(56_826_125 * (10 ** -11), ImperialPint::get()->getMultiplier());
         $this->assertSame(11_365_225 * (10 ** -10), ImperialQuart::get()->getMultiplier());
         $this->assertSame(10 ** -3, Liter::get()->getMultiplier());
+        $this->assertSame(295_735_295_625 * (10 ** -16), USFluidOunce::get()->getMultiplier());
+        $this->assertSame(3_785_411_784 * (10 ** -12), USGallon::get()->getMultiplier());
+        $this->assertSame(11_829_411_825 * (10 ** -15), USGill::get()->getMultiplier());
+        $this->assertSame(473_176_473 * (10 ** -12), USPint::get()->getMultiplier());
+        $this->assertSame(946_352_946 * (10 ** -12), USQuart::get()->getMultiplier());
 
         $this->assertSame("mm³", CubicMilliMeter::get()->getSymbol());
         $this->assertSame("cubic millimeter", CubicMilliMeter::get()->getName());

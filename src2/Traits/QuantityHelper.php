@@ -26,8 +26,8 @@ trait QuantityHelper
      */
     public static function setDefaultUnit(Unit $unit): Unit
     {
-        $current    = self::getDefaultUnit();
-        self::$unit = $unit;
+        $current      = static::getDefaultUnit();
+        static::$unit = $unit;
 
         return $current;
     }
@@ -37,11 +37,11 @@ trait QuantityHelper
      */
     public static function getDefaultUnit(): Unit
     {
-        if (self::$unit === null) {
-            self::$unit = self::getInitialUnit();
+        if (static::$unit === null) {
+            static::$unit = static::getInitialUnit();
         }
 
-        return self::$unit;
+        return static::$unit;
     }
 
     abstract protected static function getInitialUnit(): Unit;

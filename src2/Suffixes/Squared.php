@@ -19,18 +19,12 @@ use MiBo\Properties\Traits\UnitHelper;
  */
 trait Squared
 {
-    use UnitHelper {
-        UnitHelper::getSymbol as contractGetSymbol;
-        UnitHelper::getMultiplier as contractGetMultiplier;
-//        UnitHelper::getName as contractGetName;
-    }
-
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    public function getSymbolSuffix(): string
     {
-        return $this->contractGetSymbol() . "²";
+        return "²";
     }
 
     /**
@@ -44,8 +38,8 @@ trait Squared
     /**
      * @inheritdoc
      */
-    public function getName(): string
+    public function getNameSuffix(): string
     {
-        return "square " . parent::getName();
+        return "square";
     }
 }

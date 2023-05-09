@@ -4,11 +4,16 @@ declare(strict_types = 1);
 
 namespace MiBo\Properties\Tests;
 
+use MiBo\Properties\Calculators\PropertyCalc;
 use MiBo\Properties\Quantities\Length;
+use MiBo\Properties\Traits\UnitHelper;
 use MiBo\Properties\Units\Length\AstronomicalUnit;
 use MiBo\Properties\Units\Length\Barleycorn;
+use MiBo\Properties\Units\Length\CentiMeter;
 use MiBo\Properties\Units\Length\Chain;
 use MiBo\Properties\Units\Length\Meter;
+use MiBo\Properties\Units\Length\MilliMeter;
+use MiBo\Properties\Units\Length\TeraMeter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -88,8 +93,44 @@ class UnitTest extends TestCase
         $this->assertTrue($barleycorn->isEnglish());
     }
 
+    /**
+     * @small
+     *
+     * @covers \MiBo\Properties\Traits\InternationSystemProperty::__callStatic
+     * @covers \MiBo\Properties\Traits\InternationSystemProperty::getClassToCreate
+     *
+     * @return void
+     */
     public function testSIStaticCall(): void
     {
-        
+        $prefixes = [
+            "Milli" => MilliMeter::get(),
+            "Centi" => CentiMeter::get(),
+            "Tera"  => TeraMeter::get(),
+        ];
+
+        foreach ($prefixes as $prefix => $unit) {
+             $this->assertSame(
+                 strtolower($prefix) . "meter",
+                 \MiBo\Properties\Length::{strtoupper($prefix)}()->getUnit()->getName()
+             );
+        }
+    }
+
+    /**
+     * @small
+     *
+     * @coversNothing
+     *
+     * @return void
+     */
+    public function testMulti(): void
+    {
+        $a = new \MiBo\Properties\Length(10, Meter::get());
+        $b = new \MiBo\Properties\Length(10, Meter::get());
+
+        $final = PropertyCalc::multiple($a, $b);
+
+        $this->assertSame(100, $final->getValue());
     }
 }

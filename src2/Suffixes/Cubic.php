@@ -19,10 +19,6 @@ use MiBo\Properties\Traits\UnitHelper;
  */
 trait Cubic
 {
-    use UnitHelper {
-        getMultiplier as contractGetMultiplier;
-    }
-
     /**
      * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
      *

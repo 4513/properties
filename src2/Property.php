@@ -86,7 +86,7 @@ abstract class Property implements PropertyContract
 
     public function convertToUnit(Unit $unit): PropertyContract
     {
-        if ($unit->getName() === $this->getUnit()->getName()) {
+        if ($unit::class === $this->getUnit()::class) {
             return $this;
         }
 

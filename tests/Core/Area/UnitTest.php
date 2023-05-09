@@ -61,7 +61,7 @@ class UnitTest extends TestCase
         $this->assertSame("square meter", $unit->getName());
         $this->assertSame(1**2, $unit->getMultiplier());
         $this->assertSame(Area::class, $unit->getQuantityClassName());
-        $this->assertSame(((10 ** -18) ** 2), SquareAttoMeter::get()->getMultiplier());
+        $this->assertSame((10 ** -18), SquareAttoMeter::get()->getMultiplier());
         $this->assertSame(10 ** 2.0, Are::get()->getMultiplier());
         $this->assertSame("decare", DecAre::get()->getName());
         $this->assertSame("hectare", HectAre::get()->getName());

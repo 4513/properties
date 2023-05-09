@@ -39,7 +39,9 @@ class QuantityTest extends TestCase
 
         $this->assertSame("L", $quantity::getDimensionSymbol());
         $this->assertSame("m", $quantity::getDefaultUnit()->getSymbol());
-        $this->assertSame("m", $quantity::setDefaultUnit(MilliMeter::get())->getSymbol());
+        $this->assertSame("m", ($previous = $quantity::setDefaultUnit(MilliMeter::get()))->getSymbol());
         $this->assertSame("mm", $quantity::getDefaultUnit()->getSymbol());
+
+        $quantity::setDefaultUnit($previous);
     }
 }
