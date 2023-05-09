@@ -30,6 +30,7 @@ class QuantityTest extends TestCase
      * @covers ::getDefaultUnit
      * @covers ::getInitialUnit
      * @covers ::setDefaultUnit
+     * @covers ::getDefaultProperty
      *
      * @return void
      */
@@ -41,6 +42,7 @@ class QuantityTest extends TestCase
         $this->assertSame("m", $quantity::getDefaultUnit()->getSymbol());
         $this->assertSame("m", ($previous = $quantity::setDefaultUnit(MilliMeter::get()))->getSymbol());
         $this->assertSame("mm", $quantity::getDefaultUnit()->getSymbol());
+        $this->assertSame(\MiBo\Properties\Length::class, $quantity::getDefaultProperty());
 
         $quantity::setDefaultUnit($previous);
     }
