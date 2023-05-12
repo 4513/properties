@@ -123,6 +123,7 @@ class PropertyCalcTest extends TestCase
      * @covers ::multiplySingle
      * @covers ::compileEquations
      * @covers ::compileEquation
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -142,6 +143,7 @@ class PropertyCalcTest extends TestCase
      *
      * @covers ::multiply
      * @covers ::multiplySingle
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -159,6 +161,7 @@ class PropertyCalcTest extends TestCase
      *
      * @covers ::multiply
      * @covers ::multiplySingle
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -181,6 +184,7 @@ class PropertyCalcTest extends TestCase
      * @covers ::divideSingle
      * @covers ::compileEquations
      * @covers ::compileEquation
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -200,6 +204,7 @@ class PropertyCalcTest extends TestCase
      *
      * @covers ::divide
      * @covers ::divideSingle
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -217,6 +222,7 @@ class PropertyCalcTest extends TestCase
      *
      * @covers ::divide
      * @covers ::divideSingle
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -237,6 +243,7 @@ class PropertyCalcTest extends TestCase
      *
      * @covers ::divide
      * @covers ::divideSingle
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -256,6 +263,7 @@ class PropertyCalcTest extends TestCase
      * @covers ::divide
      * @covers ::divideSingle
      * @covers ::checkDivisor
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -274,6 +282,7 @@ class PropertyCalcTest extends TestCase
      * @covers ::divide
      * @covers ::divideSingle
      * @covers ::checkDivisor
+     * @covers ::mergeQuantities
      *
      * @return void
      */
@@ -293,6 +302,7 @@ class PropertyCalcTest extends TestCase
      * @covers ::multiplySingle
      * @covers ::compileEquations
      * @covers ::compileEquation
+     * @covers ::mergeQuantities
      *
      * @return void
      */

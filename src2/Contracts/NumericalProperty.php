@@ -71,4 +71,11 @@ interface NumericalProperty extends Property
      * @return int|float
      */
     public function getValue(): int|float;
+
+    /**
+     * @inheritDoc
+     *
+     * @return static
+     */
+    public function convertToUnit(Unit $unit): Property;
 }

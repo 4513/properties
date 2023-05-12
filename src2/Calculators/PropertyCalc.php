@@ -8,7 +8,6 @@ use CompileError;
 use InvalidArgumentException;
 use MiBo\Properties\Contracts\DerivedQuantity;
 use MiBo\Properties\Contracts\NumericalProperty;
-use MiBo\Properties\Contracts\Property;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
@@ -166,6 +165,14 @@ class PropertyCalc
         self::checkDivisor($divisor);
 
         if ($dividend instanceof NumericalProperty) {
+            if ($divisor instanceof NumericalProperty
+                && $dividend::getQuantityClassName() === $divisor::getQuantityClassName()) {
+
+                return self::divideSingle(
+                    $dividend->getValue(), $divisor->convertToUnit($dividend->getUnit())->getValue()
+                );
+            }
+
             return $divisor instanceof NumericalProperty ?
                 self::mergeQuantities($dividend, $divisor, false) :
                 new ($dividend::class)($dividend->getValue() / $divisor, $dividend->getUnit());
@@ -234,7 +241,7 @@ class PropertyCalc
          * @var string[] $equations
          */
         foreach (self::$equations as $product => $equations) {
-            if ($product::class === $first::getQuantityClassName()) {
+            if ($product === $first::getQuantityClassName()) {
                 continue;
             }
 
@@ -286,14 +293,14 @@ class PropertyCalc
                 $unit     = $product::getDefaultUnit();
                 $property = $product::getDefaultProperty();
 
-                if (isset(self::$productResolvers[$product::class])) {
+                if (isset(self::$productResolvers[$product])) {
                     /** @var \MiBo\Properties\Contracts\NumericalProperty $first */
                     /** @var \MiBo\Properties\Contracts\NumericalProperty $second */
                     /** @var \MiBo\Properties\Contracts\NumericalProperty $newProperty */
-                    $newProperty = self::$productResolvers[$product::class]($first, $second);
+                    $newProperty = self::$productResolvers[$product]($first, $second);
 
                     if (!$newProperty instanceof NumericalProperty
-                        || $newProperty::getQuantityClassName() !== $product::class
+                        || $newProperty::getQuantityClassName() !== $product
                     ) {
                         throw new TypeError();
                     }
