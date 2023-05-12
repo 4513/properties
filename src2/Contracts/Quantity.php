@@ -38,5 +38,8 @@ interface Quantity
      */
     public static function getDefaultUnit(): Unit;
 
+    /**
+     * @return class-string<\MiBo\Properties\Contracts\NumericalProperty>
+     */
     public static function getDefaultProperty(): string;
 }

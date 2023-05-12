@@ -100,6 +100,9 @@ trait InternationSystemProperty
         return $unitNamespace . $prefix . self::getDefaultISUnit();
     }
 
+    /**
+     * @return class-string<\MiBo\Properties\Contracts\Quantity>
+     */
     abstract public static function getQuantityClassName(): string;
 
     abstract public static function getDefaultISUnit(): string;

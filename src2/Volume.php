@@ -25,6 +25,8 @@ class Volume extends NumericalProperty
 
     /**
      * @inheritDoc
+     *
+     * @return class-string<\MiBo\Properties\Quantities\Volume>
      */
     public static function getQuantityClassName(): string
     {

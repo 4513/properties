@@ -64,4 +64,11 @@ interface NumericalProperty extends Property
      * @return static
      */
     public function floor(): static;
+
+    /**
+     * @inheritDoc
+     *
+     * @return int|float
+     */
+    public function getValue(): int|float;
 }

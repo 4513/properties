@@ -60,6 +60,9 @@ abstract class Property implements PropertyContract
         return $this->unit;
     }
 
+    /**
+     * @inheritDoc
+     */
     abstract public static function getQuantityClassName(): string;
 
     /**
