@@ -17,5 +17,8 @@ namespace MiBo\Properties\Contracts;
  */
 interface DerivedQuantity extends Quantity
 {
+    /**
+     * @return string[]
+     */
     public static function getEquations(): array;
 }

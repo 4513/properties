@@ -7,6 +7,7 @@ namespace MiBo\Properties;
 use InvalidArgumentException;
 use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Property as PropertyContract;
+use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
 
 /**
@@ -21,6 +22,8 @@ use MiBo\Properties\Contracts\Unit;
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
  * @template-covariant TUnit of \MiBo\Properties\Contracts\Unit
+ *
+ * @implements \MiBo\Properties\Contracts\Property<TUnit>
  */
 abstract class Property implements PropertyContract
 {
@@ -59,7 +62,10 @@ abstract class Property implements PropertyContract
 
     abstract public static function getQuantityClassName(): string;
 
-    public function getQuantity()
+    /**
+     * @inheritDoc
+     */
+    public function getQuantity(): Quantity
     {
         static $quantities = [];
 
@@ -70,12 +76,20 @@ abstract class Property implements PropertyContract
         return $quantities[$this->getQuantityClassName()];
     }
 
-    public function getValue()
+    /**
+     * @inheritDoc
+     *
+     * @return int|float
+     */
+    public function getValue(): int|float
     {
         return $this->value;
     }
 
-    public function getBaseValue()
+    /**
+     * @inheritDoc
+     */
+    public function getBaseValue(): mixed
     {
         if ($this->getUnit() instanceof NumericalUnit) {
             return $this->getValue() * $this->getUnit()->getMultiplier();
@@ -84,6 +98,15 @@ abstract class Property implements PropertyContract
         return $this->getValue();
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @template TInnerUnit of \MiBo\Properties\Contracts\Unit
+     *
+     * @param TInnerUnit $unit
+     *
+     * @phpstan-assert TUnit $unit
+     */
     public function convertToUnit(Unit $unit): PropertyContract
     {
         if ($unit::class === $this->getUnit()::class) {
@@ -99,11 +122,18 @@ abstract class Property implements PropertyContract
         }
 
         $this->value = $this->getBaseValue() / $unit->getMultiplier();
-        $this->unit  = $unit;
+
+        /** @phpstan-ignore-next-line */
+        $this->unit = $unit;
 
         return $this;
     }
 
+    /**
+     * @param int|float $value
+     *
+     * @return static
+     */
     protected function setValue(int|float $value): static
     {
         $this->value = $value;

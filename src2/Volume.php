@@ -19,7 +19,9 @@ use MiBo\Properties\Traits\InternationSystemProperty;
  */
 class Volume extends NumericalProperty
 {
-    use InternationSystemProperty;
+    use InternationSystemProperty {
+        getClassToCreate as contractGetClassToCreate;
+    }
 
     /**
      * @inheritDoc

@@ -1103,11 +1103,11 @@ class Math
      */
     public static function randMT(?int $min = null, ?int $max = null): int
     {
-        if ($min === null) {
+        if ($min === null || $max === null) {
             return mt_rand();
         }
 
-        if ($max !== null && $min > $max) {
+        if ($min > $max) {
             throw new ValueError("min must be bigger than max!");
         }
 
@@ -1216,13 +1216,7 @@ class Math
      */
     public static function pow(int|float $number, int|float $exponent): int|float
     {
-        $result = pow($number, $exponent);
-
-        if (is_object($result)) {
-            throw new CompileError();
-        }
-
-        return $result;
+        return pow($number, $exponent);
     }
 
     /**
@@ -1270,11 +1264,11 @@ class Math
      */
     public static function rand(?int $min = null, ?int $max = null): int
     {
-        if ($min === null) {
+        if ($min === null || $max === null) {
             return rand();
         }
 
-        if ($max !== null && $min > $max) {
+        if ($min > $max) {
             throw new ValueError("min must be bigger than max!");
         }
 
@@ -1294,9 +1288,7 @@ class Math
      *  If the precision is negative, number is rounded to precision significant digits before the decimal
      * point, i.e. to the nearest multiple of pow(10, -precision), e.g. for a precision of -1 number is
      * rounded to tens, for a precision of -2 to hundreds, etc.
-     * @param int-mask-of> $mode Use one of the following constants to specify the mode in which
-     * rounding
-     * occurs.
+     * @param int<1, 4> $mode Use one of the following constants to specify the mode in which rounding occurs.
      * <table><tr><th>Constants</th><th>Description</th></tr>
      * <tr><td>PHP_ROUND_HALF_UP</td><td> Rounds number away from zero when it is half way there, making 1.5
      * into 2 and -1.5 into -2.</td></tr>

@@ -12,6 +12,8 @@ use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
 use MiBo\Properties\Quantities\Volume;
+use TypeError;
+use ValueError;
 
 /**
  * Class PropertyMath
@@ -105,7 +107,7 @@ class PropertyCalc
      * @param int|float|\MiBo\Properties\Contracts\NumericalProperty ...$multiplicands
      *
      * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($multiplier is int|float ? ($multiplicands is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return ($multiplier is int|float ? ($multiplicands is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>) : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>)
      */
     public static function multiply(
         int|float|NumericalProperty $multiplier,
@@ -124,7 +126,7 @@ class PropertyCalc
      * @param int|float|\MiBo\Properties\Contracts\NumericalProperty ...$divisors
      *
      * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($dividend is int|float ? ($divisors is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return ($dividend is int|float ? ($divisors is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>) : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>)
      */
     public static function divide(
         int|float|NumericalProperty $dividend,
@@ -143,7 +145,7 @@ class PropertyCalc
      * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $divisor
      *
      * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($dividend is int|float ? ($divisor is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return ($dividend is int|float ? ($divisor is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>) : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>)
      */
     protected static function divideSingle(
         int|float|NumericalProperty $dividend,
@@ -215,7 +217,7 @@ class PropertyCalc
                     if (!$newProperty instanceof NumericalProperty
                         || $newProperty::getQuantityClassName() !== $product
                     ) {
-                        throw new \TypeError();
+                        throw new TypeError();
                     }
 
                     return $newProperty;
@@ -228,7 +230,7 @@ class PropertyCalc
             }
         }
 
-        throw new \ValueError();
+        throw new ValueError();
     }
 
     protected static function checkDivisor(int|float|NumericalProperty $divisor): void
@@ -247,7 +249,7 @@ class PropertyCalc
      * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $multiplicand
      *
      * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($multiplier is int|float ? ($multiplicand is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return ($multiplier is int|float ? ($multiplicand is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>) : \MiBo\Properties\Contracts\NumericalProperty<\MiBo\Properties\Contracts\NumericalUnit>)
      */
     protected static function multiplySingle(
         int|float|NumericalProperty $multiplier,
@@ -302,7 +304,8 @@ class PropertyCalc
                     continue;
                 }
 
-                $unit     = $product::getDefaultUnit();
+                $unit = $product::getDefaultUnit();
+                /** @var class-string<\MiBo\Properties\NumericalProperty> $property */
                 $property = $product::getDefaultProperty();
 
                 if (isset(self::$productResolvers[$product])) {
@@ -311,7 +314,7 @@ class PropertyCalc
                     if (!$newProperty instanceof NumericalProperty
                         || $newProperty::getQuantityClassName() !== $product
                     ) {
-                        throw new \TypeError();
+                        throw new TypeError();
                     }
 
                     return $newProperty;
@@ -324,7 +327,7 @@ class PropertyCalc
             }
         }
 
-        throw new \ValueError();
+        throw new ValueError();
     }
 
     protected static function compileEquations(bool $force = false): void

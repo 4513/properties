@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace MiBo\Properties\Traits;
 
+use CompileError;
+use MiBo\Properties\Contracts\Unit;
+
 /**
  * Trait InternationSystemProperty
  *
@@ -38,6 +41,9 @@ namespace MiBo\Properties\Traits;
  */
 trait InternationSystemProperty
 {
+    /**
+     * @var array<string, string>
+     */
     private static array $prefixes = [
         "ATTO"  => "Atto",
         "CENTI" => "Centi",
@@ -61,20 +67,27 @@ trait InternationSystemProperty
         "ZETTA" => "Zetta",
     ];
 
+    /**
+     * @param string $name
+     * @param array<int, mixed> $arguments
+     *
+     * @return void|static
+     */
     public static function __callStatic(string $name, array $arguments)
     {
         if (key_exists($name, self::$prefixes)) {
             $className = self::getClassToCreate(self::$prefixes[$name]);
             $value     = isset($arguments[0]) && is_numeric($arguments[0]) ? $arguments[0] : 0;
 
+            /** @phpstan-ignore-next-line */
             return new static($value, $className::get());
         }
     }
 
     /**
-     * @param class-string<\MiBo\Properties\Contracts\Unit> $prefix
+     * @param string $prefix
      *
-     * @return string
+     * @return class-string<\MiBo\Properties\Contracts\Unit>
      */
     protected static function getClassToCreate(string $prefix): string
     {
@@ -83,6 +96,7 @@ trait InternationSystemProperty
         $quantityClass  = preg_replace("/([\\\\\w]+\\\)/", "", static::getQuantityClassName());
         $unitNamespace  = $namespace . "Units\\" . $quantityClass . "\\";
 
+        /** @var class-string<\MiBo\Properties\Contracts\Unit> */
         return $unitNamespace . $prefix . self::getDefaultISUnit();
     }
 

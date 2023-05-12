@@ -14,18 +14,40 @@ namespace MiBo\Properties\Contracts;
  * @since x.x
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
+ *
+ * @template-covariant TUnit of \MiBo\Properties\Contracts\Unit
  */
 interface Property
 {
+    /**
+     * @return \MiBo\Properties\Contracts\Unit
+     */
     public function getUnit(): Unit;
 
+    /**
+     * @return class-string<\MiBo\Properties\Contracts\Quantity>
+     */
     public static function getQuantityClassName(): string;
 
-    public function getQuantity();
+    /**
+     * @return \MiBo\Properties\Contracts\Quantity
+     */
+    public function getQuantity(): Quantity;
 
-    public function getValue();
+    /**
+     * @return mixed
+     */
+    public function getValue(): mixed;
 
-    public function getBaseValue();
+    /**
+     * @return mixed
+     */
+    public function getBaseValue(): mixed;
 
+    /**
+     * @param \MiBo\Properties\Contracts\Unit $unit
+     *
+     * @return \MiBo\Properties\Contracts\Property<TUnit>
+     */
     public function convertToUnit(Unit $unit): Property;
 }

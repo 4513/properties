@@ -17,8 +17,6 @@ use MiBo\Properties\Traits\InternationSystemProperty;
  * @since x.x
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @template-extends \MiBo\Properties\Property<\MiBo\Properties\Units\Length\Meter>
  */
 class Length extends NumericalProperty
 {
@@ -26,19 +24,24 @@ class Length extends NumericalProperty
 
     /**
      * @param float|int $value
-     * @param \MiBo\Properties\Contracts\Unit $unit
-     * @phpstan-assert \MiBo\Properties\Units\Length\Meter $unit
+     * @param \MiBo\Properties\Contracts\NumericalUnit $unit
      */
     public function __construct(float|int $value, Unit $unit)
     {
         parent::__construct($value, $unit);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getDefaultISUnit(): string
     {
         return "Meter";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getQuantityClassName(): string
     {
         return Quantities\Length::class;

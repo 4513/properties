@@ -27,7 +27,7 @@ trait UnitHelper
      */
     public static function get(): static
     {
-        if (true || !key_exists(static::class, self::$instances)) {
+        if (!key_exists(static::class, self::$instances)) {
             self::$instances[static::class] = new static();
         }
 
