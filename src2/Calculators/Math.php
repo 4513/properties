@@ -39,7 +39,7 @@ class Math
     /**
      * Not a Number
      */
-    public const NaN = NAN;
+    public const NAN = NAN;
 
     /**
      * Returns the absolute value of number.
@@ -1011,17 +1011,7 @@ class Math
      */
     public static function max(int|float ...$values): int|float
     {
-        $max = max(...$values);
-
-        if ($max === false || !is_numeric($max)) {
-            throw new ValueError("Failed to get max value!");
-        }
-
-        if (is_int($max) || is_float($max)) {
-            return $max;
-        }
-
-        return (float) $max;
+        return max(...$values);
     }
 
     /**
@@ -1036,17 +1026,7 @@ class Math
      */
     public static function min(int|float ...$values): int|float
     {
-        $min = min(...$values);
-
-        if ($min === false || !is_numeric($min)) {
-            throw new ValueError("Failed to get min value!");
-        }
-
-        if (is_int($min) || is_float($min)) {
-            return $min;
-        }
-
-        return (float) $min;
+        return min(...$values);
     }
 
     /**
@@ -1314,7 +1294,9 @@ class Math
      *  If the precision is negative, number is rounded to precision significant digits before the decimal
      * point, i.e. to the nearest multiple of pow(10, -precision), e.g. for a precision of -1 number is
      * rounded to tens, for a precision of -2 to hundreds, etc.
-     * @param int $mode Use one of the following constants to specify the mode in which rounding occurs.
+     * @param int-mask-of> $mode Use one of the following constants to specify the mode in which
+     * rounding
+     * occurs.
      * <table><tr><th>Constants</th><th>Description</th></tr>
      * <tr><td>PHP_ROUND_HALF_UP</td><td> Rounds number away from zero when it is half way there, making 1.5
      * into 2 and -1.5 into -2.</td></tr>

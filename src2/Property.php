@@ -103,4 +103,11 @@ abstract class Property implements PropertyContract
 
         return $this;
     }
+
+    protected function setValue(int|float $value): static
+    {
+        $this->value = $value;
+
+        return $this;
+    }
 }

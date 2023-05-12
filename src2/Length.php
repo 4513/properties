@@ -20,7 +20,7 @@ use MiBo\Properties\Traits\InternationSystemProperty;
  *
  * @template-extends \MiBo\Properties\Property<\MiBo\Properties\Units\Length\Meter>
  */
-class Length extends Property
+class Length extends NumericalProperty
 {
     use InternationSystemProperty;
 

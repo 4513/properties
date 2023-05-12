@@ -18,7 +18,7 @@ use MiBo\Properties\Traits\InternationSystemProperty;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-class Area extends Property
+class Area extends NumericalProperty
 {
     use InternationSystemProperty {
         getClassToCreate as contractGetClassToCreate;

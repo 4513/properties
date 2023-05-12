@@ -129,7 +129,7 @@ class UnitTest extends TestCase
         $a = new \MiBo\Properties\Length(10, Meter::get());
         $b = new \MiBo\Properties\Length(10, Meter::get());
 
-        $final = PropertyCalc::multiple($a, $b);
+        $final = PropertyCalc::multiply($a, $b);
 
         $this->assertSame(100, $final->getValue());
     }

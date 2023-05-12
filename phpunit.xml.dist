@@ -10,8 +10,5 @@
     <include>
       <directory suffix=".php">./src2</directory>
     </include>
-    <exclude>
-      <directory suffix="Math.php">./src2/Calculators</directory>
-    </exclude>
   </source>
 </phpunit>
