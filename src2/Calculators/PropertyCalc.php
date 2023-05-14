@@ -13,6 +13,7 @@ use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\ElectricCurrent;
 use MiBo\Properties\Quantities\Length;
+use MiBo\Properties\Quantities\LuminousIntensity;
 use MiBo\Properties\Quantities\Mass;
 use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
@@ -45,6 +46,7 @@ class PropertyCalc
         Mass::class,
         ElectricCurrent::class,
         ThermodynamicTemperature::class,
+        LuminousIntensity::class,
     ];
 
     /**
