@@ -44,5 +44,5 @@ class Digit implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected int|float $multiplier = -3;
+    protected int $multiplier = -3;
 }

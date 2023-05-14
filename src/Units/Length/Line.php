@@ -44,5 +44,5 @@ class Line implements NumericalUnit
 
     protected string $symbol = "l";
 
-    protected int|float $multiplier = -5;
+    protected int $multiplier = -5;
 }

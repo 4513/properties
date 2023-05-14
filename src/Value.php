@@ -18,6 +18,8 @@ use const PHP_FLOAT_DIG;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
+ *
+ * @template TBase of positive-int
  */
 final class Value
 {
@@ -34,11 +36,29 @@ final class Value
 
     private bool $infinityMode = false;
 
-    public function __construct(int|float $value, int $exp = 0)
+    /** @var TBase */
+    private int $base;
+
+    /**
+     * @param int|float $value Value to initialize.
+     * @param int $exp Exponent of value. Default 0.
+     * @param TBase $base Base of value. Default 10.
+     */
+    public function __construct(int|float $value, int $exp = 0, int $base = 10)
     {
+        $this->base = $base;
+
         $this->add($value, $exp);
     }
 
+    /**
+     * Adds value to current value.
+     *
+     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to add.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with added value.
+     */
     public function add(int|float|Value $value, int $exp = 0): static
     {
         if ($this->infinityMode === true) {
@@ -82,8 +102,18 @@ final class Value
         return $this;
     }
 
+    /**
+     * Adds value to current value.
+     *
+     * @param \MiBo\Properties\Value<TBase> $value Value to add.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with added value.
+     */
     private function addSelf(Value $value, int $exp): static
     {
+        $this->checkBaseBeforeOperation($value);
+
         foreach ($value->getValues() as $innerExp => $val) {
             $this->add($val, $innerExp + $exp);
         }
@@ -91,6 +121,14 @@ final class Value
         return $this;
     }
 
+    /**
+     * Subtracts value from current value.
+     *
+     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to subtract.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with subtracted value.
+     */
     public function subtract(int|float|Value $value, int $exp = 0): static
     {
         if ($this->infinityMode === true) {
@@ -104,8 +142,18 @@ final class Value
         return $this->add(-$value, $exp);
     }
 
+    /**
+     * Subtracts value from current value.
+     *
+     * @param \MiBo\Properties\Value<TBase> $value Value to subtract.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with subtracted value.
+     */
     private function subtractSelf(Value $value, int $exp): static
     {
+        $this->checkBaseBeforeOperation($value);
+
         foreach ($value->getValues() as $innerExp => $val) {
             $this->subtract($val, $exp + $innerExp);
         }
@@ -113,6 +161,14 @@ final class Value
         return $this;
     }
 
+    /**
+     * Multiplies value with current value.
+     *
+     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to multiply.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with multiplied value.
+     */
     public function multiply(int|float|Value $value, int $exp = 0): static
     {
         if ($this->infinityMode === true) {
@@ -160,8 +216,18 @@ final class Value
         return $this;
     }
 
+    /**
+     * Multiplies value with current value.
+     *
+     * @param \MiBo\Properties\Value<TBase> $value Value to multiply.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with multiplied value.
+     */
     private function multiplySelf(Value $value, int $exp): static
     {
+        $this->checkBaseBeforeOperation($value);
+
         if (empty($value->getValues())) {
             $this->values = [];
 
@@ -175,6 +241,14 @@ final class Value
         return $this;
     }
 
+    /**
+     * Divides value with current value.
+     *
+     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to divide.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with divided value.
+     */
     public function divide(int|float|Value $value, int $exp = 0): static
     {
         if ($this->infinityMode === true) {
@@ -215,8 +289,18 @@ final class Value
         return $this;
     }
 
+    /**
+     * Divides value with current value.
+     *
+     * @param \MiBo\Properties\Value<TBase> $value Value to divide.
+     * @param int $exp Exponent of value.
+     *
+     * @return static Value with divided value.
+     */
     private function divideSelf(Value $value, int $exp): static
     {
+        $this->checkBaseBeforeOperation($value);
+
         foreach ($value->getValues() as $innerExp => $val) {
             $this->divide($val, $innerExp - $exp);
         }
@@ -225,13 +309,23 @@ final class Value
     }
 
     /**
-     * @return array
+     * Returns all values to be part of the final result.
+     *
+     * @return array<int, int|float> Values of value.
      */
     public function getValues(): array
     {
         return $this->values;
     }
 
+    /**
+     * Returns the final value.
+     *
+     * @param int $requestedExp Exponent of value.
+     * @param int $precision Precision of value.
+     *
+     * @return int|float Final value.
+     */
     public function getValue(int $requestedExp = 0, int $precision = 10): int|float
     {
         if ($this->infinityMode === true) {
@@ -272,18 +366,51 @@ final class Value
         return $precision === 0 ? (int) $rounded : $rounded;
     }
 
+    /**
+     * @return int Minimum exponent of value.
+     */
     public function getMinExp(): int
     {
         return min(array_keys($this->values) ?: [0]);
     }
 
+    /**
+     * @return bool Whether value is infinite.
+     */
     public function isInfinite(): bool
     {
         return self::$preferInfinity && $this->infinityMode && isset($this->values[0]) && is_infinite($this->values[0]);
     }
 
+    /**
+     * @return bool Whether the value has been divided by infinity.
+     */
     public function isAlmostZero(): bool
     {
         return self::$preferInfinity && $this->infinityMode && isset($this->values[0]) && $this->values[0] !== INF;
+    }
+
+    /**
+     * @return positive-int
+     */
+    public function getBase(): int
+    {
+        return $this->base;
+    }
+
+    /**
+     * Checks that two values have the same base.
+     *
+     * @param \MiBo\Properties\Value<TBase> $value Value to compare.
+     *
+     * @return void
+     *
+     * @phpstan-assert \MiBo\Properties\Value<TBase> $value
+     */
+    protected function checkBaseBeforeOperation(Value $value): void
+    {
+        if ($this->base !== $value->getBase()) {
+            throw new ValueError();
+        }
     }
 }

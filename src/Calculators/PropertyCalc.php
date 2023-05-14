@@ -67,7 +67,7 @@ class PropertyCalc
      * @param \MiBo\Properties\Contracts\NumericalProperty $addend First addend.
      * @param \MiBo\Properties\Contracts\NumericalProperty ...$addends Other addends.
      *
-     * @return \MiBo\Properties\NumericalProperty Sum of all addends.
+     * @return \MiBo\Properties\Contracts\NumericalProperty Sum of all addends.
      */
     public static function add(NumericalProperty $addend, NumericalProperty ...$addends): NumericalProperty
     {
@@ -80,7 +80,7 @@ class PropertyCalc
      * @param \MiBo\Properties\Contracts\NumericalProperty $minuend Minuend.
      * @param \MiBo\Properties\Contracts\NumericalProperty ...$subtrahends Subtrahends.
      *
-     * @return \MiBo\Properties\NumericalProperty Difference of all subtrahends from minuend.
+     * @return \MiBo\Properties\Contracts\NumericalProperty Difference of all subtrahends from minuend.
      */
     public static function subtract(NumericalProperty $minuend, NumericalProperty ...$subtrahends): NumericalProperty
     {
@@ -189,6 +189,10 @@ class PropertyCalc
         $quantity = null;
         $mainProp = null;
 
+        if (count($properties) === 0) {
+            throw new InvalidArgumentException('Cannot merge zero quantities.');
+        }
+
         foreach ($properties as $property) {
             if ($quantity === null) {
                 $quantity = $property::getQuantityClassName();
@@ -203,14 +207,15 @@ class PropertyCalc
             }
 
             if ($add) {
-                $mainProp->getNumericalValue()
+                $mainProp?->getNumericalValue()
                     ->add($property->getNumericalValue(), $property->getUnit()->getMultiplier());
             } else {
-                $mainProp->getNumericalValue()
+                $mainProp?->getNumericalValue()
                     ->subtract($property->getNumericalValue(), $property->getUnit()->getMultiplier());
             }
         }
 
+        /** @var \MiBo\Properties\Contracts\NumericalProperty */
         return $mainProp;
     }
 
@@ -243,6 +248,7 @@ class PropertyCalc
          * @var string[] $equations
          */
         foreach (self::$equations as $product => $equations) {
+            // @phpstan-ignore-next-line class vs class-string
             if ($product === $first::getQuantityClassName()) {
                 continue;
             }
@@ -295,23 +301,33 @@ class PropertyCalc
                 $unit     = $product::getDefaultUnit();
                 $property = $product::getDefaultProperty();
 
+                /** @var class-string<\MiBo\Properties\Contracts\Quantity> $product */
+                $product = $product;
+
                 if (isset(self::$productResolvers[$product])) {
                     /** @var \MiBo\Properties\Contracts\NumericalProperty $first */
                     /** @var \MiBo\Properties\Contracts\NumericalProperty $second */
                     /** @var \MiBo\Properties\Contracts\NumericalProperty $newProperty */
                     $newProperty = self::$productResolvers[$product]($first, $second);
 
+                    // @phpstan-ignore-next-line
                     if (!$newProperty instanceof NumericalProperty
                         || $newProperty::getQuantityClassName() !== $product
                     ) {
                         throw new TypeError();
                     }
 
+                    // @phpstan-ignore-next-line
                     return $newProperty;
                 }
 
-                $first  = $first->convertToUnit($firstQuantity::getDefaultUnit());
-                $second = $second->convertToUnit($secondQuantity::getDefaultUnit());
+                /** @var \MiBo\Properties\Contracts\NumericalUnit $firstDefaultUnit */
+                $firstDefaultUnit = $firstQuantity::getDefaultUnit();
+                /** @var \MiBo\Properties\Contracts\NumericalUnit $secondDefaultUnit */
+                $secondDefaultUnit = $secondQuantity::getDefaultUnit();
+
+                $first  = $first->convertToUnit($firstDefaultUnit);
+                $second = $second->convertToUnit($secondDefaultUnit);
 
                 $value = $first->getNumericalValue();
 

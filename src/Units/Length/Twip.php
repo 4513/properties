@@ -47,5 +47,5 @@ class Twip implements NumericalUnit
 
     protected string $symbol = "m";
 
-    protected int|float $multiplier = -10;
+    protected int $multiplier = -10;
 }

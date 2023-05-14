@@ -61,5 +61,5 @@ class Hand implements NumericalUnit
 
     protected string $symbol = "hh";
 
-    protected int|float $multiplier = -4;
+    protected int $multiplier = -4;
 }

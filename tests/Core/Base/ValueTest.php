@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
@@ -28,6 +28,7 @@ class ValueTest extends TestCase
      * @covers ::__construct
      * @covers ::getValues
      * @covers ::getMinExp
+     * @covers ::getBase
      *
      * @return void
      */
@@ -52,6 +53,8 @@ class ValueTest extends TestCase
             $expected !== 0 ?
                 $this->assertSame($values[0], $value->getMinExp()) :
                 $this->assertSame(0, $value->getMinExp());
+
+            $this->assertSame(10, $value->getBase());
         }
     }
 }

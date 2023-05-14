@@ -22,7 +22,7 @@ use ValueError;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
- * @extends \MiBo\Properties\Property<\MiBo\Properties\Contracts\NumericalUnit>
+ * @extends \MiBo\Properties\Property<\MiBo\Properties\Contracts\NumericalUnit, int|float>
  */
 abstract class NumericalProperty extends Property implements ContractNumericalProperty
 {
@@ -69,7 +69,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
      *
      * @return static
      */
@@ -87,7 +87,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
      *
      * @return static
      */
@@ -105,9 +105,9 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
      *
-     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty<int|float>)
      */
     public function multiply(ContractNumericalProperty|float|int $value): ContractNumericalProperty
     {
@@ -123,9 +123,9 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
      *
-     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty<int|float>)
      */
     public function divide(ContractNumericalProperty|float|int $value): ContractNumericalProperty
     {

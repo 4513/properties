@@ -156,6 +156,7 @@ class ValueMultiplyTest extends TestCase
      *
      * @covers ::multiply
      * @covers ::multiplySelf
+     * @covers ::checkBaseBeforeOperation
      *
      * @return void
      */

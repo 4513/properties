@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MiBo\Properties\Calculators;
 
 use InvalidArgumentException;
+use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\NumericalProperty;
 use MiBo\Properties\Quantities\Area;
@@ -179,14 +180,28 @@ class UnitConvertor
     ];
 
     /**
+     * List of custom unit convertors.
+     *
+     * Key of the array is requested quantity. The value is a closure that takes two arguments:
+     * - property to convert;
+     * - unit to convert to,
+     *
+     * and returns converted value.
+     *
+     * @phpcs:ignore
+     * @var array<class-string<\MiBo\Properties\Contracts\Quantity>, \Closure(\MiBo\Properties\NumericalProperty, \MiBo\Properties\Contracts\Unit): \MiBo\Properties\Value<int>>
+     */
+    public static array $unitConvertors = [];
+
+    /**
      * Converts property to given unit.
      *
      * @param \MiBo\Properties\NumericalProperty $property Property to convert.
-     * @param \MiBo\Properties\Contracts\Unit $unit Unit to convert to.
+     * @param \MiBo\Properties\Contracts\NumericalUnit $unit Unit to convert to.
      *
-     * @return \MiBo\Properties\Value Converted value.
+     * @return \MiBo\Properties\Value<int> Converted value.
      */
-    public static function convert(NumericalProperty $property, Unit $unit): Value
+    public static function convert(NumericalProperty $property, NumericalUnit $unit): Value
     {
         if ($property->getUnit()::class === $unit::class) {
             return $property->getNumericalValue();
@@ -201,6 +216,10 @@ class UnitConvertor
         $currentValue = $property->getNumericalValue();
         $currentUnit  = $property->getUnit();
         $quantity     = $property::getQuantityClassName();
+
+        if (key_exists($quantity, self::$unitConvertors)) {
+            return self::$unitConvertors[$quantity]($property, $unit);
+        }
 
         if (in_array($quantity, self::UNIT_SPECIAL)) {
             /** @see \MiBo\Properties\Calculators\UnitConvertor::convertT */
@@ -231,11 +250,11 @@ class UnitConvertor
      * Converts thermodynamic temperature to given unit.
      *
      * @param \MiBo\Properties\NumericalProperty $property Property to convert.
-     * @param \MiBo\Properties\Contracts\Unit $unit Unit to convert to.
+     * @param \MiBo\Properties\Contracts\NumericalUnit $unit Unit to convert to.
      *
-     * @return \MiBo\Properties\Value Converted value.
+     * @return \MiBo\Properties\Value<int> Converted value.
      */
-    protected static function convertT(NumericalProperty $property, Unit $unit): Value
+    protected static function convertT(NumericalProperty $property, NumericalUnit $unit): Value
     {
         $value = $property->getNumericalValue();
 

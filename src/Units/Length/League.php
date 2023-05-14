@@ -44,5 +44,5 @@ class League implements NumericalUnit
 
     protected string $symbol = "lea";
 
-    protected int|float $multiplier = -3;
+    protected int $multiplier = -3;
 }

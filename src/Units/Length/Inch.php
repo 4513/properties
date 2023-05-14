@@ -59,5 +59,5 @@ class Inch implements NumericalUnit
 
     protected string $symbol = "in";
 
-    protected int|float $multiplier = -4;
+    protected int $multiplier = -4;
 }

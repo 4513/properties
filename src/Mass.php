@@ -24,7 +24,7 @@ class Mass extends NumericalProperty
     /**
      * @inheritDoc
      *
-     * @return class-string<\MiBo\Properties\Quantities\Time>
+     * @return class-string<\MiBo\Properties\Quantities\Mass>
      */
     public static function getQuantityClassName(): string
     {

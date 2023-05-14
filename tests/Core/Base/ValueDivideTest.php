@@ -155,6 +155,7 @@ class ValueDivideTest extends TestCase
      * @covers ::divide
      * @covers ::divideSelf
      * @covers ::multiplySelf
+     * @covers ::checkBaseBeforeOperation
      *
      * @return void
      */

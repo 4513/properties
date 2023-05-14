@@ -77,7 +77,7 @@ interface NumericalProperty extends Property
     /**
      * Get numerical value.
      *
-     * @return \MiBo\Properties\Value Numerical value.
+     * @return \MiBo\Properties\Value<int> Numerical value.
      */
     public function getNumericalValue(): Value;
 }

@@ -156,6 +156,7 @@ class ValueSubtractTest extends TestCase
      *
      * @covers ::subtract
      * @covers ::subtractSelf
+     * @covers ::checkBaseBeforeOperation
      *
      * @return void
      */

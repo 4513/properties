@@ -60,7 +60,7 @@ interface Property
      *
      * @param \MiBo\Properties\Contracts\Unit $unit The unit.
      *
-     * @return \MiBo\Properties\Contracts\Property<TUnit> The property in the given unit.
+     * @return \MiBo\Properties\Contracts\Property<TUnit, TValue> The property in the given unit.
      */
     public function convertToUnit(Unit $unit): Property;
 }

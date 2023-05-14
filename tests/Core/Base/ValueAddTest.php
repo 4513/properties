@@ -151,6 +151,7 @@ class ValueAddTest extends TestCase
      *
      * @covers ::add
      * @covers ::addSelf
+     * @covers ::checkBaseBeforeOperation
      *
      * @return void
      */

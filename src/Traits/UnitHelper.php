@@ -68,7 +68,7 @@ trait UnitHelper
      */
     public function getName(): string
     {
-        $name = $this->name;
+        $name = $this->name ?? "";
 
         if (method_exists($this, "getNamePrefix")) {
             $name = $this->getNamePrefix() . $name;
@@ -86,7 +86,7 @@ trait UnitHelper
      */
     public function getSymbol(): string
     {
-        $symbol = $this->symbol;
+        $symbol = $this->symbol ?? "";
 
         if (method_exists($this, "getSymbolPrefix")) {
             $symbol = $this->getSymbolPrefix() . $symbol;
