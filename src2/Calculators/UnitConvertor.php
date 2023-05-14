@@ -8,6 +8,7 @@ use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\NumericalProperty;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
+use MiBo\Properties\Quantities\Mass;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
 use MiBo\Properties\Units\Area\Acre;
@@ -45,6 +46,7 @@ use MiBo\Properties\Units\Length\Span;
 use MiBo\Properties\Units\Length\Thou;
 use MiBo\Properties\Units\Length\Twip;
 use MiBo\Properties\Units\Length\Yard;
+use MiBo\Properties\Units\Mass\Dalton;
 use MiBo\Properties\Units\Time\Day;
 use MiBo\Properties\Units\Time\Hour;
 use MiBo\Properties\Units\Time\Minute;
@@ -114,6 +116,9 @@ class UnitConvertor
             Thou::class             => 254,
             Twip::class             => 176_389,
             Yard::class             => 9_144,
+        ],
+        Mass::class   => [
+            Dalton::class => 1_660_539_040,
         ],
         Time::class   => [
             Day::class    => 864_000,

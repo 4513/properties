@@ -5,7 +5,9 @@ declare(strict_types = 1);
 namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\Quantity;
+use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Traits\QuantityHelper;
+use MiBo\Properties\Units\AmountOfSubstance\Mole;
 
 /**
  * Class AmountOfSubstance
@@ -32,7 +34,7 @@ class AmountOfSubstance implements Quantity
 
     protected static function getInitialUnit(): Unit
     {
-        return A::get();
+        return Mole::get();
     }
 
     public static function getDefaultProperty(): string

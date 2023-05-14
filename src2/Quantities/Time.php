@@ -5,7 +5,9 @@ declare(strict_types = 1);
 namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\Quantity;
+use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Traits\QuantityHelper;
+use MiBo\Properties\Units\Time\Second;
 
 /**
  * Class Time
@@ -32,7 +34,7 @@ final class Time implements Quantity
 
     protected static function getInitialUnit(): Unit
     {
-        return Meter::get();
+        return Second::get();
     }
 
     public static function getDefaultProperty(): string

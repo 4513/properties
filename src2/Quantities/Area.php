@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace MiBo\Properties\Quantities;
 
 use MiBo\Properties\Contracts\DerivedQuantity;
-use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Traits\QuantityHelper;
 use MiBo\Properties\Units\Area\SquareMeter;

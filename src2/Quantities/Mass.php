@@ -7,10 +7,10 @@ namespace MiBo\Properties\Quantities;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Traits\QuantityHelper;
-use MiBo\Properties\Units\Length\Meter;
+use MiBo\Properties\Units\Mass\KiloGram;
 
 /**
- * Class Length
+ * Class Mass
  *
  * @package MiBo\Properties\Quantities
  *
@@ -20,7 +20,7 @@ use MiBo\Properties\Units\Length\Meter;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-final class Length implements Quantity
+class Mass implements Quantity
 {
     use QuantityHelper;
 
@@ -29,16 +29,16 @@ final class Length implements Quantity
      */
     public static function getDimensionSymbol(): string
     {
-        return "L";
+        return "t";
     }
 
     protected static function getInitialUnit(): Unit
     {
-        return Meter::get();
+        return KiloGram::get();
     }
 
     public static function getDefaultProperty(): string
     {
-        return \MiBo\Properties\Length::class;
+        return \MiBo\Properties\Mass::class;
     }
 }

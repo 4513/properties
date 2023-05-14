@@ -12,6 +12,7 @@ use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
+use MiBo\Properties\Quantities\Mass;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
 use TypeError;
@@ -39,6 +40,7 @@ class PropertyCalc
         Volume::class,
         Time::class,
         AmountOfSubstance::class,
+        Mass::class,
     ];
 
     /**
