@@ -19,7 +19,7 @@ use const PHP_FLOAT_DIG;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
- * @template TBase of positive-int
+ * @template TBase of int
  */
 final class Value
 {
@@ -175,7 +175,7 @@ final class Value
             throw new ValueError();
         }
 
-        if (self::$preferInfinity === true && is_infinite($value)) {
+        if (self::$preferInfinity === true && is_float($value) && is_infinite($value)) {
             $this->infinityMode = true;
             $this->values       = [0 => INF];
 
@@ -391,7 +391,7 @@ final class Value
     }
 
     /**
-     * @return positive-int
+     * @return TBase
      */
     public function getBase(): int
     {
@@ -401,11 +401,13 @@ final class Value
     /**
      * Checks that two values have the same base.
      *
-     * @param \MiBo\Properties\Value<TBase> $value Value to compare.
+     * @template TInnerBase of int
+     *
+     * @param \MiBo\Properties\Value<TInnerBase> $value Value to compare.
      *
      * @return void
      *
-     * @phpstan-assert \MiBo\Properties\Value<TBase> $value
+     * @phpstan-assert int-mask-of<TBase> TInnerBase
      */
     protected function checkBaseBeforeOperation(Value $value): void
     {

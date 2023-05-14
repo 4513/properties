@@ -22,12 +22,16 @@ use ValueError;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
- * @extends \MiBo\Properties\Property<\MiBo\Properties\Contracts\NumericalUnit, int|float>
+ * @extends \MiBo\Properties\Property<\MiBo\Properties\Contracts\NumericalUnit, int>
  */
 abstract class NumericalProperty extends Property implements ContractNumericalProperty
 {
     private Value $numericalValue;
 
+    /**
+     * @param float|int|\MiBo\Properties\Value<int> $value
+     * @param \MiBo\Properties\Contracts\Unit $unit
+     */
     public function __construct(float|int|Value $value, Unit $unit)
     {
         $this->numericalValue = $value instanceof Value ? $value : new Value($value);
@@ -69,13 +73,14 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
      *
      * @return static
      */
     public function add(ContractNumericalProperty|float|int $value): static
     {
         if ($value instanceof ContractNumericalProperty) {
+            /** @var \MiBo\Properties\NumericalProperty */
             return PropertyCalc::add($this, $value);
         }
 
@@ -87,13 +92,14 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
      *
      * @return static
      */
     public function subtract(ContractNumericalProperty|float|int $value): static
     {
         if ($value instanceof ContractNumericalProperty) {
+            /** @var \MiBo\Properties\NumericalProperty */
             return PropertyCalc::subtract($this, $value);
         }
 
@@ -105,9 +111,9 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
      *
-     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty<int|float>)
+     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty)
      */
     public function multiply(ContractNumericalProperty|float|int $value): ContractNumericalProperty
     {
@@ -123,9 +129,9 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     /**
      * @inheritDoc
      *
-     * @param \MiBo\Properties\Contracts\NumericalProperty<int|float>|float|int $value
+     * @param \MiBo\Properties\Contracts\NumericalProperty|float|int $value
      *
-     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty<int|float>)
+     * @return ($value is int|float ? static : \MiBo\Properties\Contracts\NumericalProperty)
      */
     public function divide(ContractNumericalProperty|float|int $value): ContractNumericalProperty
     {
@@ -139,7 +145,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     }
 
     /**
-     * @return \MiBo\Properties\Value
+     * @return \MiBo\Properties\Value<int>
      */
     public function getNumericalValue(): Value
     {
