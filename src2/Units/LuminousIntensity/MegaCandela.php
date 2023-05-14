@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace MiBo\Properties\Units\LuminousIntensity;
 
+use MiBo\Properties\Prefixes\Mega;
+
 /**
  * Class MegaCandela
  *
@@ -15,7 +17,7 @@ namespace MiBo\Properties\Units\LuminousIntensity;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-class MegaCandela
+class MegaCandela extends Candela
 {
-
+    use Mega;
 }
