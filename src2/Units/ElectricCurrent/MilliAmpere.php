@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace MiBo\Properties\Units\ElectricCurrent;
 
-use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Prefixes\Milli;
 
 /**
@@ -10,14 +11,13 @@ use MiBo\Properties\Prefixes\Milli;
  *
  * @package MiBo\Properties\Units\ElectricCurrent
  *
- * @since 0.1
+ * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @author Michal Boris <michal.boris@gmail.com>
+ * @since x.x
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 class MilliAmpere extends Ampere
 {
     use Milli;
-
-    /** @inheritdoc */
-    protected static ?Unit $instance = null;
 }

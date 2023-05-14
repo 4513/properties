@@ -7,7 +7,7 @@ namespace MiBo\Properties;
 use MiBo\Properties\Traits\InternationSystemProperty;
 
 /**
- * Class Time
+ * Class ElectricCurrent
  *
  * @package MiBo\Properties
  *
@@ -17,22 +17,22 @@ use MiBo\Properties\Traits\InternationSystemProperty;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-class Time extends NumericalProperty
+class ElectricCurrent extends NumericalProperty
 {
     use InternationSystemProperty;
 
     /**
      * @inheritDoc
      *
-     * @return class-string<\MiBo\Properties\Quantities\Time>
+     * @return class-string<\MiBo\Properties\Quantities\ElectricCurrent>
      */
     public static function getQuantityClassName(): string
     {
-        return Quantities\Time::class;
+        return Quantities\ElectricCurrent::class;
     }
 
     public static function getDefaultISUnit(): string
     {
-        return "Second";
+        return "Ampere";
     }
 }

@@ -11,6 +11,7 @@ use MiBo\Properties\Contracts\NumericalProperty;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
+use MiBo\Properties\Quantities\ElectricCurrent;
 use MiBo\Properties\Quantities\Length;
 use MiBo\Properties\Quantities\Mass;
 use MiBo\Properties\Quantities\Time;
@@ -41,6 +42,7 @@ class PropertyCalc
         Time::class,
         AmountOfSubstance::class,
         Mass::class,
+        ElectricCurrent::class,
     ];
 
     /**
