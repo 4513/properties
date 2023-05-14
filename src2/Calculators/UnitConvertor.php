@@ -47,6 +47,18 @@ use MiBo\Properties\Units\Length\Thou;
 use MiBo\Properties\Units\Length\Twip;
 use MiBo\Properties\Units\Length\Yard;
 use MiBo\Properties\Units\Mass\Dalton;
+use MiBo\Properties\Units\Mass\Drachm;
+use MiBo\Properties\Units\Mass\Grain;
+use MiBo\Properties\Units\Mass\Hundedweight;
+use MiBo\Properties\Units\Mass\LongTon;
+use MiBo\Properties\Units\Mass\Ounce;
+use MiBo\Properties\Units\Mass\Pound;
+use MiBo\Properties\Units\Mass\Quarter;
+use MiBo\Properties\Units\Mass\ShortTon;
+use MiBo\Properties\Units\Mass\Slug;
+use MiBo\Properties\Units\Mass\Stone;
+use MiBo\Properties\Units\Mass\Ton;
+use MiBo\Properties\Units\Mass\USHundredweight;
 use MiBo\Properties\Units\Time\Day;
 use MiBo\Properties\Units\Time\Hour;
 use MiBo\Properties\Units\Time\Minute;
@@ -118,7 +130,19 @@ class UnitConvertor
             Yard::class             => 9_144,
         ],
         Mass::class   => [
-            Dalton::class => 1_660_539_040,
+            Dalton::class          => 1_660_539_040,
+            Drachm::class          => 17_718_451_953_125,
+            Grain::class           => 6_479_891,
+            Hundedweight::class    => 5_080_234_544,
+            LongTon::class         => 10_160_469_088,
+            Ounce::class           => 28_349_523_125,
+            Pound::class           => 45_359_237,
+            Quarter::class         => 1_270_058_636,
+            ShortTon::class        => 90_718_474,
+            Slug::class            => 1_459_390_294,
+            Stone::class           => 650_029_318,
+            Ton::class             => 1_0160_469_088,
+            USHundredweight::class => 45_359_237,
         ],
         Time::class   => [
             Day::class    => 864_000,
