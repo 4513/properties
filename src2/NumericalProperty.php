@@ -6,7 +6,12 @@ namespace MiBo\Properties;
 
 use MiBo\Properties\Calculators\Math;
 use MiBo\Properties\Calculators\PropertyCalc;
+use MiBo\Properties\Calculators\UnitConvertor;
 use MiBo\Properties\Contracts\NumericalProperty as ContractNumericalProperty;
+use MiBo\Properties\Contracts\NumericalUnit;
+use MiBo\Properties\Contracts\Property as PropertyContract;
+use MiBo\Properties\Contracts\Unit;
+use ValueError;
 
 /**
  * Class NumericalProperty
@@ -23,6 +28,37 @@ use MiBo\Properties\Contracts\NumericalProperty as ContractNumericalProperty;
  */
 abstract class NumericalProperty extends Property implements ContractNumericalProperty
 {
+    private Value $numericalValue;
+
+    public function __construct(float|int|Value $value, Unit $unit)
+    {
+        $this->numericalValue = $value instanceof Value ? $value : new Value($value);
+
+        parent::__construct($this->numericalValue->getValue(), $unit);
+    }
+
+    public function getValue(): int|float
+    {
+        return $this->numericalValue->getValue($this->getUnit()->getMultiplier());
+    }
+
+    public function getBaseValue(): int|float
+    {
+        return $this->numericalValue->getValue($this->getUnit()->getMultiplier());
+    }
+
+    public function convertToUnit(Unit $unit): PropertyContract
+    {
+        if (!$unit instanceof NumericalUnit) {
+            throw new ValueError();
+        }
+
+        $this->numericalValue = UnitConvertor::convert($this, $unit);
+        $this->unit           = $unit;
+
+        return $this;
+    }
+
     /**
      * @inheritDoc
      *
@@ -32,7 +68,13 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
      */
     public function add(ContractNumericalProperty|float|int $value): static
     {
-        return $this->setValue(PropertyCalc::add($this, $value));
+        if ($value instanceof ContractNumericalProperty) {
+            return PropertyCalc::add($this, $value);
+        }
+
+        $this->numericalValue->add($value);
+
+        return $this;
     }
 
     /**
@@ -44,7 +86,13 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
      */
     public function subtract(ContractNumericalProperty|float|int $value): static
     {
-        return $this->setValue(PropertyCalc::subtract($this, $value));
+        if ($value instanceof ContractNumericalProperty) {
+            return PropertyCalc::subtract($this, $value);
+        }
+
+        $this->numericalValue->subtract($value);
+
+        return $this;
     }
 
     /**
@@ -60,7 +108,9 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
             return PropertyCalc::multiply($this, $value);
         }
 
-        return $this->setValue(Math::product($this->getValue(), $value));
+        $this->numericalValue->multiply($value);
+
+        return $this;
     }
 
     /**
@@ -76,30 +126,24 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
             return PropertyCalc::divide($this, $value);
         }
 
-        return $this->setValue(Math::ratio($this->getValue(), $value));
+        $this->numericalValue->divide($value);
+
+        return $this;
     }
 
     /**
-     * @inheritDoc
+     * @return \MiBo\Properties\Value
      */
-    public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): static
+    public function getNumericalValue(): Value
     {
-        return $this->setValue(Math::round($this->getValue(), $precision, $mode));
+        return $this->numericalValue;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function ceil(): static
+    public function __debugInfo(): ?array
     {
-        return $this->setValue(Math::ceil($this->getValue()));
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function floor(): static
-    {
-        return $this->setValue(Math::floor($this->getValue()));
+        return [
+            "value" => $this->getValue(),
+            "unit"  => $this->getUnit(),
+        ];
     }
 }

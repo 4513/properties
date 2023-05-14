@@ -43,13 +43,9 @@ class Chain implements NumericalUnit
     use UnitHelper;
     use UnitForLength;
 
-    protected float $multiplier = 201_168 * (10 ** -4);
+    protected int $multiplier = -4;
 
     protected string $name = "chain";
 
     protected string $symbol = "ch";
-
-    final protected function __construct()
-    {
-    }
 }

@@ -37,9 +37,9 @@ trait Zetta
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** 21;
+        return 21;
     }
 
     /**

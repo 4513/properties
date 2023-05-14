@@ -44,9 +44,5 @@ class Digit implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected int|float $multiplier = 19 * (10 ** -3);
-
-    final protected function __construct()
-    {
-    }
+    protected int|float $multiplier = -3;
 }

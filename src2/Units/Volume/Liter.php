@@ -42,9 +42,5 @@ class Liter implements NumericalUnit
 
     protected string $symbol = "l";
 
-    protected float $multiplier = 10 ** -3;
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -3;
 }

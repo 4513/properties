@@ -48,81 +48,68 @@ class PropertyCalc
      */
     public static array $productResolvers = [];
 
-    protected static function merge(bool $add = true, int|float|NumericalProperty ...$properties): int|float
+    protected static function merge(bool $add = true, NumericalProperty ...$properties): NumericalProperty
     {
         $quantity = null;
-        $toUnit   = null;
-        $sum      = 0;
-        $initial  = null;
+        $mainProp = null;
 
         foreach ($properties as $property) {
-            if ($initial === null) {
-                if ($property instanceof NumericalProperty) {
-                    $quantity = $property::getQuantityClassName();
-                    $toUnit   = $property->getUnit();
-                    $initial  = $property->getValue();
-                } else {
-                    $initial = $property;
-                }
+            if ($quantity === null) {
+                $quantity = $property::getQuantityClassName();
+                $property->getNumericalValue()->multiply(1, $property->getUnit()->getMultiplier());
+                $mainProp = $property;
 
                 continue;
             }
 
-            if ($property instanceof NumericalProperty) {
-                if ($quantity === null) {
-                    $quantity = $property::getQuantityClassName();
-                } else if ($property::getQuantityClassName() !== $quantity) {
-                    throw new InvalidArgumentException('Cannot add different quantities.');
-                }
+            if ($property::getQuantityClassName() !== $quantity) {
+                throw new InvalidArgumentException('Cannot merge different quantities.');
+            }
 
-                if ($toUnit === null) {
-                    $toUnit = $property->getUnit();
-                }
-
-                $sum += $property->convertToUnit($toUnit)->getValue();
+            if ($add) {
+                $mainProp->getNumericalValue()
+                    ->add($property->getNumericalValue(), $property->getUnit()->getMultiplier());
             } else {
-                $sum += $property;
+                $mainProp->getNumericalValue()
+                    ->subtract($property->getNumericalValue(), $property->getUnit()->getMultiplier());
             }
         }
 
-        // No Property was passed, all the numbers were simple integers or floats.
-        if ($quantity === null) {
-            return $add ? $initial + $sum : $initial - $sum;
-        }
-
-        return $add ? $initial + $sum : $initial - $sum;
+        return $mainProp;
     }
 
-    public static function add(int|float|NumericalProperty $addend, int|float|NumericalProperty ...$addends): int|float
+    /**
+     * @param \MiBo\Properties\Contracts\NumericalProperty $addend
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$addends
+     *
+     * @return \MiBo\Properties\NumericalProperty
+     */
+    public static function add(NumericalProperty $addend, NumericalProperty ...$addends): NumericalProperty
     {
         return self::merge(true, $addend, ...$addends);
     }
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $minuend
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty ...$subtrahends
+     * @param \MiBo\Properties\Contracts\NumericalProperty $minuend
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$subtrahends
      *
-     * @return int|float
+     * @return \MiBo\Properties\NumericalProperty
      */
-    public static function subtract(
-        int|float|NumericalProperty $minuend,
-        int|float|NumericalProperty ...$subtrahends
-    ): int|float
+    public static function subtract(NumericalProperty $minuend, NumericalProperty ...$subtrahends): NumericalProperty
     {
         return self::merge(false, $minuend, ...$subtrahends);
     }
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $multiplier
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty ...$multiplicands
+     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplier
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$multiplicands
      *
-     * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($multiplier is int|float ? ($multiplicands is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return \MiBo\Properties\Contracts\NumericalProperty
      */
     public static function multiply(
-        int|float|NumericalProperty $multiplier,
-        int|float|NumericalProperty ...$multiplicands
-    ): int|float|NumericalProperty
+        NumericalProperty $multiplier,
+        NumericalProperty ...$multiplicands
+    ): NumericalProperty
     {
         foreach ($multiplicands as $multiplicand) {
             $multiplier = self::multiplySingle($multiplier, $multiplicand);
@@ -132,16 +119,15 @@ class PropertyCalc
     }
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $dividend
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty ...$divisors
+     * @param \MiBo\Properties\Contracts\NumericalProperty $dividend
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$divisors
      *
-     * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($dividend is int|float ? ($divisors is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return \MiBo\Properties\Contracts\NumericalProperty
      */
     public static function divide(
-        int|float|NumericalProperty $dividend,
-        int|float|NumericalProperty ...$divisors
-    ): int|float|NumericalProperty
+        NumericalProperty $dividend,
+        NumericalProperty ...$divisors
+    ): NumericalProperty
     {
         foreach ($divisors as $divisor) {
             $dividend = self::divideSingle($dividend, $divisor);
@@ -151,36 +137,19 @@ class PropertyCalc
     }
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $dividend
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $divisor
+     * @param \MiBo\Properties\Contracts\NumericalProperty $dividend
+     * @param \MiBo\Properties\Contracts\NumericalProperty $divisor
      *
-     * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($dividend is int|float ? ($divisor is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
+     * @return \MiBo\Properties\Contracts\NumericalProperty
      */
     protected static function divideSingle(
-        int|float|NumericalProperty $dividend,
-        int|float|NumericalProperty $divisor
-    ): int|float|NumericalProperty
+        NumericalProperty $dividend,
+        NumericalProperty $divisor
+    ): NumericalProperty
     {
         self::checkDivisor($divisor);
 
-        if ($dividend instanceof NumericalProperty) {
-            if ($divisor instanceof NumericalProperty
-                && $dividend::getQuantityClassName() === $divisor::getQuantityClassName()) {
-
-                return self::divideSingle(
-                    $dividend->getValue(), $divisor->convertToUnit($dividend->getUnit())->getValue()
-                );
-            }
-
-            return $divisor instanceof NumericalProperty ?
-                self::mergeQuantities($dividend, $divisor, false) :
-                new ($dividend::class)($dividend->getValue() / $divisor, $dividend->getUnit());
-        }
-
-        return $divisor instanceof NumericalProperty ?
-            new ($divisor::class)($dividend / $divisor->getValue(), $divisor->getUnit()) :
-            $dividend / $divisor;
+        return self::mergeQuantities($dividend, $divisor, false);
     }
 
     protected static function checkDivisor(int|float|NumericalProperty $divisor): void
@@ -195,35 +164,19 @@ class PropertyCalc
     }
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $multiplier
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $multiplicand
-     *
-     * @phpcs:ignore Generic.Files.LineLength.TooLong
-     * @return ($multiplier is int|float ? ($multiplicand is int|float ? int|float : \MiBo\Properties\Contracts\NumericalProperty) : \MiBo\Properties\Contracts\NumericalProperty)
-     */
-    protected static function multiplySingle(
-        int|float|NumericalProperty $multiplier,
-        int|float|NumericalProperty $multiplicand
-    ): int|float|NumericalProperty
-    {
-        if ($multiplier instanceof NumericalProperty) {
-            return $multiplicand instanceof NumericalProperty ?
-                self::mergeQuantities($multiplier, $multiplicand) :
-                new ($multiplier::class)($multiplier->getValue() * $multiplicand, $multiplier->getUnit());
-        }
-
-        return $multiplicand instanceof NumericalProperty ?
-            new ($multiplicand::class)($multiplier * $multiplicand->getValue(), $multiplicand->getUnit()) :
-            $multiplier * $multiplicand;
-    }
-
-    /**
-     * @param \MiBo\Properties\Contracts\NumericalProperty $first
-     * @param \MiBo\Properties\Contracts\NumericalProperty $second
-     * @param bool $toProduct
+     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplier
+     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplicand
      *
      * @return \MiBo\Properties\Contracts\NumericalProperty
      */
+    protected static function multiplySingle(
+        NumericalProperty $multiplier,
+        NumericalProperty $multiplicand
+    ): NumericalProperty
+    {
+        return self::mergeQuantities($multiplier, $multiplicand);
+    }
+
     protected static function mergeQuantities(
         NumericalProperty $first,
         NumericalProperty $second,
@@ -311,9 +264,11 @@ class PropertyCalc
                 $first  = $first->convertToUnit($firstQuantity::getDefaultUnit());
                 $second = $second->convertToUnit($secondQuantity::getDefaultUnit());
 
+                $value = $first->getNumericalValue();
+
                 return $toProduct ?
-                    new ($property)($first->getValue() * $second->getValue(), $unit::get()) :
-                    new ($property)($first->getValue() / $second->getValue(), $unit::get());
+                    new ($property)($value->multiply($second->getNumericalValue()), $unit::get()) :
+                    new ($property)($value->divide($second->getNumericalValue()), $unit::get());
             }
         }
 

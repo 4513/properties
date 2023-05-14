@@ -36,9 +36,9 @@ trait Atto
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** -18;
+        return -18;
     }
 
     /**

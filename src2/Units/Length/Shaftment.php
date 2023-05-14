@@ -44,9 +44,5 @@ class Shaftment implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 1_524 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

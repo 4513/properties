@@ -40,9 +40,9 @@ trait Peta
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** 15;
+        return 15;
     }
 
     /**

@@ -44,9 +44,5 @@ class Mile implements NumericalUnit
 
     protected string $symbol = "mi";
 
-    protected float $multiplier = 1_609_334 * (10 ** -3);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -3;
 }

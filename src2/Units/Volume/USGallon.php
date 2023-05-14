@@ -42,9 +42,5 @@ class USGallon implements NumericalUnit
 
     protected string $symbol = "gal";
 
-    protected float $multiplier = 3_785_411_784 * (10 ** -12);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -12;
 }

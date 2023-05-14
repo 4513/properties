@@ -61,9 +61,5 @@ class Hand implements NumericalUnit
 
     protected string $symbol = "hh";
 
-    protected int|float $multiplier = 1_016 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int|float $multiplier = -4;
 }

@@ -44,9 +44,5 @@ class Line implements NumericalUnit
 
     protected string $symbol = "l";
 
-    protected int|float $multiplier = 655 * (10 ** -5);
-
-    final protected function __construct()
-    {
-    }
+    protected int|float $multiplier = -5;
 }

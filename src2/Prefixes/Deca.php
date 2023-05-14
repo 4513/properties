@@ -51,9 +51,9 @@ trait Deca
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** 1;
+        return 1;
     }
 
     /**

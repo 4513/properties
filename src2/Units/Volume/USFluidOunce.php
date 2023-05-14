@@ -42,9 +42,5 @@ class USFluidOunce implements NumericalUnit
 
     protected string $symbol = "fl oz";
 
-    protected float $multiplier = 295_735_295_625 * (10 ** -16);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -16;
 }

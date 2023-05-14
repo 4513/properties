@@ -42,9 +42,5 @@ class ImperialPint implements NumericalUnit
 
     protected string $symbol = "pt";
 
-    protected float $multiplier = 56_826_125 * (10 ** -11);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -11;
 }

@@ -30,7 +30,7 @@ trait Yobi
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
         return 2 ** 80;
     }

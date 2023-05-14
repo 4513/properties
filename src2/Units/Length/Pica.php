@@ -44,9 +44,5 @@ class Pica implements NumericalUnit
 
     protected string $symbol = "P";
 
-    protected float $multiplier = 4_233 * (10 ** -6);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -6;
 }

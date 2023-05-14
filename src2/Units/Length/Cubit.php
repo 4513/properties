@@ -43,9 +43,5 @@ class Cubit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 8_866 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

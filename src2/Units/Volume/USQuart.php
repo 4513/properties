@@ -42,9 +42,5 @@ class USQuart implements NumericalUnit
 
     protected string $symbol = "qt";
 
-    protected float $multiplier = 946_352_946 * (10 ** -12);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -12;
 }

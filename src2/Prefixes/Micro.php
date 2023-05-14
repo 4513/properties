@@ -47,9 +47,9 @@ trait Micro
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** -6;
+        return -6;
     }
 
     /**

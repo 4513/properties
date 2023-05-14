@@ -42,9 +42,5 @@ class AcreFoot implements NumericalUnit
 
     protected string $symbol = "ac⋅ft";
 
-    protected float $multiplier = 1_233.5;
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -1;
 }

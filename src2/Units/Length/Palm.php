@@ -44,9 +44,5 @@ class Palm implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 762 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

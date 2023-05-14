@@ -42,9 +42,5 @@ class Rood implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 1_011_714 * (10 ** -3);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -3;
 }

@@ -44,9 +44,5 @@ class Rod implements NumericalUnit
 
     protected string $symbol = "rd";
 
-    protected float $multiplier = 50_292 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

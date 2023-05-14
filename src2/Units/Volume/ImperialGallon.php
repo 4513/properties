@@ -42,9 +42,5 @@ class ImperialGallon implements NumericalUnit
 
     protected string $symbol = "gal";
 
-    protected float $multiplier = 454_609 * (10 ** -8);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -8;
 }

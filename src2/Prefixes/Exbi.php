@@ -30,7 +30,7 @@ trait Exbi
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
         return 2 ** 60;
     }

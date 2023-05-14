@@ -78,9 +78,5 @@ class Foot implements NumericalUnit
 
     protected string $symbol = "ft";
 
-    protected float $multiplier = 3_048 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

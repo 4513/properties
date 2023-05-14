@@ -48,9 +48,5 @@ class Barleycorn implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 84_667 * (10 ** -7);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -7;
 }

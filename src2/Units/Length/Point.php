@@ -44,9 +44,5 @@ class Point implements NumericalUnit
 
     protected string $symbol = "rd";
 
-    protected float $multiplier = 352_778 * (10 ** -9);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -9;
 }

@@ -41,10 +41,4 @@ class SurveyTownship implements NumericalUnit
     protected string $name = "survey township";
 
     protected string $symbol = "twp.";
-
-    protected int $multiplier = 93_239_930;
-
-    final protected function __construct()
-    {
-    }
 }

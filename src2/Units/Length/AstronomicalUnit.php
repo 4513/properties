@@ -51,13 +51,7 @@ class AstronomicalUnit implements NumericalUnit
     use UnitHelper;
     use UnitForLength;
 
-    protected int $multiplier = 149_597_870_700;
-
     protected string $name = "astronomical unit";
 
     protected string $symbol = "au";
-
-    final protected function __construct()
-    {
-    }
 }

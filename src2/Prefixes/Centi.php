@@ -42,9 +42,9 @@ trait Centi
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** -2;
+        return -2;
     }
 
     /**

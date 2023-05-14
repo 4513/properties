@@ -52,9 +52,5 @@ class Yard implements NumericalUnit
 
     protected string $symbol = "yd";
 
-    protected float $multiplier = 9_144 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

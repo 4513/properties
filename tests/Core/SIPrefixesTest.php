@@ -48,26 +48,26 @@ class SIPrefixesTest extends TestCase
      */
     public function testPrefixMultiplier(): void
     {
-        $this->assertSame(10**24, Length::YOTTA()->getUnit()->getMultiplier());
-        $this->assertSame(10**21, Length::ZETTA()->getUnit()->getMultiplier());
-        $this->assertSame(10**18, Length::EXA()->getUnit()->getMultiplier());
-        $this->assertSame(10**15, Length::PETA()->getUnit()->getMultiplier());
-        $this->assertSame(10**12, Length::TERA()->getUnit()->getMultiplier());
-        $this->assertSame(10**9, Length::GIGA()->getUnit()->getMultiplier());
-        $this->assertSame(10**6, Length::MEGA()->getUnit()->getMultiplier());
-        $this->assertSame(10**3, Length::KILO()->getUnit()->getMultiplier());
-        $this->assertSame(10**2, Length::HECTO()->getUnit()->getMultiplier());
-        $this->assertSame(10**1, Length::DECA()->getUnit()->getMultiplier());
-        $this->assertSame(10**-1, Length::DECI()->getUnit()->getMultiplier());
-        $this->assertSame(10**-2, Length::CENTI()->getUnit()->getMultiplier());
-        $this->assertSame(10**-3, Length::MILLI()->getUnit()->getMultiplier());
-        $this->assertSame(10**-6, Length::MICRO()->getUnit()->getMultiplier());
-        $this->assertSame(10**-9, Length::NANO()->getUnit()->getMultiplier());
-        $this->assertSame(10**-12, Length::PICO()->getUnit()->getMultiplier());
-        $this->assertSame(10**-15, Length::FEMTO()->getUnit()->getMultiplier());
-        $this->assertSame(10**-18, Length::ATTO()->getUnit()->getMultiplier());
-        $this->assertSame(10**-21, Length::ZEPTO()->getUnit()->getMultiplier());
-        $this->assertSame(10**-24, Length::YOCTO()->getUnit()->getMultiplier());
+        $this->assertSame(24, Length::YOTTA()->getUnit()->getMultiplier());
+        $this->assertSame(21, Length::ZETTA()->getUnit()->getMultiplier());
+        $this->assertSame(18, Length::EXA()->getUnit()->getMultiplier());
+        $this->assertSame(15, Length::PETA()->getUnit()->getMultiplier());
+        $this->assertSame(12, Length::TERA()->getUnit()->getMultiplier());
+        $this->assertSame(9, Length::GIGA()->getUnit()->getMultiplier());
+        $this->assertSame(6, Length::MEGA()->getUnit()->getMultiplier());
+        $this->assertSame(3, Length::KILO()->getUnit()->getMultiplier());
+        $this->assertSame(2, Length::HECTO()->getUnit()->getMultiplier());
+        $this->assertSame(1, Length::DECA()->getUnit()->getMultiplier());
+        $this->assertSame(-1, Length::DECI()->getUnit()->getMultiplier());
+        $this->assertSame(-2, Length::CENTI()->getUnit()->getMultiplier());
+        $this->assertSame(-3, Length::MILLI()->getUnit()->getMultiplier());
+        $this->assertSame(-6, Length::MICRO()->getUnit()->getMultiplier());
+        $this->assertSame(-9, Length::NANO()->getUnit()->getMultiplier());
+        $this->assertSame(-12, Length::PICO()->getUnit()->getMultiplier());
+        $this->assertSame(-15, Length::FEMTO()->getUnit()->getMultiplier());
+        $this->assertSame(-18, Length::ATTO()->getUnit()->getMultiplier());
+        $this->assertSame(-21, Length::ZEPTO()->getUnit()->getMultiplier());
+        $this->assertSame(-24, Length::YOCTO()->getUnit()->getMultiplier());
     }
 
     /**

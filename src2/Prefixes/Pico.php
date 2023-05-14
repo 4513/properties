@@ -42,9 +42,9 @@ trait Pico
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** -12;
+        return -12;
     }
 
     /**

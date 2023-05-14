@@ -38,9 +38,9 @@ trait Yotta
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** 24;
+        return 24;
     }
 
     /**

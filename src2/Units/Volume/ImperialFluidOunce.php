@@ -42,9 +42,5 @@ class ImperialFluidOunce implements NumericalUnit
 
     protected string $symbol = "fl oz";
 
-    protected float $multiplier = 284_130_625 * (10 ** -13);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -13;
 }

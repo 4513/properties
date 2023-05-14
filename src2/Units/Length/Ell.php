@@ -44,9 +44,5 @@ class Ell implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 1_143 * (10 ** -3);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -3;
 }

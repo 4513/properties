@@ -23,15 +23,6 @@ class Length extends NumericalProperty
     use InternationSystemProperty;
 
     /**
-     * @param float|int $value
-     * @param \MiBo\Properties\Contracts\NumericalUnit $unit
-     */
-    public function __construct(float|int $value, Unit $unit)
-    {
-        parent::__construct($value, $unit);
-    }
-
-    /**
      * @inheritDoc
      */
     public static function getDefaultISUnit(): string

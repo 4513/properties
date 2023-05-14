@@ -44,9 +44,5 @@ class Barrel implements NumericalUnit
 
     protected string $symbol = "bbl";
 
-    protected float $multiplier = 119_240_471_196 * (10 ** -12);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -12;
 }

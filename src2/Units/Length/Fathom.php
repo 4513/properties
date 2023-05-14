@@ -44,9 +44,5 @@ class Fathom implements NumericalUnit
 
     protected string $symbol = "ftm";
 
-    protected float $multiplier = 18_288 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

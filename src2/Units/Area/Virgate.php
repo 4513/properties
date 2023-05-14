@@ -42,9 +42,5 @@ class Virgate implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected int $multiplier = 120 * (10 ** 3);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = 3;
 }

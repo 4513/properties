@@ -44,9 +44,5 @@ class Link implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 2_012 * (10 ** -4);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -4;
 }

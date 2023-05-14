@@ -42,9 +42,5 @@ class USPint implements NumericalUnit
 
     protected string $symbol = "pt";
 
-    protected float $multiplier = 473_176_473 * (10 ** -12);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -12;
 }

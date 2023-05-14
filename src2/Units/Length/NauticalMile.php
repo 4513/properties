@@ -43,10 +43,4 @@ class NauticalMile implements NumericalUnit
     protected string $name = "nautical mile";
 
     protected string $symbol = "NM";
-
-    protected int $multiplier = 1_852;
-
-    final protected function __construct()
-    {
-    }
 }

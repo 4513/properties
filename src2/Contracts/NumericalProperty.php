@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace MiBo\Properties\Contracts;
 
+use MiBo\Properties\Value;
+
 /**
  * Interface NumericalProperty
  *
@@ -48,24 +50,6 @@ interface NumericalProperty extends Property
     public function divide(int|float|NumericalProperty $value): NumericalProperty;
 
     /**
-     * @param int $precision
-     * @param int<1, 4> $mode
-     *
-     * @return static
-     */
-    public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): static;
-
-    /**
-     * @return static
-     */
-    public function ceil(): static;
-
-    /**
-     * @return static
-     */
-    public function floor(): static;
-
-    /**
      * @inheritDoc
      *
      * @return int|float
@@ -78,4 +62,9 @@ interface NumericalProperty extends Property
      * @return static
      */
     public function convertToUnit(Unit $unit): Property;
+
+    /**
+     * @return \MiBo\Properties\Value
+     */
+    public function getNumericalValue(): Value;
 }

@@ -41,9 +41,9 @@ trait Giga
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** 9;
+        return 9;
     }
 
     /**

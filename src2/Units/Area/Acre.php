@@ -42,9 +42,5 @@ class Acre implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 4_046_873 * (10 ** -3);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -3;
 }

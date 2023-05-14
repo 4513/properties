@@ -28,6 +28,7 @@ trait UnitHelper
     public static function get(): static
     {
         if (!key_exists(static::class, self::$instances)) {
+            /** @phpstan-ignore-next-line static construct */
             self::$instances[static::class] = new static();
         }
 
@@ -37,12 +38,12 @@ trait UnitHelper
     /**
      * @inheritDoc
      */
-    public function getMultiplier(): int|float
+    public function getMultiplier(): int
     {
-        $multiplier = $this->multiplier ?? 1;
+        $multiplier = $this->multiplier ?? 0;
 
         if (method_exists($this, "getMultiplierPrefix")) {
-            $multiplier *= $this->getMultiplierPrefix();
+            $multiplier += $this->getMultiplierPrefix();
         }
 
         return $multiplier;

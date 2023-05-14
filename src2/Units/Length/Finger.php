@@ -44,9 +44,5 @@ class Finger implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected int|float $multiplier = 1_905 * (10 ** -5);
-
-    final protected function __construct()
-    {
-    }
+    protected int|float $multiplier = -5;
 }

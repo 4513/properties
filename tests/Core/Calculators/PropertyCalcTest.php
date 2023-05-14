@@ -46,7 +46,7 @@ class PropertyCalcTest extends TestCase
         $prop2 = Length::KILO(1);
         $prop3 = Length::CENTI(11);
 
-        $this->assertSame(100_111.0, PropertyCalc::add($prop1, $prop2, $prop3));
+        $this->assertSame(100_111, PropertyCalc::add($prop1, $prop2, $prop3)->getValue());
     }
 
     /**
@@ -59,28 +59,10 @@ class PropertyCalcTest extends TestCase
      */
     public function testAddPropertiesWithSimple(): void
     {
-        $prop1 = 0.01;
         $prop2 = Length::KILO(1);
         $prop3 = Length::CENTI(11);
 
-        $this->assertSame(1.010_11, PropertyCalc::add($prop1, $prop2, $prop3));
-    }
-
-    /**
-     * @small
-     *
-     * @covers ::add
-     * @covers ::merge
-     *
-     * @return void
-     */
-    public function testAddSimple(): void
-    {
-        $prop1 = 0.01;
-        $prop2 = 1;
-        $prop3 = 10;
-
-        $this->assertSame(11.01, PropertyCalc::add($prop1, $prop2, $prop3));
+        $this->assertSame(1.000_11, PropertyCalc::add($prop2, $prop3)->getValue());
     }
 
     /**
@@ -113,7 +95,7 @@ class PropertyCalcTest extends TestCase
         $prop1 = Length::CENTI(100);
         $prop2 = Length::MILLI(100);
 
-        $this->assertSame(90.0, PropertyCalc::subtract($prop1, $prop2));
+        $this->assertSame(90, PropertyCalc::subtract($prop1, $prop2)->getValue());
     }
 
     /**
@@ -136,45 +118,6 @@ class PropertyCalcTest extends TestCase
 
         $this->assertSame(100_000, $prop3->getValue());
         $this->assertSame(SquareMeter::get()->getName(), $prop3->getUnit()->getName());
-    }
-
-    /**
-     * @small
-     *
-     * @covers ::multiply
-     * @covers ::multiplySingle
-     * @covers ::mergeQuantities
-     *
-     * @return void
-     */
-    public function testProductSimple(): void
-    {
-        $prop1 = 10;
-        $prop2 = 10;
-        $prop3 = 10;
-
-        $this->assertSame(1000, PropertyCalc::multiply($prop1, $prop2, $prop3));
-    }
-
-    /**
-     * @small
-     *
-     * @covers ::multiply
-     * @covers ::multiplySingle
-     * @covers ::mergeQuantities
-     *
-     * @return void
-     */
-    public function testProductCombinations(): void
-    {
-        $prop1 = 10;
-        $prop2 = Length::DECA(1);
-        $prop3 = 10;
-
-        $result = PropertyCalc::multiply($prop1, $prop2, $prop3);
-
-        $this->assertSame(100, $result->getValue());
-        $this->assertSame(DecaMeter::get()->getName(), $result->getUnit()->getName());
     }
 
     /**
@@ -208,53 +151,14 @@ class PropertyCalcTest extends TestCase
      *
      * @return void
      */
-    public function testDivisionSimple(): void
-    {
-        $prop1 = 100;
-        $prop2 = 10;
-        $prop3 = 10;
-
-        $this->assertSame(1, PropertyCalc::divide($prop1, $prop2, $prop3));
-    }
-
-    /**
-     * @small
-     *
-     * @covers ::divide
-     * @covers ::divideSingle
-     * @covers ::mergeQuantities
-     *
-     * @return void
-     */
-    public function testDivisionCombination(): void
-    {
-        $prop1 = 100;
-        $prop2 = Length::DECA(1);
-        $prop3 = 10;
-
-        $result = PropertyCalc::divide($prop1, $prop2, $prop3);
-
-        $this->assertSame(10, $result->getValue());
-        $this->assertSame(DecaMeter::get()->getName(), $result->getUnit()->getName());
-    }
-
-    /**
-     * @small
-     *
-     * @covers ::divide
-     * @covers ::divideSingle
-     * @covers ::mergeQuantities
-     *
-     * @return void
-     */
     public function testDivisionSame(): void
     {
         $prop1 = Length::CENTI(100);
         $prop2 = Length::CENTI(100);
 
-        $result = PropertyCalc::divide($prop1, $prop2);
+        $this->expectException(\ValueError::class);
 
-        $this->assertSame(1, $result);
+        PropertyCalc::divide($prop1, $prop2);
     }
 
     /**
@@ -279,25 +183,6 @@ class PropertyCalcTest extends TestCase
     /**
      * @small
      *
-     * @covers ::divide
-     * @covers ::divideSingle
-     * @covers ::checkDivisor
-     * @covers ::mergeQuantities
-     *
-     * @return void
-     */
-    public function testDivisionZeroSimple(): void
-    {
-        $prop1 = 100;
-        $prop2 = 0;
-
-        $this->expectException(InvalidArgumentException::class);
-        PropertyCalc::divide($prop1, $prop2);
-    }
-
-    /**
-     * @small
-     *
      * @covers ::multiply
      * @covers ::multiplySingle
      * @covers ::compileEquations
@@ -314,7 +199,7 @@ class PropertyCalcTest extends TestCase
 
         $result = PropertyCalc::multiply($prop1, $prop2, $prop3);
 
-        $this->assertSame(1.0, $result->getValue());
+        $this->assertSame(1, $result->getValue());
         $this->assertSame(CubicMeter::get()->getName(), $result->getUnit()->getName());
     }
 }

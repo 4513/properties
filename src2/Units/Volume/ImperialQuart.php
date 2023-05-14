@@ -42,9 +42,5 @@ class ImperialQuart implements NumericalUnit
 
     protected string $symbol = "qt";
 
-    protected float $multiplier = 11_365_225 * (10 ** -10);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -10;
 }

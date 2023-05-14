@@ -65,7 +65,7 @@ class UnitTest extends TestCase
         $unit = Meter::get();
 
         $this->assertSame("m", $unit->getSymbol());
-        $this->assertSame(1.0, (float) $unit->getMultiplier());
+        $this->assertSame(0, $unit->getMultiplier());
         $this->assertSame("meter", $unit->getName());
         $this->assertSame(Length::class, $unit->getQuantityClassName());
         $this->assertTrue($unit->isMetric());

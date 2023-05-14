@@ -48,9 +48,5 @@ class Thou implements NumericalUnit
 
     protected string $symbol = "th";
 
-    protected float $multiplier = 254 * (10 ** -7);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -7;
 }

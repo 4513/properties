@@ -44,9 +44,5 @@ class Nail implements NumericalUnit
 
     protected string $symbol = "";
 
-    protected float $multiplier = 5_715 * (10 ** -5);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -5;
 }

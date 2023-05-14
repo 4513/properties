@@ -45,9 +45,9 @@ trait Milli
     /**
      * @inheritdoc
      */
-    protected function getMultiplierPrefix(): float|int
+    protected function getMultiplierPrefix(): int
     {
-        return 10 ** -3;
+        return -3;
     }
 
     /**

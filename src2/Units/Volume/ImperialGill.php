@@ -42,9 +42,5 @@ class ImperialGill implements NumericalUnit
 
     protected string $symbol = "gi";
 
-    protected float $multiplier = 1_420_653_125 * (10 ** -13);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -13;
 }

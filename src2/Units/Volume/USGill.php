@@ -42,9 +42,5 @@ class USGill implements NumericalUnit
 
     protected string $symbol = "gi";
 
-    protected float $multiplier = 11_829_411_825 * (10 ** -15);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -15;
 }

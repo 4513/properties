@@ -44,9 +44,5 @@ class Cable implements NumericalUnit
 
     protected string $symbol = "cb";
 
-    protected float $multiplier = 219_456 * (10 ** -3);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -3;
 }

@@ -30,7 +30,7 @@ abstract class Property implements PropertyContract
     private int|float $value;
 
     /** @var TUnit */
-    private Unit $unit;
+    protected Unit $unit;
 
     /**
      * @param int|float $value
@@ -124,7 +124,7 @@ abstract class Property implements PropertyContract
             throw new \ValueError();
         }
 
-        $this->value = $this->getBaseValue() / $unit->getMultiplier();
+        $this->value = $this->getBaseValue() * 10 ** $unit->getMultiplier();
 
         /** @phpstan-ignore-next-line */
         $this->unit = $unit;

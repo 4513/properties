@@ -44,9 +44,5 @@ class Furlong implements NumericalUnit
 
     protected string $symbol = "fur";
 
-    protected float $multiplier = 201_168 * (10 ** -3);
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = -3;
 }

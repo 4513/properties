@@ -41,10 +41,4 @@ class Section implements NumericalUnit
     protected string $name = "section";
 
     protected string $symbol = "";
-
-    protected int $multiplier = 2_589_998;
-
-    final protected function __construct()
-    {
-    }
 }

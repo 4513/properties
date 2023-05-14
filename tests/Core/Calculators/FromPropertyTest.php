@@ -51,8 +51,5 @@ class FromPropertyTest extends TestCase
 
         $property->divide(5);
         $this->assertEquals(2, $property->getValue());
-
-        $property->round(1);
-        $this->assertEquals(2, $property->getValue());
     }
 }

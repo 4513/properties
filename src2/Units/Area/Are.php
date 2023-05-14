@@ -42,9 +42,5 @@ class Are implements NumericalUnit
 
     protected string $symbol = "a";
 
-    protected float $multiplier = 10 ** 2;
-
-    final protected function __construct()
-    {
-    }
+    protected int $multiplier = 2;
 }

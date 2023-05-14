@@ -54,8 +54,4 @@ class Meter implements NumericalUnit
     protected string $name = "meter";
 
     protected string $symbol = "m";
-
-    final protected function __construct()
-    {
-    }
 }
