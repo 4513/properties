@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Prefixes;
 
-use MiBo\Properties\Traits\UnitHelper;
-
 /**
  * Trait Atto
  *
@@ -19,14 +17,18 @@ use MiBo\Properties\Traits\UnitHelper;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 trait Atto
 {
     /**
-     * @inheritdoc
+     * Returns symbol prefix.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
+     *
+     * @return string
      */
     protected function getSymbolPrefix(): string
     {
@@ -34,7 +36,11 @@ trait Atto
     }
 
     /**
-     * @inheritdoc
+     * Returns exp size.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getMultiplier
+     *
+     * @return int
      */
     protected function getMultiplierPrefix(): int
     {
@@ -42,7 +48,11 @@ trait Atto
     }
 
     /**
-     * @inheritdoc
+     * Returns prefix.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getName
+     *
+     * @return string
      */
     protected function getNamePrefix(): string
     {

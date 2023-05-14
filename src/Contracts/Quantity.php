@@ -18,7 +18,9 @@ namespace MiBo\Properties\Contracts;
 interface Quantity
 {
     /**
-     * @return string|null
+     * Returns dimension symbol of the Quantity.
+     *
+     * @return string|null Dimension symbol of the Quantity.
      */
     public static function getDimensionSymbol(): ?string;
 
@@ -39,7 +41,9 @@ interface Quantity
     public static function getDefaultUnit(): Unit;
 
     /**
-     * @return class-string<\MiBo\Properties\Contracts\NumericalProperty>
+     * Change a default Property for the Quantity.
+     *
+     * @return class-string<\MiBo\Properties\Contracts\NumericalProperty> The class name of the Property.
      */
     public static function getDefaultProperty(): string;
 }

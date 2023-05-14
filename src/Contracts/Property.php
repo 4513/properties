@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties\Contracts;
 
@@ -11,43 +11,56 @@ namespace MiBo\Properties\Contracts;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
  * @template-covariant TUnit of \MiBo\Properties\Contracts\Unit
+ * @template-covariant TValue of mixed
  */
 interface Property
 {
     /**
-     * @return \MiBo\Properties\Contracts\Unit
+     * Returns the Unit.
+     *
+     * @return TUnit
      */
     public function getUnit(): Unit;
 
     /**
-     * @return class-string<\MiBo\Properties\Contracts\Quantity>
+     * Returns the Quantity class name.
+     *
+     * @return class-string<\MiBo\Properties\Contracts\Quantity> The class name of the Quantity.
      */
     public static function getQuantityClassName(): string;
 
     /**
-     * @return \MiBo\Properties\Contracts\Quantity
+     * Returns the Quantity.
+     *
+     * @return \MiBo\Properties\Contracts\Quantity The Quantity.
      */
     public function getQuantity(): Quantity;
 
     /**
-     * @return mixed
+     * Returns the value.
+     *
+     * @return TValue
      */
     public function getValue(): mixed;
 
     /**
-     * @return mixed
+     * Returns the base value.
+     *
+     * @return TValue
      */
     public function getBaseValue(): mixed;
 
     /**
-     * @param \MiBo\Properties\Contracts\Unit $unit
+     * Returns the value in the given unit.
      *
-     * @return \MiBo\Properties\Contracts\Property<TUnit>
+     * @param \MiBo\Properties\Contracts\Unit $unit The unit.
+     *
+     * @return \MiBo\Properties\Contracts\Property<TUnit> The property in the given unit.
      */
     public function convertToUnit(Unit $unit): Property;
 }

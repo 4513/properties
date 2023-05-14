@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties;
 
-use MiBo\Properties\Calculators\Math;
 use MiBo\Properties\Calculators\PropertyCalc;
 use MiBo\Properties\Calculators\UnitConvertor;
 use MiBo\Properties\Contracts\NumericalProperty as ContractNumericalProperty;
 use MiBo\Properties\Contracts\NumericalUnit;
-use MiBo\Properties\Contracts\Property as PropertyContract;
 use MiBo\Properties\Contracts\Unit;
 use ValueError;
 
@@ -20,7 +18,7 @@ use ValueError;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
@@ -37,17 +35,26 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
         parent::__construct($this->numericalValue->getValue(), $unit);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getValue(): int|float
     {
-        return $this->numericalValue->getValue($this->getUnit()->getMultiplier());
+        return $this->numericalValue->getValue();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getBaseValue(): int|float
     {
         return $this->numericalValue->getValue($this->getUnit()->getMultiplier());
     }
 
-    public function convertToUnit(Unit $unit): PropertyContract
+    /**
+     * @inheritDoc
+     */
+    public function convertToUnit(Unit $unit): NumericalProperty
     {
         if (!$unit instanceof NumericalUnit) {
             throw new ValueError();
@@ -139,11 +146,24 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
         return $this->numericalValue;
     }
 
-    public function __debugInfo(): ?array
+    /**
+     * @return array<string, mixed>
+     */
+    public function __debugInfo(): array
     {
         return [
             "value" => $this->getValue(),
             "unit"  => $this->getUnit(),
         ];
+    }
+
+    /**
+     * Clones the property.
+     *
+     * @return void
+     */
+    public function __clone(): void
+    {
+        $this->numericalValue = clone $this->numericalValue;
     }
 }

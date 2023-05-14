@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Prefixes;
 
-use MiBo\Properties\Traits\UnitHelper;
-
 /**
  * Trait Centi
  *
@@ -32,7 +30,11 @@ use MiBo\Properties\Traits\UnitHelper;
 trait Centi
 {
     /**
-     * @inheritdoc
+     * Returns symbol prefix.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
+     *
+     * @return string
      */
     protected function getSymbolPrefix(): string
     {
@@ -40,7 +42,11 @@ trait Centi
     }
 
     /**
-     * @inheritdoc
+     * Returns exp size.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getMultiplier
+     *
+     * @return int
      */
     protected function getMultiplierPrefix(): int
     {
@@ -48,7 +54,11 @@ trait Centi
     }
 
     /**
-     * @inheritdoc
+     * Returns prefix.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getName
+     *
+     * @return string
      */
     protected function getNamePrefix(): string
     {

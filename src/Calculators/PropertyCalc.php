@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties\Calculators;
 
 use CompileError;
+use DivisionByZeroError;
 use InvalidArgumentException;
 use MiBo\Properties\Contracts\DerivedQuantity;
 use MiBo\Properties\Contracts\NumericalProperty;
@@ -28,7 +29,7 @@ use ValueError;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
@@ -60,6 +61,129 @@ class PropertyCalc
      */
     public static array $productResolvers = [];
 
+    /**
+     * Adds two or more quantities using addition.
+     *
+     * @param \MiBo\Properties\Contracts\NumericalProperty $addend First addend.
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$addends Other addends.
+     *
+     * @return \MiBo\Properties\NumericalProperty Sum of all addends.
+     */
+    public static function add(NumericalProperty $addend, NumericalProperty ...$addends): NumericalProperty
+    {
+        return self::merge(true, $addend, ...$addends);
+    }
+
+    /**
+     * Subtracts two or more quantities using subtraction.
+     *
+     * @param \MiBo\Properties\Contracts\NumericalProperty $minuend Minuend.
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$subtrahends Subtrahends.
+     *
+     * @return \MiBo\Properties\NumericalProperty Difference of all subtrahends from minuend.
+     */
+    public static function subtract(NumericalProperty $minuend, NumericalProperty ...$subtrahends): NumericalProperty
+    {
+        return self::merge(false, $minuend, ...$subtrahends);
+    }
+
+    /**
+     * Multiplies two or more quantities using multiplication.
+     *
+     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplier First multiplier.
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$multiplicands Other multiplicands.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalProperty Product of all multiplicands.
+     */
+    public static function multiply(
+        NumericalProperty $multiplier,
+        NumericalProperty ...$multiplicands
+    ): NumericalProperty
+    {
+        foreach ($multiplicands as $multiplicand) {
+            $multiplier = self::multiplySingle($multiplier, $multiplicand);
+        }
+
+        return $multiplier;
+    }
+
+    /**
+     * Divides two or more quantities using division.
+     *
+     * @param \MiBo\Properties\Contracts\NumericalProperty $dividend Dividend.
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$divisors Divisors.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalProperty Quotient of all divisors from dividend.
+     */
+    public static function divide(
+        NumericalProperty $dividend,
+        NumericalProperty ...$divisors
+    ): NumericalProperty
+    {
+        foreach ($divisors as $divisor) {
+            $dividend = self::divideSingle($dividend, $divisor);
+        }
+
+        return $dividend;
+    }
+
+    /**
+     * Merges two quantities using multiplication.
+     *
+     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplier First multiplier.
+     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplicand Other multiplicand.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalProperty Product of multiplier and multiplicand.
+     */
+    protected static function multiplySingle(
+        NumericalProperty $multiplier,
+        NumericalProperty $multiplicand
+    ): NumericalProperty
+    {
+        return self::mergeQuantities($multiplier, $multiplicand);
+    }
+
+    /**
+     * Merges two quantities using multiplication.
+     *
+     * @param \MiBo\Properties\Contracts\NumericalProperty $dividend Dividend.
+     * @param \MiBo\Properties\Contracts\NumericalProperty $divisor Divisor.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalProperty Product of dividend and divisor.
+     */
+    protected static function divideSingle(
+        NumericalProperty $dividend,
+        NumericalProperty $divisor
+    ): NumericalProperty
+    {
+        return self::mergeQuantities($dividend, $divisor, false);
+    }
+
+    /**
+     * Validates that the divisor is not zero.
+     *
+     * @param \MiBo\Properties\Contracts\NumericalProperty $divisor Divisor.
+     *
+     * @return void
+     */
+    protected static function checkDivisor(NumericalProperty $divisor): void
+    {
+        if ($divisor->getNumericalValue()->isAlmostZero()
+            || $divisor->getValue() === 0
+            || $divisor->getValue() === 0.0
+        ) {
+            throw new DivisionByZeroError();
+        }
+    }
+
+    /**
+     * Merges two or more quantities using addition or subtraction.
+     *
+     * @param bool $add Whether to add or subtract (true = add, false = subtract).
+     * @param \MiBo\Properties\Contracts\NumericalProperty ...$properties Properties to merge.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalProperty Merged property.
+     */
     protected static function merge(bool $add = true, NumericalProperty ...$properties): NumericalProperty
     {
         $quantity = null;
@@ -91,104 +215,14 @@ class PropertyCalc
     }
 
     /**
-     * @param \MiBo\Properties\Contracts\NumericalProperty $addend
-     * @param \MiBo\Properties\Contracts\NumericalProperty ...$addends
+     * Merges two quantities using multiplication or division.
      *
-     * @return \MiBo\Properties\NumericalProperty
-     */
-    public static function add(NumericalProperty $addend, NumericalProperty ...$addends): NumericalProperty
-    {
-        return self::merge(true, $addend, ...$addends);
-    }
-
-    /**
-     * @param \MiBo\Properties\Contracts\NumericalProperty $minuend
-     * @param \MiBo\Properties\Contracts\NumericalProperty ...$subtrahends
+     * @param \MiBo\Properties\Contracts\NumericalProperty $first First property.
+     * @param \MiBo\Properties\Contracts\NumericalProperty $second Second property.
+     * @param bool $toProduct Whether to merge to product or quotient (true = product, false = quotient).
      *
-     * @return \MiBo\Properties\NumericalProperty
+     * @return \MiBo\Properties\Contracts\NumericalProperty Merged property.
      */
-    public static function subtract(NumericalProperty $minuend, NumericalProperty ...$subtrahends): NumericalProperty
-    {
-        return self::merge(false, $minuend, ...$subtrahends);
-    }
-
-    /**
-     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplier
-     * @param \MiBo\Properties\Contracts\NumericalProperty ...$multiplicands
-     *
-     * @return \MiBo\Properties\Contracts\NumericalProperty
-     */
-    public static function multiply(
-        NumericalProperty $multiplier,
-        NumericalProperty ...$multiplicands
-    ): NumericalProperty
-    {
-        foreach ($multiplicands as $multiplicand) {
-            $multiplier = self::multiplySingle($multiplier, $multiplicand);
-        }
-
-        return $multiplier;
-    }
-
-    /**
-     * @param \MiBo\Properties\Contracts\NumericalProperty $dividend
-     * @param \MiBo\Properties\Contracts\NumericalProperty ...$divisors
-     *
-     * @return \MiBo\Properties\Contracts\NumericalProperty
-     */
-    public static function divide(
-        NumericalProperty $dividend,
-        NumericalProperty ...$divisors
-    ): NumericalProperty
-    {
-        foreach ($divisors as $divisor) {
-            $dividend = self::divideSingle($dividend, $divisor);
-        }
-
-        return $dividend;
-    }
-
-    /**
-     * @param \MiBo\Properties\Contracts\NumericalProperty $dividend
-     * @param \MiBo\Properties\Contracts\NumericalProperty $divisor
-     *
-     * @return \MiBo\Properties\Contracts\NumericalProperty
-     */
-    protected static function divideSingle(
-        NumericalProperty $dividend,
-        NumericalProperty $divisor
-    ): NumericalProperty
-    {
-        self::checkDivisor($divisor);
-
-        return self::mergeQuantities($dividend, $divisor, false);
-    }
-
-    protected static function checkDivisor(int|float|NumericalProperty $divisor): void
-    {
-        if ($divisor instanceof NumericalProperty && ($divisor->getValue() === 0 || $divisor->getValue() === 0.0)) {
-            throw new InvalidArgumentException('Cannot divide by zero.');
-        }
-
-        if (!$divisor instanceof NumericalProperty && ($divisor === 0 || $divisor === 0.0)) {
-            throw new InvalidArgumentException('Cannot divide by zero.');
-        }
-    }
-
-    /**
-     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplier
-     * @param \MiBo\Properties\Contracts\NumericalProperty $multiplicand
-     *
-     * @return \MiBo\Properties\Contracts\NumericalProperty
-     */
-    protected static function multiplySingle(
-        NumericalProperty $multiplier,
-        NumericalProperty $multiplicand
-    ): NumericalProperty
-    {
-        return self::mergeQuantities($multiplier, $multiplicand);
-    }
-
     protected static function mergeQuantities(
         NumericalProperty $first,
         NumericalProperty $second,
@@ -198,6 +232,9 @@ class PropertyCalc
         if ($toProduct === false) {
             self::checkDivisor($second);
         }
+
+        $first  = clone $first;
+        $second = clone $second;
 
         self::compileEquations();
 
@@ -287,6 +324,13 @@ class PropertyCalc
         throw new ValueError();
     }
 
+    /**
+     * Compiles equations for derived quantities.
+     *
+     * @param bool $force Whether to force recompilation.
+     *
+     * @return void
+     */
     protected static function compileEquations(bool $force = false): void
     {
         if ($force === false && !empty(self::$equations)) {
@@ -304,8 +348,10 @@ class PropertyCalc
     }
 
     /**
-     * @param string $equation
-     * @param class-string<\MiBo\Properties\Contracts\Quantity> $quantity
+     * Compiles an equation for a derived quantity.
+     *
+     * @param string $equation Equation.
+     * @param class-string<\MiBo\Properties\Contracts\Quantity> $quantity Quantity.
      *
      * @return void
      */

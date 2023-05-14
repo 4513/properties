@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties\Contracts;
 
@@ -13,39 +13,48 @@ use MiBo\Properties\Value;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
- * @extends \MiBo\Properties\Contracts\Property<\MiBo\Properties\Contracts\NumericalUnit>
+ * @phpcs:ignore
+ * @extends \MiBo\Properties\Contracts\Property<\MiBo\Properties\Contracts\NumericalUnit, int|float|\MiBo\Properties\Value>
  */
 interface NumericalProperty extends Property
 {
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value
+     * Add value to property.
      *
-     * @return static
+     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value Value to add.
+     *
+     * @return static Property with added value.
      */
     public function add(int|float|NumericalProperty $value): static;
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value
+     * Subtract value from property.
      *
-     * @return static
+     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value Value to subtract.
+     *
+     * @return static Property with subtracted value.
      */
     public function subtract(int|float|NumericalProperty $value): static;
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value
+     * Multiply property by value.
      *
-     * @return \MiBo\Properties\Contracts\NumericalProperty
+     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value Value to multiply by.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalProperty Property with multiplied value.
      */
     public function multiply(int|float|NumericalProperty $value): NumericalProperty;
 
     /**
-     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value
+     * Divide property by value.
      *
-     * @return \MiBo\Properties\Contracts\NumericalProperty
+     * @param int|float|\MiBo\Properties\Contracts\NumericalProperty $value Value to divide by.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalProperty Property with divided value.
      */
     public function divide(int|float|NumericalProperty $value): NumericalProperty;
 
@@ -59,12 +68,16 @@ interface NumericalProperty extends Property
     /**
      * @inheritDoc
      *
-     * @return static
+     * @param \MiBo\Properties\Contracts\NumericalUnit $unit Unit to convert to.
+     *
+     * @return static Property with converted value.
      */
-    public function convertToUnit(Unit $unit): Property;
+    public function convertToUnit(Unit $unit): NumericalProperty;
 
     /**
-     * @return \MiBo\Properties\Value
+     * Get numerical value.
+     *
+     * @return \MiBo\Properties\Value Numerical value.
      */
     public function getNumericalValue(): Value;
 }

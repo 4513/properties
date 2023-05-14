@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties;
 
@@ -15,7 +15,7 @@ use const PHP_FLOAT_DIG;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
@@ -47,6 +47,13 @@ final class Value
 
         if ($value instanceof Value) {
             return $this->addSelf($value, $exp);
+        }
+
+        if (self::$preferInfinity === true && is_infinite($value)) {
+            $this->infinityMode = true;
+            $this->values       = [0 => INF];
+
+            return $this;
         }
 
         if (is_float($value)) {
@@ -112,6 +119,17 @@ final class Value
             throw new ValueError();
         }
 
+        if (self::$preferInfinity === true && is_infinite($value)) {
+            $this->infinityMode = true;
+            $this->values       = [0 => INF];
+
+            return $this;
+        }
+
+        if (empty($this->values)) {
+            return $this;
+        }
+
         if ($value instanceof Value) {
             return $this->multiplySelf($value, $exp);
         }
@@ -144,6 +162,12 @@ final class Value
 
     private function multiplySelf(Value $value, int $exp): static
     {
+        if (empty($value->getValues())) {
+            $this->values = [];
+
+            return $this;
+        }
+
         foreach ($value->getValues() as $innerExp => $val) {
             $this->multiply($val, $exp + $innerExp);
         }
@@ -163,10 +187,8 @@ final class Value
 
         if (($value === 0 || $value === 0.0)) {
             if (self::$preferInfinity === true) {
-                $positive           = $this->getValue() >= 0;
                 $this->infinityMode = true;
-                $this->values       = [];
-                $this->values[0]    = $positive ? INF : -INF;
+                $this->values       = [0 => INF];
 
                 return $this;
             }
@@ -196,7 +218,7 @@ final class Value
     private function divideSelf(Value $value, int $exp): static
     {
         foreach ($value->getValues() as $innerExp => $val) {
-            $this->divide($val, $exp - $innerExp);
+            $this->divide($val, $innerExp - $exp);
         }
 
         return $this;
@@ -230,7 +252,8 @@ final class Value
         $earlyResult2 = $value * 10 ** (- $requestedExp - $expDiff);
 
         if ((float) ((int) $earlyResult2) === $earlyResult2
-            || ((float) ((int) $earlyResult1) === $earlyResult1) && (int) $earlyResult1 !== 0) {
+            || ((float) ((int) $earlyResult1) === $earlyResult1) && (int) $earlyResult1 !== 0
+        ) {
             $earlyResult2 = (int) $earlyResult2;
         }
 
@@ -244,11 +267,23 @@ final class Value
             return $calculatedResult;
         }
 
-        return round($calculatedResult, $precision);
+        $rounded = round($calculatedResult, $precision);
+
+        return $precision === 0 ? (int) $rounded : $rounded;
     }
 
     public function getMinExp(): int
     {
         return min(array_keys($this->values) ?: [0]);
+    }
+
+    public function isInfinite(): bool
+    {
+        return self::$preferInfinity && $this->infinityMode && isset($this->values[0]) && is_infinite($this->values[0]);
+    }
+
+    public function isAlmostZero(): bool
+    {
+        return self::$preferInfinity && $this->infinityMode && isset($this->values[0]) && $this->values[0] !== INF;
     }
 }

@@ -1,26 +1,27 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties\Tests\Calculators;
 
 use MiBo\Properties\Calculators\Math;
 use PHPUnit\Framework\TestCase;
+use ValueError;
 
 /**
- * Class BaseMathTest
+ * Class MathTest
  *
  * @package MiBo\Properties\Tests\Calculators
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
  * @coversDefaultClass \MiBo\Properties\Calculators\Math
  */
-class BaseMathTest extends TestCase
+class MathTest extends TestCase
 {
     /**
      * @small
@@ -633,6 +634,10 @@ class BaseMathTest extends TestCase
         $this->assertIsInt(Math::mt_rand());
         $this->assertIsInt(Math::mt_rand(1, 5));
         $this->assertIsInt(Math::mt_rand(1, 2));
+
+        $this->expectException(ValueError::class);
+
+        Math::randMT(5, 0);
     }
 
     /**
@@ -714,6 +719,10 @@ class BaseMathTest extends TestCase
         $this->assertIsInt(Math::rand());
         $this->assertIsInt(Math::rand(1, 5));
         $this->assertIsInt(Math::rand(1, 2));
+
+        $this->expectException(ValueError::class);
+
+        Math::rand(5, 0);
     }
 
     /**

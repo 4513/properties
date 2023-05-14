@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties\Contracts;
 
@@ -13,7 +13,7 @@ use Stringable;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
@@ -26,6 +26,11 @@ interface Unit extends Stringable
      */
     public function isSI(): bool;
 
+    /**
+     * Some units are accepted for use with SI.
+     *
+     * @return bool Whether the Unit is accepted for use with SI.
+     */
     public function acceptedForUseWithSI(): bool;
 
     /**
@@ -35,12 +40,32 @@ interface Unit extends Stringable
      */
     public function isImperial(): bool;
 
+    /**
+     * Some units are defined in the Metric System.
+     *
+     * @return bool Whether the Unit is defined as Metric.
+     */
     public function isMetric(): bool;
 
+    /**
+     * Some units are defined in the Astronomical System.
+     *
+     * @return bool Whether the Unit is defined as Astronomical.
+     */
     public function isAstronomical(): bool;
 
+    /**
+     * Some units are defined in the US Customary System.
+     *
+     * @return bool Whether the Unit is defined as US Customary.
+     */
     public function isUSCustomary(): bool;
 
+    /**
+     * Some units are defined in the English System.
+     *
+     * @return bool Whether the Unit is defined as English.
+     */
     public function isEnglish(): bool;
 
     /**
@@ -50,11 +75,31 @@ interface Unit extends Stringable
      */
     public static function get();
 
+    /**
+     * Returns the symbol of the Unit.
+     *
+     * @return string Symbol of the Unit.
+     */
     public function getSymbol(): string;
 
+    /**
+     * Returns the name of the Unit.
+     *
+     * @return string Name of the Unit.
+     */
     public function toString(): string;
 
+    /**
+     * Returns the name of the Unit.
+     *
+     * @return string Name of the Unit.
+     */
     public function getName(): string;
 
+    /**
+     * Returns the quantity for the Unit.
+     *
+     * @return string Name of the Unit.
+     */
     public static function getQuantityClassName(): string;
 }

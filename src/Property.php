@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MiBo\Properties;
 
 use InvalidArgumentException;
-use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Property as PropertyContract;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
@@ -17,26 +16,28 @@ use MiBo\Properties\Contracts\Unit;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
  * @template-covariant TUnit of \MiBo\Properties\Contracts\Unit
+ * @template-covariant TValue of mixed
  *
- * @implements \MiBo\Properties\Contracts\Property<TUnit>
+ * @implements \MiBo\Properties\Contracts\Property<TUnit, TValue>
  */
 abstract class Property implements PropertyContract
 {
-    private int|float $value;
+    /** @var TValue */
+    private $value;
 
     /** @var TUnit */
     protected Unit $unit;
 
     /**
-     * @param int|float $value
+     * @param TValue $value
      * @param TUnit $unit
      */
-    public function __construct(int|float $value, Unit $unit)
+    public function __construct($value, Unit $unit)
     {
         if ($unit::getQuantityClassName() !== static::getQuantityClassName()) {
             throw new InvalidArgumentException(
@@ -53,6 +54,8 @@ abstract class Property implements PropertyContract
     }
 
     /**
+     * @inheritDoc
+     *
      * @return TUnit
      */
     public function getUnit(): Unit
@@ -82,9 +85,9 @@ abstract class Property implements PropertyContract
     /**
      * @inheritDoc
      *
-     * @return int|float
+     * @return TValue
      */
-    public function getValue(): int|float
+    public function getValue(): mixed
     {
         return $this->value;
     }
@@ -94,10 +97,6 @@ abstract class Property implements PropertyContract
      */
     public function getBaseValue(): mixed
     {
-        if ($this->getUnit() instanceof NumericalUnit) {
-            return $this->getValue() * $this->getUnit()->getMultiplier();
-        }
-
         return $this->getValue();
     }
 
@@ -110,34 +109,14 @@ abstract class Property implements PropertyContract
      *
      * @phpstan-assert TUnit $unit
      */
-    public function convertToUnit(Unit $unit): PropertyContract
-    {
-        if ($unit::class === $this->getUnit()::class) {
-            return $this;
-        }
-
-        if (!$unit instanceof NumericalUnit) {
-            throw new \ValueError();
-        }
-
-        if ($unit::getQuantityClassName() !== $this::getQuantityClassName()) {
-            throw new \ValueError();
-        }
-
-        $this->value = $this->getBaseValue() * 10 ** $unit->getMultiplier();
-
-        /** @phpstan-ignore-next-line */
-        $this->unit = $unit;
-
-        return $this;
-    }
+    abstract public function convertToUnit(Unit $unit): PropertyContract;
 
     /**
-     * @param int|float $value
+     * @param TValue $value
      *
      * @return static
      */
-    protected function setValue(int|float $value): static
+    protected function setValue($value): static
     {
         $this->value = $value;
 
