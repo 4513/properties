@@ -9,6 +9,7 @@ use MiBo\Properties\NumericalProperty;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
 use MiBo\Properties\Quantities\Mass;
+use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
 use MiBo\Properties\Units\Area\Acre;
@@ -59,6 +60,13 @@ use MiBo\Properties\Units\Mass\Slug;
 use MiBo\Properties\Units\Mass\Stone;
 use MiBo\Properties\Units\Mass\Ton;
 use MiBo\Properties\Units\Mass\USHundredweight;
+use MiBo\Properties\Units\ThermodynamicTemperature\DegreeCelsius;
+use MiBo\Properties\Units\ThermodynamicTemperature\DegreeFahrenheit;
+use MiBo\Properties\Units\ThermodynamicTemperature\DegreeNewton;
+use MiBo\Properties\Units\ThermodynamicTemperature\DegreeRankine;
+use MiBo\Properties\Units\ThermodynamicTemperature\DegreeReaumur;
+use MiBo\Properties\Units\ThermodynamicTemperature\DegreeRomer;
+use MiBo\Properties\Units\ThermodynamicTemperature\Kelvin;
 use MiBo\Properties\Units\Time\Day;
 use MiBo\Properties\Units\Time\Hour;
 use MiBo\Properties\Units\Time\Minute;
@@ -90,7 +98,7 @@ use MiBo\Properties\Value;
 class UnitConvertor
 {
     protected const UNIT_COEFFICIENTS = [
-        Area::class   => [
+        Area::class                     => [
             Acre::class           => 4_046_873,
             Bovate::class         => 60,
             Carucate::class       => 490,
@@ -99,7 +107,7 @@ class UnitConvertor
             SurveyTownship::class => 93_239_930,
             Virgate::class        => 120,
         ],
-        Length::class => [
+        Length::class                   => [
             AstronomicalUnit::class => 149_597_870_700,
             Barleycorn::class       => 84_667,
             Cable::class            => 219_456,
@@ -129,7 +137,7 @@ class UnitConvertor
             Twip::class             => 176_389,
             Yard::class             => 9_144,
         ],
-        Mass::class   => [
+        Mass::class                     => [
             Dalton::class          => 1_660_539_040,
             Drachm::class          => 17_718_451_953_125,
             Grain::class           => 6_479_891,
@@ -144,12 +152,15 @@ class UnitConvertor
             Ton::class             => 1_0160_469_088,
             USHundredweight::class => 45_359_237,
         ],
-        Time::class   => [
+        ThermodynamicTemperature::class => [
+            DegreeCelsius::class => 27_315,
+        ],
+        Time::class                     => [
             Day::class    => 864_000,
             Hour::class   => 3_600,
             Minute::class => 60,
         ],
-        Volume::class => [
+        Volume::class                   => [
             AcreFoot::class           => 12_335,
             Barrel::class             => 119_240_471_196,
             ImperialFluidOunce::class => 284_130_625,
@@ -165,6 +176,10 @@ class UnitConvertor
         ],
     ];
 
+    protected const UNIT_SPECIAL = [
+        ThermodynamicTemperature::class,
+    ];
+
     public static function convert(NumericalProperty $property, Unit $unit): Value
     {
         if ($property->getUnit()::class === $unit::class) {
@@ -174,6 +189,13 @@ class UnitConvertor
         $currentValue = $property->getNumericalValue();
         $currentUnit  = $property->getUnit();
         $quantity     = $property::getQuantityClassName();
+
+        if (key_exists($quantity, self::UNIT_SPECIAL)) {
+            /** @see \MiBo\Properties\Calculators\UnitConvertor::convertT */
+            $method = "convert" . $quantity::getDimensionSymbol();
+
+            return self::$method($property, $unit);
+        }
 
         if (!key_exists($quantity, self::UNIT_COEFFICIENTS)) {
             return $currentValue->multiply(1, $currentUnit->getMultiplier())
@@ -191,5 +213,88 @@ class UnitConvertor
             key_exists($unit::class, $coefs) ? $coefs[$unit::class] : 1,
             $unit->getMultiplier()
         );
+    }
+
+    protected static function convertT(NumericalProperty $property, Unit $unit): Value
+    {
+        $value = $property->getNumericalValue();
+
+        switch ($property->getUnit()::class) {
+            case DegreeCelsius::class:
+                $value->add(27_315, -2);
+            break;
+
+            case DegreeFahrenheit::class:
+                $value->subtract(32)
+                    ->multiply(5)
+                    ->divide(9)
+                    ->add(27_315, 2);
+            break;
+
+            case DegreeNewton::class:
+                $value->multiply(100)
+                    ->divide(33)
+                    ->add(27_315, -2);
+            break;
+
+            case DegreeRankine::class:
+                $value->multiply(5)
+                    ->divide(9);
+            break;
+
+            case DegreeReaumur::class:
+                $value->divide(8, -1)
+                    ->add(27_315, -2);
+            break;
+
+            case DegreeRomer::class:
+                $value->subtract(75, -1)
+                    ->divide(525, -3)
+                    ->add(27_315, -2);
+            break;
+
+            case Kelvin::class:
+            default:
+            break;
+        }
+
+        switch ($unit::class) {
+            case DegreeCelsius::class:
+                $value->subtract(27_315, -2);
+                return $value;
+
+            case DegreeFahrenheit::class:
+                $value->subtract(27_315, -2)
+                    ->multiply(9)
+                    ->divide(5)
+                    ->add(32);
+                return $value;
+
+            case DegreeNewton::class:
+                $value->subtract(27_315, -2)
+                    ->multiply(33)
+                    ->divide(100);
+                return $value;
+
+            case DegreeRankine::class:
+                $value->multiply(9)
+                    ->divide(5);
+                return $value;
+
+            case DegreeReaumur::class:
+                $value->subtract(27_315, -2)
+                    ->multiply(8, -1);
+                return $value;
+
+            case DegreeRomer::class:
+                $value->subtract(27_315, -2)
+                    ->multiply(525, -3)
+                    ->add(75, -1);
+                return $value;
+
+            case Kelvin::class:
+            default:
+                return $value;
+        }
     }
 }

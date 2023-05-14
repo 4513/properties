@@ -14,6 +14,7 @@ use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\ElectricCurrent;
 use MiBo\Properties\Quantities\Length;
 use MiBo\Properties\Quantities\Mass;
+use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
 use TypeError;
@@ -43,6 +44,7 @@ class PropertyCalc
         AmountOfSubstance::class,
         Mass::class,
         ElectricCurrent::class,
+        ThermodynamicTemperature::class,
     ];
 
     /**
