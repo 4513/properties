@@ -20,6 +20,8 @@ use MiBo\Properties\Traits\UnitHelper;
 trait Cubic
 {
     /**
+     * Returns symbol suffix.
+     *
      * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
      *
      * @return string
@@ -30,14 +32,8 @@ trait Cubic
     }
 
     /**
-     * @inheritdoc
-     */
-    protected function getMultiplierSuffix(): float|int
-    {
-        return 3;
-    }
-
-    /**
+     * Returns name suffix.
+     *
      * @see \MiBo\Properties\Traits\UnitHelper::getName
      *
      * @return string

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Traits;
 
-use MiBo\Properties\Contracts\Unit;
-
 /**
  * Trait UnitHelper
  *

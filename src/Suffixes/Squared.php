@@ -20,7 +20,11 @@ use MiBo\Properties\Traits\UnitHelper;
 trait Squared
 {
     /**
-     * @inheritdoc
+     * Returns symbol suffix.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
+     *
+     * @return string
      */
     public function getSymbolSuffix(): string
     {
@@ -28,15 +32,11 @@ trait Squared
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getMultiplierSuffix(): float|int
-    {
-        return 2;
-    }
-
-    /**
-     * @inheritdoc
+     * Returns name suffix.
+     *
+     * @see \MiBo\Properties\Traits\UnitHelper::getName
+     *
+     * @return string
      */
     public function getNameSuffix(): string
     {
