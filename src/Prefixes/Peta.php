@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Prefixes;
 
-use MiBo\Properties\Contracts\HasMultiplier;
-use MiBo\Properties\Contracts\HasName;
-use MiBo\Properties\Contracts\HasSymbol;
+use MiBo\Properties\Traits\UnitHelper;
 
 /**
  * Trait Peta
@@ -23,43 +21,35 @@ use MiBo\Properties\Contracts\HasSymbol;
  *
  * @package MiBo\Properties\Prefixes
  *
- * @author Michal Boris <michal.boris@gmail.com>
+ * @author Michal Boris <michal.boris27@gmail.com>
+ *
+ * @since x.x
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 trait Peta
 {
-    use HasSymbol {
-        HasSymbol::getSymbol as contractGetSymbol;
-    }
-
-    use HasMultiplier {
-        HasMultiplier::getMultiplier as contractGetMultiplier;
-    }
-
-    use HasName {
-        HasName::getName as contractGetName;
+    /**
+     * @inheritdoc
+     */
+    protected function getSymbolPrefix(): string
+    {
+        return "P";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierPrefix(): int
     {
-        return "P" . $this->contractGetSymbol();
+        return 15;
     }
 
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    protected function getNamePrefix(): string
     {
-        return 10**15 * $this->contractGetMultiplier();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "peta" . $this->contractGetName();
+        return "peta";
     }
 }

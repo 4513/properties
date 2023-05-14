@@ -1,124 +1,60 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace MiBo\Properties\Contracts;
 
-use Error;
-use MiBo\Properties\Quantities\NoQuantity;
 use Stringable;
 
 /**
- * Class Unit
+ * Interface Unit
  *
  * @package MiBo\Properties\Contracts
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since 0.1
- *
- * @template TQuantity of \MiBo\Properties\Contracts\Quantity
+ * @since x.x
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-abstract class Unit implements Stringable, UsedInSystem
+interface Unit extends Stringable
 {
-    use HasSymbol,
-        HasName,
-        HasMultiplier;
-
-    /** @var string */
-    protected string $code;
-
-    /** @var static|null */
-    protected static ?Unit $instance = null;
-
-    /** @var class-string<TQuantity> */
-    protected const QUANTITY = NoQuantity::class;
-
     /**
-     * @see \MiBo\Properties\Contracts\Unit::get
-     */
-    final protected function __construct() {}
-
-    /**
-     * Singleton's constructor.
+     * Some units are defined in the International System of Units (SI).
      *
-     * @return static
+     * @return bool Whether the Unit is defined in SI.
      */
-    public static function get(): static
-    {
-        if (static::class === Unit::class) {
-            throw new Error("Cannot call static method 'get' on abstract class " . Unit::class . "!");
-        }
+    public function isSI(): bool;
 
-        if (static::$instance === null) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }
+    public function acceptedForUseWithSI(): bool;
 
     /**
-     * Returns the unit's code (e.g. 'm' for meter, or 'EUR' for the euro currency).
+     * Some units are defined in the Imperial System.
      *
-     * @return string
+     * @return bool Whether the Unit is defined as Imperial.
      */
-    public function getCode(): string
-    {
-        if (!isset($this->code)) {
-            return $this->getSymbol();
-        }
+    public function isImperial(): bool;
 
-        return $this->code;
-    }
+    public function isMetric(): bool;
+
+    public function isAstronomical(): bool;
+
+    public function isUSCustomary(): bool;
+
+    public function isEnglish(): bool;
 
     /**
-     * Returns string-able unit.
+     * Creates a new instance of the Unit.
      *
-     * @return string
+     * @return static New instance of the Unit.
      */
-    final public function __toString(): string
-    {
-        return $this->toString();
-    }
+    public static function get();
 
-    /**
-     * Returns string-able unit.
-     *
-     * @return string
-     */
-    public function toString(): string
-    {
-        return $this->getName();
-    }
+    public function getSymbol(): string;
 
-    /**
-     * @inheritdoc
-     */
-    public function isImperial(): bool
-    {
-        return false;
-    }
+    public function toString(): string;
 
-    /**
-     * @inheritdoc
-     */
-    public function isSI(): bool
-    {
-        return false;
-    }
+    public function getName(): string;
 
-    public function isDimensional(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @return class-string<TQuantity>
-     */
-    public static function getQuantity(): string
-    {
-        return static::QUANTITY;
-    }
+    public static function getQuantityClassName(): string;
 }

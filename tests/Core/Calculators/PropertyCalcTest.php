@@ -36,7 +36,6 @@ class PropertyCalcTest extends TestCase
      *
      * @covers ::add
      * @covers ::merge
-     * @covers \MiBo\Properties\Units\Length\Meter::__construct
      *
      * @return void
      */

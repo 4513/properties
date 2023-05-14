@@ -1,19 +1,21 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace MiBo\Properties\Contracts;
 
 /**
- * Class NumericalUnit
+ * Interface NumericalUnit
  *
  * @package MiBo\Properties\Contracts
  *
- * @since 0.1
+ * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @author Michal Boris <michal.boris@gmail.com>
+ * @since x.x
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-abstract class NumericalUnit extends Unit
+interface NumericalUnit extends Unit
 {
-    use HasMultiplier;
+    public function getMultiplier(): int|float;
 }

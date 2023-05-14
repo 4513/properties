@@ -30,7 +30,6 @@ class FromPropertyTest extends TestCase
      * @covers ::subtract
      * @covers ::multiply
      * @covers ::divide
-     * @covers ::round
      *
      * @return void
      */

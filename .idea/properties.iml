@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="MiBo\Properties\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/tests/Core" isTestSource="true" packagePrefix="MiBo\Properties\Tests\" />
-      <sourceFolder url="file://$MODULE_DIR$/src2" isTestSource="false" packagePrefix="MiBo\Properties\" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="MiBo\Properties\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-invoker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
@@ -36,7 +36,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/diff" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpstan/phpstan-strict-rules" />
-      <excludeFolder url="file://$MODULE_DIR$/src" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/slevomat/coding-standard" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpstan/phpdoc-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dealerdirect/phpcodesniffer-composer-installer" />

@@ -34,7 +34,6 @@ class UnitTest extends TestCase
     /**
      * @small
      *
-     * @covers ::__construct
      * @covers ::getSymbol
      * @covers ::getMultiplier
      * @covers ::getName

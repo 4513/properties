@@ -4,54 +4,42 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Suffixes;
 
-use MiBo\Properties\Contracts\HasMultiplier;
-use MiBo\Properties\Contracts\HasName;
-use MiBo\Properties\Contracts\HasSymbol;
+use MiBo\Properties\Traits\UnitHelper;
 
 /**
  * Trait Squared
  *
  * @package MiBo\Properties\Suffixes
  *
- * @since 0.1
+ * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @author Michal Boris <michal.boris@gmail.com>
+ * @since x.x
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 trait Squared
 {
-    use HasSymbol {
-        HasSymbol::getSymbol as contractGetSymbol;
-    }
-
-    use HasMultiplier {
-        HasMultiplier::getMultiplier as contractGetMultiplier;
-    }
-
-    use HasName {
-        HasName::getName as contractGetName;
+    /**
+     * @inheritdoc
+     */
+    public function getSymbolSuffix(): string
+    {
+        return "²";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    public function getMultiplierSuffix(): float|int
     {
-        return $this->contractGetSymbol() . "^2";
+        return 2;
     }
 
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    public function getNameSuffix(): string
     {
-        return $this->contractGetMultiplier()**2;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "square " . $this->contractGetName();
+        return "square";
     }
 }

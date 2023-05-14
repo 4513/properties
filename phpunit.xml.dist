@@ -8,7 +8,7 @@
   <coverage/>
   <source>
     <include>
-      <directory suffix=".php">./src2</directory>
+      <directory suffix=".php">./src</directory>
     </include>
   </source>
   <php>

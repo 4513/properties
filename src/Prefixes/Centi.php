@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Prefixes;
 
-use MiBo\Properties\Contracts\HasMultiplier;
-use MiBo\Properties\Contracts\HasName;
-use MiBo\Properties\Contracts\HasSymbol;
+use MiBo\Properties\Traits\UnitHelper;
 
 /**
  * Trait Centi
@@ -25,45 +23,35 @@ use MiBo\Properties\Contracts\HasSymbol;
  *
  * @package MiBo\Properties\Prefixes
  *
+ * @author Michal Boris <michal.boris27@gmail.com>
+ *
  * @since 0.1
  *
- * @author Michal Boris <michal.boris@gmail.com>
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 trait Centi
 {
-    use HasSymbol {
-        HasSymbol::getSymbol as contractGetSymbol;
-    }
-
-    use HasMultiplier {
-        HasMultiplier::getMultiplier as contractGetMultiplier;
-    }
-
-    use HasName {
-        HasName::getName as contractGetName;
+    /**
+     * @inheritdoc
+     */
+    protected function getSymbolPrefix(): string
+    {
+        return "c";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierPrefix(): int
     {
-        return "c" . $this->contractGetSymbol();
+        return -2;
     }
 
     /**
      * @inheritdoc
      */
-    public function getMultiplier(): float|int
+    protected function getNamePrefix(): string
     {
-        return 10**-2 * $this->contractGetMultiplier();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "centi" . $this->contractGetName();
+        return "centi";
     }
 }

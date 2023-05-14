@@ -6,7 +6,7 @@
 
     <arg value="sp" />
 
-    <file>./src2</file>
+    <file>./src</file>
 
     <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.NewlineBeforeOpenBrace">
         <severity>0</severity>

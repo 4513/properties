@@ -77,7 +77,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "MiBo\\Properties\\": "src2/"
+            "MiBo\\Properties\\": "src/"
         }
     },
     "autoload-dev": {

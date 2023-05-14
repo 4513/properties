@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MiBo\Properties;
 
-use CompileError;
-use MiBo\Properties\Contracts\Math;
+use InvalidArgumentException;
+use MiBo\Properties\Contracts\NumericalUnit;
+use MiBo\Properties\Contracts\Property as PropertyContract;
 use MiBo\Properties\Contracts\Quantity;
-use MiBo\Properties\Contracts\QuantityMath;
 use MiBo\Properties\Contracts\Unit;
 
 /**
@@ -15,19 +17,40 @@ use MiBo\Properties\Contracts\Unit;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since 0.1
- *
- * @template TUnit of \MiBo\Properties\Contracts\Unit
+ * @since x.x
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
+ *
+ * @template-covariant TUnit of \MiBo\Properties\Contracts\Unit
+ *
+ * @implements \MiBo\Properties\Contracts\Property<TUnit>
  */
-class Property
+abstract class Property implements PropertyContract
 {
-    /** @var int|float $value */
-    protected int|float $value = 0;
+    private int|float $value;
 
     /** @var TUnit */
-    protected $unit;
+    protected Unit $unit;
+
+    /**
+     * @param int|float $value
+     * @param TUnit $unit
+     */
+    public function __construct(int|float $value, Unit $unit)
+    {
+        if ($unit::getQuantityClassName() !== static::getQuantityClassName()) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Unit %s is not compatible with Quantity %s',
+                    $unit::class,
+                    static::getQuantityClassName()
+                )
+            );
+        }
+
+        $this->value = $value;
+        $this->unit  = $unit;
+    }
 
     /**
      * @return TUnit
@@ -38,143 +61,85 @@ class Property
     }
 
     /**
-     * @return class-string<Quantity>
+     * @inheritDoc
      */
-    public function getQuantity(): string
-    {
-        return $this->getUnit()::getQuantity();
-    }
+    abstract public static function getQuantityClassName(): string;
 
-    public function getQuantityClass(): Quantity
+    /**
+     * @inheritDoc
+     */
+    public function getQuantity(): Quantity
     {
-        return new ($this->getQuantity());
+        static $quantities = [];
+
+        if (!key_exists(static::getQuantityClassName(), $quantities)) {
+            $quantities[static::getQuantityClassName()] = new (static::getQuantityClassName());
+        }
+
+        return $quantities[$this->getQuantityClassName()];
     }
 
     /**
-     * @param int|float $value
-     * @param TUnit $unit
+     * @inheritDoc
+     *
+     * @return int|float
      */
-    public function __construct(int|float $value, $unit)
-    {
-        $this->value = $value;
-        $this->unit  = $unit;
-    }
-
-    /**
-     * @return float|int
-     */
-    public function getValue(): float|int
+    public function getValue(): int|float
     {
         return $this->value;
     }
 
     /**
-     * @template T of static
-     *
-     * @param int|float|T $addend
-     *
-     * @return static
+     * @inheritDoc
      */
-    public function add(int|float|Property $addend): static
+    public function getBaseValue(): mixed
     {
-        if (is_int($addend) || is_float($addend)) {
-            $this->value += $addend;
-
-            return $this;
+        if ($this->getUnit() instanceof NumericalUnit) {
+            return $this->getValue() * $this->getUnit()->getMultiplier();
         }
 
-        if ($this->getQuantity() !== $addend->getQuantity()) {
-            throw new CompileError("Cannot add a value from a different quantity!");
-        }
-
-        $this->value += (
-            $addend->getValue() /
-            ($this->getUnit()->getMultiplier() / $addend->getUnit()->getMultiplier())
-        );
-
-        return $this;
+        return $this->getValue();
     }
 
-    public function subtract(int|float|Property $subtrahend): static
+    /**
+     * @inheritDoc
+     *
+     * @template TInnerUnit of \MiBo\Properties\Contracts\Unit
+     *
+     * @param TInnerUnit $unit
+     *
+     * @phpstan-assert TUnit $unit
+     */
+    public function convertToUnit(Unit $unit): PropertyContract
     {
-        if (is_int($subtrahend) || is_float($subtrahend)) {
-            $this->value -= $subtrahend;
-
+        if ($unit::class === $this->getUnit()::class) {
             return $this;
         }
 
-        if ($this->getQuantity() !== $subtrahend->getQuantity()) {
-            throw new CompileError("Cannot subtract a value from a different quantity!");
+        if (!$unit instanceof NumericalUnit) {
+            throw new \ValueError();
         }
 
-        $this->value -= (
-            $subtrahend->getValue() /
-            ($this->getUnit()->getMultiplier() / $subtrahend->getUnit()->getMultiplier())
-        );
-
-        return $this;
-    }
-
-    public function convertUnit(Unit $unit): static
-    {
-        if ($this->getUnit()->getMultiplier() === $unit->getMultiplier()) {
-            return $this;
+        if ($unit::getQuantityClassName() !== $this::getQuantityClassName()) {
+            throw new \ValueError();
         }
 
-        $this->value = $this->value /
-            ($unit->getMultiplier() / $this->getUnit()->getMultiplier());
+        $this->value = $this->getBaseValue() * 10 ** $unit->getMultiplier();
 
+        /** @phpstan-ignore-next-line */
         $this->unit = $unit;
 
         return $this;
     }
 
-    public function multiply(int|float|Property $multiplicand): static
+    /**
+     * @param int|float $value
+     *
+     * @return static
+     */
+    protected function setValue(int|float $value): static
     {
-        if (is_int($multiplicand) || is_float($multiplicand)) {
-            $this->value *= $multiplicand;
-
-            return $this;
-        }
-
-        return QuantityMath::product($this, $multiplicand);
-    }
-
-    public function divide(int|float|Property $divisor): static
-    {
-        if (is_int($divisor) || is_float($divisor)) {
-            $this->value = $this->value / $divisor;
-
-            return $this;
-        }
-
-        return QuantityMath::ratio($this, $divisor);
-    }
-
-    public function abs(): static
-    {
-        $this->value = Math::absolute($this->value);
-
-        return $this;
-    }
-
-    public function ceil(): static
-    {
-        $this->value = Math::ceil($this->value);
-
-        return $this;
-    }
-
-    public function floor(): static
-    {
-        $this->value = Math::floor($this->value);
-
-        return $this;
-    }
-
-    public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): static
-    {
-        $this->value = Math::round($this->value, $precision, $mode);
+        $this->value = $value;
 
         return $this;
     }

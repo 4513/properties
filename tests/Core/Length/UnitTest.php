@@ -53,7 +53,6 @@ class UnitTest extends TestCase
      * @small
      *
      * @covers \MiBo\Properties\Units\Length\Meter::get
-     * @covers \MiBo\Properties\Units\Length\Meter::__construct
      * @covers \MiBo\Properties\Units\Length\Meter::getMultiplier
      *
      * @return void

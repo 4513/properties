@@ -4,54 +4,46 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Suffixes;
 
-use MiBo\Properties\Contracts\HasMultiplier;
-use MiBo\Properties\Contracts\HasName;
-use MiBo\Properties\Contracts\HasSymbol;
+use MiBo\Properties\Traits\UnitHelper;
 
 /**
  * Trait Cubic
  *
  * @package MiBo\Properties\Suffixes
  *
- * @since 0.1
+ * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @author Michal Boris <michal.boris@gmail.com>
+ * @since x.x
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
 trait Cubic
 {
-    use HasSymbol {
-        HasSymbol::getSymbol as contractGetSymbol;
-    }
-
-    use HasMultiplier {
-        HasMultiplier::getMultiplier as contractGetMultiplier;
-    }
-
-    use HasName {
-        HasName::getName as contractGetName;
+    /**
+     * @see \MiBo\Properties\Traits\UnitHelper::getSymbol
+     *
+     * @return string
+     */
+    protected function getSymbolSuffix(): string
+    {
+        return "³";
     }
 
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    protected function getMultiplierSuffix(): float|int
     {
-        return $this->contractGetSymbol() . "^3";
+        return 3;
     }
 
     /**
-     * @inheritdoc
+     * @see \MiBo\Properties\Traits\UnitHelper::getName
+     *
+     * @return string
      */
-    public function getMultiplier(): float|int
+    protected function getNameSuffix(): string
     {
-        return $this->contractGetMultiplier()**3;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return "cubic " . $this->contractGetName();
+        return "cubic";
     }
 }
