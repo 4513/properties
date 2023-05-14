@@ -9,8 +9,10 @@ use InvalidArgumentException;
 use MiBo\Properties\Contracts\DerivedQuantity;
 use MiBo\Properties\Contracts\NumericalProperty;
 use MiBo\Properties\Contracts\Quantity;
+use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
+use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
 use TypeError;
 use ValueError;
@@ -35,6 +37,8 @@ class PropertyCalc
         Length::class,
         Area::class,
         Volume::class,
+        Time::class,
+        AmountOfSubstance::class,
     ];
 
     /**
