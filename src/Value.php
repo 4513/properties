@@ -36,17 +36,27 @@ final class Value
 
     private bool $infinityMode = false;
 
+    private ?int $precision;
+
     /** @var TBase */
     private int $base;
 
     /**
      * @param int|float $value Value to initialize.
      * @param int $exp Exponent of value. Default 0.
+     * @param int|null $precision Precision of value. Default null, meaning, that the value is a float by
+     *      default.
      * @param TBase $base Base of value. Default 10.
      */
-    public function __construct(int|float $value, int $exp = 0, int $base = 10)
+    public function __construct(
+        int|float $value,
+        int $exp = 0,
+        ?int $precision = null,
+        int $base = 10
+    )
     {
-        $this->base = $base;
+        $this->precision = $precision;
+        $this->base      = $base;
 
         $this->add($value, $exp);
     }
@@ -75,6 +85,8 @@ final class Value
 
             return $this;
         }
+
+        [$value, $exp] = $this->preparePrecision($value, $exp);
 
         if (is_float($value)) {
             $value = (int) ($value * 10 ** self::$floatExp);
@@ -171,10 +183,12 @@ final class Value
      */
     public function multiply(int|float|Value $value, int $exp = 0): static
     {
+        // The infinity mode has been triggered and so the value cannot be changed anymore.
         if ($this->infinityMode === true) {
             throw new ValueError();
         }
 
+        // We try to multiply by the infinity. That means we trigger the infinity mode.
         if (self::$preferInfinity === true && is_float($value) && is_infinite($value)) {
             $this->infinityMode = true;
             $this->values       = [0 => INF];
@@ -182,6 +196,7 @@ final class Value
             return $this;
         }
 
+        // Current value is equal to zero. So we can return zero.
         if (empty($this->values)) {
             return $this;
         }
@@ -190,25 +205,56 @@ final class Value
             return $this->multiplySelf($value, $exp);
         }
 
+        // We try to multiply by zero. That means we can return zero.
         if ($value === 0 || $value === 0.0) {
             $this->values = [];
 
             return $this;
         }
 
+        // We try to multiply by one. We return the current value.
         if ($exp === 0 && ($value === 1 || $value === 1.0)) {
             return $this;
         }
 
-        $values = [];
+        $trueValue = $value * 10 ** $exp;
 
+        if ($this->hasPrecision() && $trueValue < 1 && $trueValue > -1) {
+            $this->multiply(100);
+            $this->divide(100 / $trueValue);
+
+            return $this;
+        }
+
+        // Dividing optimize.
+        //  We try to divide the value as little as possible, and so we try to use the multiplication
+        // to reduce the divisor.
         if ($this->multiplier !== 1 && $value === $this->multiplier) {
             $this->multiplier = 1;
             $value            = 1;
+        } elseif ($value % $this->multiplier === 0) {
+            $value           /= $this->multiplier;
+            $this->multiplier = 1;
         }
 
+        // Here we multiply the numbers.
+        $values    = [];
+        $tmpValues = [];
+
         foreach ($this->values as $exp2 => $val) {
-            $values[$exp2 + $exp] = $val * $value;
+            $innerExp = $exp2 + $exp;
+
+            [$val, $correctExp] = $this->preparePrecision($val * $value, $innerExp);
+
+            if ($correctExp === $innerExp) {
+                $values[$innerExp] = $val;
+            } else {
+                $tmpValues[$correctExp] = $val;
+            }
+        }
+
+        foreach ($tmpValues as $exp2 => $val) {
+            $values[$exp2] = $val + ($values[$exp2] ?? 0);
         }
 
         $this->values = $values;
@@ -283,6 +329,19 @@ final class Value
         }
 
         $this->multiply(1, -$exp);
+
+        if ($value === 1 || $value === 1.0) {
+            return $this;
+        }
+
+        if ($this->hasPrecision()) {
+            $currentValue     = $this->getValue();
+            [$newValue, $exp] = $this->preparePrecision($currentValue / $value, 0);
+            $this->values     = [$exp => $newValue];
+            $this->multiplier = 1;
+
+            return $this;
+        }
 
         $this->multiplier *= $value;
 
@@ -414,5 +473,39 @@ final class Value
         if ($this->base !== $value->getBase()) {
             throw new ValueError();
         }
+    }
+
+    /**
+     * Whether the value has a precision.
+     *
+     * @return bool
+     */
+    private function hasPrecision(): bool
+    {
+        return $this->precision !== null;
+    }
+
+    /**
+     * @param int|float $value
+     * @param int $exp
+     *
+     * @return array{0: int|float, 1: int}
+     */
+    protected function preparePrecision(int|float $value, int $exp): array
+    {
+        if (!$this->hasPrecision()) {
+            return [$value, $exp];
+        }
+
+        $tmpValue = $value * 10 ** $exp;
+        $int      = is_int($tmpValue);
+        $rounded  = round($tmpValue, $this->precision);
+        $rounded  = $int ? (int) $rounded : $rounded;
+
+        if ($rounded === $tmpValue) {
+            return [$value, $exp];
+        }
+
+        return [$this->precision <= 0 ? (int) $rounded : $rounded, 0];
     }
 }

@@ -126,7 +126,7 @@ class ValueDivideTest extends TestCase
                 "add"      => [1, 1.0],
             ],
             [
-                "expected" => 10.0,
+                "expected" => 10,
                 "start"    => [0, 10.0],
                 "add"      => [0, 1.0],
             ],
