@@ -27,7 +27,7 @@ class PropertyMultiplyBench
     /**
      * @return void
      *
-     * @Revs(1000000)
+     * @Revs(3000000)
      * @Iterations(2)
      */
     public function benchMultiply(): void

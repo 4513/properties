@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace MiBo\Properties;
 
+use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Units\Pure\NoUnit;
+
 /**
  * Class Pure
  *
@@ -17,6 +20,11 @@ namespace MiBo\Properties;
  */
 final class Pure extends NumericalProperty
 {
+    public function __construct(float|Value|int $value)
+    {
+        parent::__construct($value, NoUnit::get());
+    }
+
     public static function getQuantityClassName(): string
     {
         return Quantities\Pure::class;

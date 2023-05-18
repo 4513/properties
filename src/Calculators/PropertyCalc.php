@@ -247,15 +247,14 @@ class PropertyCalc
 
         if ($second instanceof \MiBo\Properties\Pure) {
             return $toProduct ?
-                $first->multiply($second->getNumericalValue()) :
-                $first->divide($second->getNumericalValue());
+                $first->multiply($second->getValue()) :
+                $first->divide($second->getValue());
         }
 
         if (!$toProduct && $first->getQuantity()::class === $second->getQuantity()::class) {
             return new (Pure::getDefaultProperty())(
-                    $first->getNumericalValue()->divide($second->getNumericalValue()),
-                    Pure::getDefaultUnit()
-                );
+                $first->getNumericalValue()->divide($second->convertToUnit($first->getUnit())->getValue())
+            );
         }
 
         /**

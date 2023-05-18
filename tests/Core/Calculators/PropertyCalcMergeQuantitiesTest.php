@@ -8,6 +8,7 @@ use DivisionByZeroError;
 use MiBo\Properties\Area;
 use MiBo\Properties\Calculators\PropertyCalc;
 use MiBo\Properties\Length;
+use MiBo\Properties\Pure;
 use MiBo\Properties\Units\Area\SquareMeter;
 use MiBo\Properties\Units\Length\DeciMeter;
 use MiBo\Properties\Units\Length\Meter;
@@ -96,5 +97,67 @@ class PropertyCalcMergeQuantitiesTest extends TestCase
         $this->expectException(DivisionByZeroError::class);
 
         PropertyCalc::divide($property1, $property2);
+    }
+
+    /**
+     * @small
+     *
+     * @covers ::divide
+     * @covers ::divideSingle
+     * @covers ::mergeQuantities
+     *
+     * @return void
+     */
+    public function testDivideByPure(): void
+    {
+        $property1 = new Length(10, Meter::get());
+        $property2 = new Pure(10);
+
+        $property3 = PropertyCalc::divide($property1, $property2);
+
+        $this->assertInstanceOf(Length::class, $property3);
+        $this->assertSame(1, $property3->getValue());
+    }
+
+    /**
+     * @small
+     *
+     * @covers ::multiply
+     * @covers ::multiplySingle
+     * @covers ::mergeQuantities
+     * @covers \MiBo\Properties\Pure::getQuantityClassName
+     *
+     * @return void
+     */
+    public function testMultiplyByPure(): void
+    {
+        $property1 = new Length(10, DeciMeter::get());
+        $property2 = new Pure(10);
+
+        $property3 = PropertyCalc::multiply($property1, $property2);
+
+        $this->assertInstanceOf(Length::class, $property3);
+        $this->assertSame(100, $property3->getValue());
+    }
+
+    /**
+     * @small
+     *
+     * @covers ::divide
+     * @covers ::divideSingle
+     * @covers ::mergeQuantities
+     * @covers \MiBo\Properties\Pure::__construct
+     *
+     * @return void
+     */
+    public function testDivideSameQuantities(): void
+    {
+        $property1 = new Length(1, Meter::get());
+        $property2 = new Length(5, DeciMeter::get());
+
+        $property3 = PropertyCalc::divide($property1, $property2);
+
+        $this->assertInstanceOf(Pure::class, $property3);
+        $this->assertSame(2.0, $property3->getValue());
     }
 }
