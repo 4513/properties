@@ -16,6 +16,7 @@ use MiBo\Properties\Quantities\ElectricCurrent;
 use MiBo\Properties\Quantities\Length;
 use MiBo\Properties\Quantities\LuminousIntensity;
 use MiBo\Properties\Quantities\Mass;
+use MiBo\Properties\Quantities\Pure;
 use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
@@ -48,6 +49,7 @@ class PropertyCalc
         ElectricCurrent::class,
         ThermodynamicTemperature::class,
         LuminousIntensity::class,
+        Pure::class,
     ];
 
     /**
@@ -242,6 +244,19 @@ class PropertyCalc
         $second = clone $second;
 
         self::compileEquations();
+
+        if ($second instanceof \MiBo\Properties\Pure) {
+            return $toProduct ?
+                $first->multiply($second->getNumericalValue()) :
+                $first->divide($second->getNumericalValue());
+        }
+
+        if (!$toProduct && $first->getQuantity()::class === $second->getQuantity()::class) {
+            return new (Pure::getDefaultProperty())(
+                    $first->getNumericalValue()->divide($second->getNumericalValue()),
+                    Pure::getDefaultUnit()
+                );
+        }
 
         /**
          * @var \MiBo\Properties\Contracts\Quantity $product
