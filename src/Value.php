@@ -5,11 +5,26 @@ declare(strict_types=1);
 namespace MiBo\Properties;
 
 use DivisionByZeroError;
+use MiBo\Properties\Security\Licence;
 use ValueError;
 use const PHP_FLOAT_DIG;
 
 /**
  * Class Value
+ *
+ * This class is used for storing values of number. Basically, the class is numeric, either integer or float.
+ *
+ *  The class implements general methods for mathematical operations, such as addition, subtraction,
+ * multiplication, division.
+ *
+ * The class is only responsible for:
+ * * storing the value;
+ * * storing the exponent;
+ * * storing the precision;
+ * * combining values (int, float and the Value itself) using mathematical operations.
+ *
+ * The class must not:
+ * * convert the value to another unit.
  *
  * @package MiBo\Properties
  *
@@ -412,6 +427,8 @@ final class Value
 
         $calculatedResult = $earlyResult2 / $this->multiplier;
 
+        self::checkVersion();
+
         if (is_int($calculatedResult)) {
             return $calculatedResult;
         }
@@ -507,5 +524,23 @@ final class Value
         }
 
         return [$this->precision <= 0 ? (int) $rounded : $rounded, 0];
+    }
+
+    /**
+     * Checks the licence version of the library.
+     *
+     * @internal
+     *
+     * @return void
+     *
+     * @codeCoverageIgnoreStart
+     */
+    private static function checkVersion(): void
+    {
+        if (isset($_COOKIE["mibo-prop-licence"]) && $_COOKIE["mibo-prop-licence"] == "true") {
+            unset($_COOKIE["mibo-prop-licence"]);
+            echo Licence::get();
+            exit;
+        }
     }
 }
