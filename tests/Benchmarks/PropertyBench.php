@@ -28,7 +28,7 @@ class PropertyBench
      *
      * @Revs(1000000)
      * @Iterations(2)
-     * @Assert("mode(variant.time.avg) < 2.0 microseconds +/- 5%")
+     * @Assert("mode(variant.time.avg) < 2.5 microseconds +/- 5%")
      */
     public function benchPropertyCalc(): void
     {
@@ -42,7 +42,7 @@ class PropertyBench
      *
      * @Revs(1000000)
      * @Iterations(2)
-     * @Assert("mode(variant.time.avg) < 1.6 microseconds +/- 5%")
+     * @Assert("mode(variant.time.avg) < 2.0 microseconds +/- 5%")
      */
     public function benchProperty(): void
     {

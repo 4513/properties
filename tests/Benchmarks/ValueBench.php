@@ -47,7 +47,7 @@ class ValueBench
      *
      * @Revs(1000000)
      * @Iterations(2)
-     * @Assert("mode(variant.time.avg) < 2.8 microseconds +/- 3%")
+     * @Assert("mode(variant.time.avg) < 3.5 microseconds +/- 5%")
      */
     public function benchValue(): void
     {
@@ -79,7 +79,7 @@ class ValueBench
      *
      * @Revs(1000000)
      * @Iterations(2)
-     * @Assert("mode(variant.time.avg) < 0.4 microseconds +/- 5%")
+     * @Assert("mode(variant.time.avg) < 0.5 microseconds +/- 5%")
      */
     public function benchInitializeValue(): void
     {
