@@ -102,4 +102,13 @@ interface Unit extends Stringable
      * @return string Name of the Unit.
      */
     public static function getQuantityClassName(): string;
+
+    /**
+     * Compares the Unit with another Unit.
+     *
+     * @param \MiBo\Properties\Contracts\Unit $unit Unit to compare.
+     *
+     * @return bool Whether the Unit is the same.
+     */
+    public function is(Unit $unit): bool;
 }

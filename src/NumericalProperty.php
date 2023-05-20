@@ -22,19 +22,25 @@ use ValueError;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  *
- * @extends \MiBo\Properties\Property<\MiBo\Properties\Contracts\NumericalUnit, int>
+ * @extends \MiBo\Properties\Property<\MiBo\Properties\Contracts\NumericalUnit, int|float>
+ *
+ * @phpstan-ignore-next-line
  */
 abstract class NumericalProperty extends Property implements ContractNumericalProperty
 {
     private Value $numericalValue;
 
     /**
-     * @param float|int|\MiBo\Properties\Value<int> $value
+     * @param float|int|\MiBo\Properties\Value $value
      * @param \MiBo\Properties\Contracts\Unit $unit
      */
     public function __construct(float|int|Value $value, Unit $unit)
     {
         $this->numericalValue = $value instanceof Value ? $value : new Value($value);
+
+        if (!$unit instanceof NumericalUnit) {
+            throw new ValueError();
+        }
 
         parent::__construct($this->numericalValue->getValue(), $unit);
     }
@@ -80,7 +86,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     public function add(ContractNumericalProperty|float|int $value): static
     {
         if ($value instanceof ContractNumericalProperty) {
-            /** @var \MiBo\Properties\NumericalProperty */
+            /** @var static */
             return PropertyCalc::add($this, $value);
         }
 
@@ -99,7 +105,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     public function subtract(ContractNumericalProperty|float|int $value): static
     {
         if ($value instanceof ContractNumericalProperty) {
-            /** @var \MiBo\Properties\NumericalProperty */
+            /** @var static */
             return PropertyCalc::subtract($this, $value);
         }
 
@@ -145,7 +151,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     }
 
     /**
-     * @return \MiBo\Properties\Value<int>
+     * @return \MiBo\Properties\Value
      */
     public function getNumericalValue(): Value
     {

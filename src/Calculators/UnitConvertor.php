@@ -189,7 +189,7 @@ class UnitConvertor
      * and returns converted value.
      *
      * @phpcs:ignore
-     * @var array<class-string<\MiBo\Properties\Contracts\Quantity>, \Closure(\MiBo\Properties\NumericalProperty, \MiBo\Properties\Contracts\Unit): \MiBo\Properties\Value<int>>
+     * @var array<class-string<\MiBo\Properties\Contracts\Quantity>, \Closure(\MiBo\Properties\NumericalProperty, \MiBo\Properties\Contracts\Unit): \MiBo\Properties\Value>
      */
     public static array $unitConvertors = [];
 
@@ -199,11 +199,11 @@ class UnitConvertor
      * @param \MiBo\Properties\NumericalProperty $property Property to convert.
      * @param \MiBo\Properties\Contracts\NumericalUnit $unit Unit to convert to.
      *
-     * @return \MiBo\Properties\Value<int> Converted value.
+     * @return \MiBo\Properties\Value Converted value.
      */
     public static function convert(NumericalProperty $property, NumericalUnit $unit): Value
     {
-        if ($property->getUnit()::class === $unit::class) {
+        if ($property->getUnit()->is($unit)) {
             return $property->getNumericalValue();
         }
 
@@ -252,7 +252,7 @@ class UnitConvertor
      * @param \MiBo\Properties\NumericalProperty $property Property to convert.
      * @param \MiBo\Properties\Contracts\NumericalUnit $unit Unit to convert to.
      *
-     * @return \MiBo\Properties\Value<int> Converted value.
+     * @return \MiBo\Properties\Value Converted value.
      */
     protected static function convertT(NumericalProperty $property, NumericalUnit $unit): Value
     {

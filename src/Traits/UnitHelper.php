@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Traits;
 
+use MiBo\Properties\Contracts\Unit;
+
 /**
  * Trait UnitHelper
  *
@@ -40,6 +42,7 @@ trait UnitHelper
     {
         $multiplier = $this->multiplier ?? 0;
 
+        /** @phpstan-ignore-next-line */
         if (method_exists($this, "getMultiplierPrefix")) {
             $multiplier += $this->getMultiplierPrefix();
         }
@@ -70,10 +73,12 @@ trait UnitHelper
     {
         $name = $this->name ?? "";
 
+        /** @phpstan-ignore-next-line */
         if (method_exists($this, "getNamePrefix")) {
             $name = $this->getNamePrefix() . $name;
         }
 
+        /** @phpstan-ignore-next-line */
         if (method_exists($this, "getNameSuffix")) {
             $name = trim($this->getNameSuffix() . " " . $name);
         }
@@ -88,14 +93,24 @@ trait UnitHelper
     {
         $symbol = $this->symbol ?? "";
 
+        /** @phpstan-ignore-next-line */
         if (method_exists($this, "getSymbolPrefix")) {
             $symbol = $this->getSymbolPrefix() . $symbol;
         }
 
+        /** @phpstan-ignore-next-line */
         if (method_exists($this, "getSymbolSuffix")) {
             $symbol .= $this->getSymbolSuffix();
         }
 
         return $symbol;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function is(Unit $unit): bool
+    {
+        return $this::class === $unit::class;
     }
 }

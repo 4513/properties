@@ -112,6 +112,7 @@ abstract class Property implements PropertyContract
     abstract public function convertToUnit(Unit $unit): PropertyContract;
 
     /**
+     * @phpstan-ignore-next-line
      * @param TValue $value
      *
      * @return static

@@ -33,8 +33,6 @@ use const PHP_FLOAT_DIG;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @template TBase of int
  */
 final class Value
 {
@@ -53,7 +51,7 @@ final class Value
 
     private ?int $precision;
 
-    /** @var TBase */
+    /** @var positive-int */
     private int $base;
 
     private static bool $licenceChecked = false;
@@ -63,7 +61,7 @@ final class Value
      * @param int $exp Exponent of value. Default 0.
      * @param int|null $precision Precision of value. Default null, meaning, that the value is a float by
      *      default.
-     * @param TBase $base Base of value. Default 10.
+     * @param positive-int $base Base of value. Default 10.
      */
     public function __construct(
         int|float $value,
@@ -81,7 +79,7 @@ final class Value
     /**
      * Adds value to current value.
      *
-     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to add.
+     * @param int|float|\MiBo\Properties\Value $value Value to add.
      * @param int $exp Exponent of value.
      *
      * @return static Value with added value.
@@ -137,7 +135,7 @@ final class Value
     /**
      * Adds value to current value.
      *
-     * @param \MiBo\Properties\Value<TBase> $value Value to add.
+     * @param \MiBo\Properties\Value $value Value to add.
      * @param int $exp Exponent of value.
      *
      * @return static Value with added value.
@@ -156,7 +154,7 @@ final class Value
     /**
      * Subtracts value from current value.
      *
-     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to subtract.
+     * @param int|float|\MiBo\Properties\Value $value Value to subtract.
      * @param int $exp Exponent of value.
      *
      * @return static Value with subtracted value.
@@ -177,7 +175,7 @@ final class Value
     /**
      * Subtracts value from current value.
      *
-     * @param \MiBo\Properties\Value<TBase> $value Value to subtract.
+     * @param \MiBo\Properties\Value $value Value to subtract.
      * @param int $exp Exponent of value.
      *
      * @return static Value with subtracted value.
@@ -196,7 +194,7 @@ final class Value
     /**
      * Multiplies value with current value.
      *
-     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to multiply.
+     * @param int|float|\MiBo\Properties\Value $value Value to multiply.
      * @param int $exp Exponent of value.
      *
      * @return static Value with multiplied value.
@@ -288,7 +286,7 @@ final class Value
     /**
      * Multiplies value with current value.
      *
-     * @param \MiBo\Properties\Value<TBase> $value Value to multiply.
+     * @param \MiBo\Properties\Value $value Value to multiply.
      * @param int $exp Exponent of value.
      *
      * @return static Value with multiplied value.
@@ -313,7 +311,7 @@ final class Value
     /**
      * Divides value with current value.
      *
-     * @param int|float|\MiBo\Properties\Value<TBase> $value Value to divide.
+     * @param int|float|\MiBo\Properties\Value $value Value to divide.
      * @param int $exp Exponent of value.
      *
      * @return static Value with divided value.
@@ -377,7 +375,7 @@ final class Value
     /**
      * Divides value with current value.
      *
-     * @param \MiBo\Properties\Value<TBase> $value Value to divide.
+     * @param \MiBo\Properties\Value $value Value to divide.
      * @param int $exp Exponent of value.
      *
      * @return static Value with divided value.
@@ -478,7 +476,7 @@ final class Value
     }
 
     /**
-     * @return TBase
+     * @return positive-int
      */
     public function getBase(): int
     {
@@ -488,13 +486,9 @@ final class Value
     /**
      * Checks that two values have the same base.
      *
-     * @template TInnerBase of int
-     *
-     * @param \MiBo\Properties\Value<TInnerBase> $value Value to compare.
+     * @param \MiBo\Properties\Value $value Value to compare.
      *
      * @return void
-     *
-     * @phpstan-assert int-mask-of<TBase> TInnerBase
      */
     protected function checkBaseBeforeOperation(Value $value): void
     {
@@ -507,6 +501,8 @@ final class Value
      * Whether the value has a precision.
      *
      * @return bool
+     *
+     * @phpstan-assert-if-true !null $this->precision
      */
     private function hasPrecision(): bool
     {

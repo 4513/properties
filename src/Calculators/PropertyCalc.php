@@ -287,7 +287,6 @@ class PropertyCalc
 
                 $parsed = preg_replace(
                     "/\(\%{$firstQuantity::getDimensionSymbol()}\%\)/",
-                    // @phpstan-ignore-next-line
                     "{$first->getValue()}",
                     $firstHalf,
                     1
@@ -302,7 +301,6 @@ class PropertyCalc
 
                 $parsed = preg_replace(
                     "/\(\%{$secondQuantity::getDimensionSymbol()}\%\)/",
-                    // @phpstan-ignore-next-line
                     "{$second->getValue()}",
                     $equation,
                     1
@@ -324,14 +322,12 @@ class PropertyCalc
                     /** @var \MiBo\Properties\Contracts\NumericalProperty $newProperty */
                     $newProperty = self::$productResolvers[$product]($first, $second);
 
-                    // @phpstan-ignore-next-line
                     if (!$newProperty instanceof NumericalProperty
                         || $newProperty::getQuantityClassName() !== $product
                     ) {
                         throw new TypeError();
                     }
 
-                    // @phpstan-ignore-next-line
                     return $newProperty;
                 }
 

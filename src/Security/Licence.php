@@ -37,6 +37,8 @@ final class Licence
     {
         self::generate();
 
-        return file_get_contents(__DIR__ . "/licence");
+        $content = file_get_contents(__DIR__ . "/licence");
+
+        return $content === false ? "" : $content;
     }
 }
