@@ -8,6 +8,7 @@ use MiBo\Properties\Calculators\PropertyCalc;
 use MiBo\Properties\Length;
 use MiBo\Properties\Units\Length\DeciMeter;
 use MiBo\Properties\Units\Length\Meter;
+use PhpBench\Benchmark\Metadata\Annotations\Assert;
 use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
 
@@ -29,6 +30,7 @@ class PropertyMultiplyBench
      *
      * @Revs(3000000)
      * @Iterations(2)
+     * @Assert("mode(variant.time.avg) < 5 microseconds +/- 2%")
      */
     public function benchMultiply(): void
     {

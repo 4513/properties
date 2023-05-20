@@ -2,5 +2,6 @@
     "$schema":"./vendor/phpbench/phpbench/phpbench.schema.json",
     "runner.bootstrap": "vendor/autoload.php",
     "runner.php_disable_ini": true,
-    "runner.path": "tests/Benchmarks"
+    "runner.path": "tests/Benchmarks",
+    "storage.xml_storage_path": "tests/Benchmarks/reports"
 }

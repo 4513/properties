@@ -6,6 +6,7 @@ namespace MiBo\Properties\Tests\Benchmarks;
 
 use MiBo\Properties\Length;
 use MiBo\Properties\Units\Length\Meter;
+use PhpBench\Benchmark\Metadata\Annotations\Assert;
 use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
 
@@ -27,6 +28,7 @@ class PropertyBench
      *
      * @Revs(1000000)
      * @Iterations(2)
+     * @Assert("mode(variant.time.avg) < 1.02 microseconds +/- 5%")
      */
     public function benchPropertyCalc(): void
     {
@@ -40,6 +42,7 @@ class PropertyBench
      *
      * @Revs(1000000)
      * @Iterations(2)
+     * @Assert("mode(variant.time.avg) < 0.85 microseconds +/- 1%")
      */
     public function benchProperty(): void
     {

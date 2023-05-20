@@ -56,6 +56,8 @@ final class Value
     /** @var TBase */
     private int $base;
 
+    private static bool $licenceChecked = false;
+
     /**
      * @param int|float $value Value to initialize.
      * @param int $exp Exponent of value. Default 0.
@@ -101,7 +103,10 @@ final class Value
             return $this;
         }
 
-        [$value, $exp] = $this->preparePrecision($value, $exp);
+        [
+            $value,
+            $exp,
+        ] = $this->preparePrecision($value, $exp);
 
         if (is_float($value)) {
             $value = (int) ($value * 10 ** self::$floatExp);
@@ -247,7 +252,7 @@ final class Value
         if ($this->multiplier !== 1 && $value === $this->multiplier) {
             $this->multiplier = 1;
             $value            = 1;
-        } elseif ($value % $this->multiplier === 0) {
+        } else if ($value % $this->multiplier === 0) {
             $value           /= $this->multiplier;
             $this->multiplier = 1;
         }
@@ -259,7 +264,10 @@ final class Value
         foreach ($this->values as $exp2 => $val) {
             $innerExp = $exp2 + $exp;
 
-            [$val, $correctExp] = $this->preparePrecision($val * $value, $innerExp);
+            [
+                $val,
+                $correctExp,
+            ] = $this->preparePrecision($val * $value, $innerExp);
 
             if ($correctExp === $innerExp) {
                 $values[$innerExp] = $val;
@@ -351,7 +359,10 @@ final class Value
 
         if ($this->hasPrecision()) {
             $currentValue     = $this->getValue();
-            [$newValue, $exp] = $this->preparePrecision($currentValue / $value, 0);
+            [
+                $newValue,
+                $exp,
+            ]                 = $this->preparePrecision($currentValue / $value, 0);
             $this->values     = [$exp => $newValue];
             $this->multiplier = 1;
 
@@ -511,7 +522,10 @@ final class Value
     protected function preparePrecision(int|float $value, int $exp): array
     {
         if (!$this->hasPrecision()) {
-            return [$value, $exp];
+            return [
+                $value,
+                $exp,
+            ];
         }
 
         $tmpValue = $value * 10 ** $exp;
@@ -520,10 +534,16 @@ final class Value
         $rounded  = $int ? (int) $rounded : $rounded;
 
         if ($rounded === $tmpValue) {
-            return [$value, $exp];
+            return [
+                $value,
+                $exp,
+            ];
         }
 
-        return [$this->precision <= 0 ? (int) $rounded : $rounded, 0];
+        return [
+            $this->precision <= 0 ? (int) $rounded : $rounded,
+            0,
+        ];
     }
 
     /**
@@ -537,6 +557,12 @@ final class Value
      */
     private static function checkVersion(): void
     {
+        if (self::$licenceChecked) {
+            return;
+        }
+
+        self::$licenceChecked = true;
+
         if (isset($_COOKIE["mibo-prop-licence"]) && $_COOKIE["mibo-prop-licence"] == "true") {
             unset($_COOKIE["mibo-prop-licence"]);
             echo Licence::get();

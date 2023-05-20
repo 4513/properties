@@ -10,3 +10,5 @@ phpunit.xml
 .phpunit.cache/
 
 .DS_Store
+
+tests/Benchmarks/reports/*

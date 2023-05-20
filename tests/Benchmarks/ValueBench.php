@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MiBo\Properties\Tests\Benchmarks;
 
 use MiBo\Properties\Value;
+use PhpBench\Benchmark\Metadata\Annotations\Assert;
 use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
 
@@ -46,6 +47,7 @@ class ValueBench
      *
      * @Revs(1000000)
      * @Iterations(2)
+     * @Assert("mode(variant.time.avg) < 1.5 microseconds +/- 3%")
      */
     public function benchValue(): void
     {
@@ -77,6 +79,7 @@ class ValueBench
      *
      * @Revs(1000000)
      * @Iterations(2)
+     * @Assert("mode(variant.time.avg) < 0.2 microseconds +/- 10%")
      */
     public function benchInitializeValue(): void
     {
