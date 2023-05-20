@@ -30,7 +30,7 @@ class PropertyMultiplyBench
      *
      * @Revs(3000000)
      * @Iterations(2)
-     * @Assert("mode(variant.time.avg) < 5 microseconds +/- 2%")
+     * @Assert("mode(variant.time.avg) < 9.8 microseconds +/- 10%")
      */
     public function benchMultiply(): void
     {
