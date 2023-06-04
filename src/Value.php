@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MiBo\Properties;
 
 use DivisionByZeroError;
-use MiBo\Properties\Security\Licence;
 use ValueError;
 use const PHP_FLOAT_DIG;
 
@@ -53,8 +52,6 @@ final class Value
 
     /** @var positive-int */
     private int $base;
-
-    private static bool $licenceChecked = false;
 
     /**
      * @param int|float $value Value to initialize.
@@ -436,8 +433,6 @@ final class Value
 
         $calculatedResult = $earlyResult2 / $this->multiplier;
 
-        self::checkVersion();
-
         if (is_int($calculatedResult)) {
             return $calculatedResult;
         }
@@ -540,29 +535,5 @@ final class Value
             $this->precision <= 0 ? (int) $rounded : $rounded,
             0,
         ];
-    }
-
-    /**
-     * Checks the licence version of the library.
-     *
-     * @internal
-     *
-     * @return void
-     *
-     * @codeCoverageIgnoreStart
-     */
-    private static function checkVersion(): void
-    {
-        if (self::$licenceChecked) {
-            return;
-        }
-
-        self::$licenceChecked = true;
-
-        if (isset($_COOKIE["mibo-prop-licence"]) && $_COOKIE["mibo-prop-licence"] == "true") {
-            unset($_COOKIE["mibo-prop-licence"]);
-            echo Licence::get();
-            exit;
-        }
     }
 }

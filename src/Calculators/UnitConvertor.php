@@ -6,7 +6,6 @@ namespace MiBo\Properties\Calculators;
 
 use InvalidArgumentException;
 use MiBo\Properties\Contracts\NumericalUnit;
-use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\NumericalProperty;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
