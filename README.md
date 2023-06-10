@@ -113,8 +113,8 @@ base can be used.
 The Value is responsible to optimize the calculations and at the same time, tries to avoid using floats. One
 must understand, that because of trying to avoiding floats, the Value might be slower than using floats directly.  
 
-One must understand, that some tests DO fail because the Value is more accurate. For example, when doing 1/3*3
-in that order, on an integer property, the result is 0 (1/3 is 0, and 0*3 is 0). However, when using the Value,
+One must understand, that some tests DO fail because the Value is more accurate. For example, when doing 1/3\*3
+in that order, on an integer property, the result is 0 (1/3 is 0, and 0\*3 is 0). However, when using the Value,
 the Value stores the first divider (3) into a "store", and one realizing that a multiplication of the same value
 is required, the Value removes the divider and does not multiply, which results in integer 1. *(That is a very
 simple example, but it shows the point)*
