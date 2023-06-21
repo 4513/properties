@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use MiBo\Properties\Contracts\Property as PropertyContract;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Exceptions\IncompatiblePropertyError;
 
 /**
  * Class Property
@@ -40,7 +41,7 @@ abstract class Property implements PropertyContract
     public function __construct($value, Unit $unit)
     {
         if ($unit::getQuantityClassName() !== static::getQuantityClassName()) {
-            throw new InvalidArgumentException(
+            throw new IncompatiblePropertyError(
                 sprintf(
                     'Unit %s is not compatible with Quantity %s',
                     $unit::class,

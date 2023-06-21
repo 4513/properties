@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace MiBo\Properties;
 
-use DivisionByZeroError;
+use MiBo\Properties\Exceptions\BaseMismatchError;
+use MiBo\Properties\Exceptions\CalculationWithInfinityException;
+use MiBo\Properties\Exceptions\DivisionByZeroException;
 use ValueError;
 use const PHP_FLOAT_DIG;
 
@@ -80,11 +82,15 @@ final class Value
      * @param int $exp Exponent of value.
      *
      * @return static Value with added value.
+     *
+     * @throws \MiBo\Properties\Exceptions\CalculationWithInfinityException If the value is already infinite.
      */
     public function add(int|float|Value $value, int $exp = 0): static
     {
         if ($this->infinityMode === true) {
-            throw new ValueError();
+            throw new CalculationWithInfinityException(
+                "The value is already either infinite or almost zero. Cannot add or subtract from it."
+            );
         }
 
         if ($value instanceof Value) {
@@ -159,7 +165,9 @@ final class Value
     public function subtract(int|float|Value $value, int $exp = 0): static
     {
         if ($this->infinityMode === true) {
-            throw new ValueError();
+            throw new CalculationWithInfinityException(
+                "The value is already either infinite or almost zero. Cannot add or subtract from it."
+            );
         }
 
         if ($value instanceof Value) {
@@ -200,7 +208,9 @@ final class Value
     {
         // The infinity mode has been triggered and so the value cannot be changed anymore.
         if ($this->infinityMode === true) {
-            throw new ValueError();
+            throw new CalculationWithInfinityException(
+                "The value is already either infinite or almost zero. Cannot multiply or divide it."
+            );
         }
 
         // We try to multiply by the infinity. That means we trigger the infinity mode.
@@ -312,11 +322,17 @@ final class Value
      * @param int $exp Exponent of value.
      *
      * @return static Value with divided value.
+     * @phpstan-return ($value is 0 ? never : static)
+     *
+     * @throws \MiBo\Properties\Exceptions\DivisionByZeroException If the value is
+     * zero.
      */
     public function divide(int|float|Value $value, int $exp = 0): static
     {
         if ($this->infinityMode === true) {
-            throw new ValueError();
+            throw new CalculationWithInfinityException(
+                "The value is already either infinite or almost zero. Cannot multiply or divide it."
+            );
         }
 
         if ($value instanceof Value) {
@@ -331,7 +347,7 @@ final class Value
                 return $this;
             }
 
-            throw new DivisionByZeroError();
+            throw new DivisionByZeroException();
         }
 
         if (is_infinite($value)) {
@@ -343,7 +359,9 @@ final class Value
                 return $this;
             }
 
-            throw new ValueError();
+            throw new CalculationWithInfinityException(
+                "Infinite number provided! Make sure to enable the infinity mode."
+            );
         }
 
         $this->multiply(1, -$exp);
@@ -484,11 +502,13 @@ final class Value
      * @param \MiBo\Properties\Value $value Value to compare.
      *
      * @return void
+     *
+     * @throws \MiBo\Properties\Exceptions\BaseMismatchError If bases do not match.
      */
     protected function checkBaseBeforeOperation(Value $value): void
     {
         if ($this->base !== $value->getBase()) {
-            throw new ValueError();
+            throw new BaseMismatchError("Cannot perform operation on values with different bases!");
         }
     }
 

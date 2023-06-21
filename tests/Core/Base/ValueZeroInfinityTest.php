@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Tests\Base;
 
+use MiBo\Properties\Exceptions\CalculationWithInfinityException;
 use MiBo\Properties\Value;
 use PHPUnit\Framework\TestCase;
 use ValueError;
@@ -40,7 +41,7 @@ class ValueZeroInfinityTest extends TestCase
         $this->assertTrue($value->isInfinite());
         $this->assertFalse($value->isAlmostZero());
 
-        $this->expectException(ValueError::class);
+        $this->expectException(CalculationWithInfinityException::class);
 
         $value->multiply(0);
     }
@@ -62,7 +63,7 @@ class ValueZeroInfinityTest extends TestCase
         $this->assertTrue($value->isInfinite());
         $this->assertFalse($value->isAlmostZero());
 
-        $this->expectException(ValueError::class);
+        $this->expectException(CalculationWithInfinityException::class);
 
         $value->divide(INF);
     }
@@ -84,7 +85,7 @@ class ValueZeroInfinityTest extends TestCase
         $this->assertFalse($value->isInfinite());
         $this->assertTrue($value->isAlmostZero());
 
-        $this->expectException(ValueError::class);
+        $this->expectException(CalculationWithInfinityException::class);
 
         $value->divide(0);
     }
@@ -101,7 +102,7 @@ class ValueZeroInfinityTest extends TestCase
         $value = new Value(0);
         $value->add(INF);
 
-        $this->expectException(ValueError::class);
+        $this->expectException(CalculationWithInfinityException::class);
 
         $value->add(0);
     }
@@ -118,7 +119,7 @@ class ValueZeroInfinityTest extends TestCase
         $value = new Value(0);
         $value->subtract(INF);
 
-        $this->expectException(ValueError::class);
+        $this->expectException(CalculationWithInfinityException::class);
 
         $value->subtract(0);
     }

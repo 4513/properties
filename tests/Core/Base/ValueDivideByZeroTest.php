@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Tests\Base;
 
+use MiBo\Properties\Exceptions\DivisionByZeroException;
 use MiBo\Properties\Value;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +34,7 @@ class ValueDivideByZeroTest extends TestCase
     {
         $value = new Value(10);
 
-        $this->expectException(\DivisionByZeroError::class);
+        $this->expectException(DivisionByZeroException::class);
 
         $value->divide(0);
     }

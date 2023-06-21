@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Tests\Base;
 
+use MiBo\Properties\Exceptions\CalculationWithInfinityException;
 use MiBo\Properties\Value;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +34,7 @@ class ValueDivideByInfTest extends TestCase
     {
         $value = new Value(10);
 
-        $this->expectException(\ValueError::class);
+        $this->expectException(CalculationWithInfinityException::class);
 
         $value->divide(INF);
     }

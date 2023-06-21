@@ -7,6 +7,7 @@ namespace MiBo\Properties\Tests\Calculators;
 use DivisionByZeroError;
 use MiBo\Properties\Area;
 use MiBo\Properties\Calculators\PropertyCalc;
+use MiBo\Properties\Exceptions\DivisionByZeroException;
 use MiBo\Properties\Length;
 use MiBo\Properties\Pure;
 use MiBo\Properties\Units\Area\SquareMeter;
@@ -94,7 +95,7 @@ class PropertyCalcMergeQuantitiesTest extends TestCase
         $property1 = new Area(100, SquareMeter::get());
         $property2 = new Length(0, DeciMeter::get());
 
-        $this->expectException(DivisionByZeroError::class);
+        $this->expectException(DivisionByZeroException::class);
 
         PropertyCalc::divide($property1, $property2);
     }

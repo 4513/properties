@@ -9,7 +9,7 @@ use MiBo\Properties\Calculators\UnitConvertor;
 use MiBo\Properties\Contracts\NumericalProperty as ContractNumericalProperty;
 use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\Unit;
-use ValueError;
+use MiBo\Properties\Exceptions\IncompatiblePropertyError;
 
 /**
  * Class NumericalProperty
@@ -39,7 +39,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
         $this->numericalValue = $value instanceof Value ? $value : new Value($value);
 
         if (!$unit instanceof NumericalUnit) {
-            throw new ValueError();
+            throw new IncompatiblePropertyError("Property's unit must be compatible with the property!");
         }
 
         parent::__construct($this->numericalValue->getValue(), $unit);
@@ -67,7 +67,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     public function convertToUnit(Unit $unit): NumericalProperty
     {
         if (!$unit instanceof NumericalUnit) {
-            throw new ValueError();
+            throw new IncompatiblePropertyError("Property's unit must be compatible with the property!");
         }
 
         $this->numericalValue = UnitConvertor::convert($this, $unit);

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace MiBo\Properties\Calculators;
 
 use CompileError;
-use DivisionByZeroError;
 use InvalidArgumentException;
 use MiBo\Properties\Contracts\DerivedQuantity;
 use MiBo\Properties\Contracts\NumericalProperty;
 use MiBo\Properties\Contracts\Quantity;
+use MiBo\Properties\Exceptions\DivisionByZeroException;
+use MiBo\Properties\Exceptions\IncompatiblePropertyError;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\ElectricCurrent;
@@ -174,7 +175,7 @@ class PropertyCalc
             || $divisor->getValue() === 0
             || $divisor->getValue() === 0.0
         ) {
-            throw new DivisionByZeroError();
+            throw new DivisionByZeroException();
         }
     }
 
@@ -205,7 +206,7 @@ class PropertyCalc
             }
 
             if ($property::getQuantityClassName() !== $quantity) {
-                throw new InvalidArgumentException('Cannot merge different quantities.');
+                throw new IncompatiblePropertyError('Cannot merge different quantities.');
             }
 
             if ($add) {
@@ -279,7 +280,8 @@ class PropertyCalc
                 $firstHalf = preg_replace("/(\/.*)/", "", $equation);
 
                 if ($firstHalf === null) {
-                    throw new CompileError();
+                    // @phpstan-ignore-next-line class-string
+                    throw new CompileError("An error occurred while compiling {$product} equation.");
                 }
 
                 /** @var \MiBo\Properties\Contracts\Quantity $firstQuantity */
@@ -325,7 +327,7 @@ class PropertyCalc
                     if (!$newProperty instanceof NumericalProperty
                         || $newProperty::getQuantityClassName() !== $product
                     ) {
-                        throw new TypeError();
+                        throw new TypeError("Product resolver for {$product} must return a {$product} property!");
                     }
 
                     return $newProperty;
@@ -347,7 +349,9 @@ class PropertyCalc
             }
         }
 
-        throw new ValueError();
+        throw new ValueError(
+            "No resolver found for merging {$first::getQuantityClassName()} and {$second::getQuantityClassName()}!"
+        );
     }
 
     /**

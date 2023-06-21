@@ -6,6 +6,7 @@ namespace MiBo\Properties\Tests\Calculators;
 
 use InvalidArgumentException;
 use MiBo\Properties\Calculators\PropertyCalc;
+use MiBo\Properties\Exceptions\IncompatiblePropertyError;
 use MiBo\Properties\Length;
 use MiBo\Properties\Time;
 use MiBo\Properties\Units\Length\DeciMeter;
@@ -60,7 +61,7 @@ class PropertyCalcMergeTest extends TestCase
         $property2 = new Length(2, Meter::get());
         $property3 = new Time(10, Second::get());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(IncompatiblePropertyError::class);
 
         PropertyCalc::add($property1, $property2, $property3);
     }
@@ -97,7 +98,7 @@ class PropertyCalcMergeTest extends TestCase
         $property2 = new Length(2, Meter::get());
         $property3 = new Time(10, Second::get());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(IncompatiblePropertyError::class);
 
         PropertyCalc::subtract($property1, $property2, $property3);
     }
