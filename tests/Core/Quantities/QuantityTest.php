@@ -4,21 +4,26 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Tests\Core\Quantities;
 
+use MiBo\Properties\Quantities\Amount;
 use MiBo\Properties\Quantities\ElectricCurrent;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
 use MiBo\Properties\Quantities\LuminousIntensity;
 use MiBo\Properties\Quantities\Mass;
+use MiBo\Properties\Quantities\PerUnit;
 use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
+use MiBo\Properties\Units\Amount\Piece;
 use MiBo\Properties\Units\AmountOfSubstance\Mole;
 use MiBo\Properties\Units\Area\SquareMeter;
 use MiBo\Properties\Units\ElectricCurrent\Ampere;
 use MiBo\Properties\Units\Length\Meter;
 use MiBo\Properties\Units\LuminousIntensity\Candela;
 use MiBo\Properties\Units\Mass\KiloGram;
+use MiBo\Properties\Units\PerUnit\PerNotSpecified;
+use MiBo\Properties\Units\Pure\NoUnit;
 use MiBo\Properties\Units\ThermodynamicTemperature\Kelvin;
 use MiBo\Properties\Units\Time\Second;
 use MiBo\Properties\Units\Volume\CubicMeter;
@@ -70,6 +75,12 @@ class QuantityTest extends TestCase
      * @covers \MiBo\Properties\Quantities\Volume::getDimensionSymbol
      * @covers \MiBo\Properties\Quantities\Volume::getInitialUnit
      * @covers \MiBo\Properties\Quantities\Volume::getDefaultProperty
+     * @covers \MiBo\Properties\Quantities\Amount::getDimensionSymbol
+     * @covers \MiBo\Properties\Quantities\Amount::getInitialUnit
+     * @covers \MiBo\Properties\Quantities\Amount::getDefaultProperty
+     * @covers \MiBo\Properties\Quantities\PerUnit::getDimensionSymbol
+     * @covers \MiBo\Properties\Quantities\PerUnit::getInitialUnit
+     * @covers \MiBo\Properties\Quantities\PerUnit::getDefaultProperty
      *
      * @return void
      */
@@ -129,6 +140,18 @@ class QuantityTest extends TestCase
                 "V",
                 CubicMeter::get(),
                 \MiBo\Properties\Volume::class,
+            ],
+            [
+                Amount::class,
+                "AMOUNT",
+                Piece::get(),
+                \MiBo\Properties\Amount::class,
+            ],
+            [
+                PerUnit::class,
+                "PERUNIT",
+                PerNotSpecified::get(NoUnit::get(), NoUnit::get()),
+                \MiBo\Properties\PerUnit::class,
             ],
         ];
 

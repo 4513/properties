@@ -37,7 +37,7 @@ class Amount implements Quantity
      */
     protected static function getInitialUnit(): Unit
     {
-        return Piece::class;
+        return Piece::get();
     }
 
     /**
