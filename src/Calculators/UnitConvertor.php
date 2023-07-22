@@ -7,12 +7,35 @@ namespace MiBo\Properties\Calculators;
 use InvalidArgumentException;
 use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\NumericalProperty;
+use MiBo\Properties\Quantities\Amount;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\Length;
 use MiBo\Properties\Quantities\Mass;
 use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
+use MiBo\Properties\Units\Amount\BakersDozen;
+use MiBo\Properties\Units\Amount\Brace;
+use MiBo\Properties\Units\Amount\Century;
+use MiBo\Properties\Units\Amount\Couple;
+use MiBo\Properties\Units\Amount\Decade;
+use MiBo\Properties\Units\Amount\Dozen;
+use MiBo\Properties\Units\Amount\Duo;
+use MiBo\Properties\Units\Amount\Grand;
+use MiBo\Properties\Units\Amount\GreatGross;
+use MiBo\Properties\Units\Amount\GreatHundred;
+use MiBo\Properties\Units\Amount\Gross;
+use MiBo\Properties\Units\Amount\HalfDozen;
+use MiBo\Properties\Units\Amount\HatTrick;
+use MiBo\Properties\Units\Amount\Large;
+use MiBo\Properties\Units\Amount\Myriad;
+use MiBo\Properties\Units\Amount\Pair;
+use MiBo\Properties\Units\Amount\Quartet;
+use MiBo\Properties\Units\Amount\Score;
+use MiBo\Properties\Units\Amount\Several;
+use MiBo\Properties\Units\Amount\SmallGross;
+use MiBo\Properties\Units\Amount\Trio;
+use MiBo\Properties\Units\Amount\Unit;
 use MiBo\Properties\Units\Area\Acre;
 use MiBo\Properties\Units\Area\Bovate;
 use MiBo\Properties\Units\Area\Carucate;
@@ -99,6 +122,29 @@ use MiBo\Properties\Value;
 class UnitConvertor
 {
     protected const UNIT_COEFFICIENTS = [
+        Amount::class => [
+            BakersDozen::class  => 13,
+            Brace::class        => 2,
+            Century::class      => 100,
+            Couple::class       => 2,
+            Decade::class       => 10,
+            Dozen::class        => 12,
+            Duo::class          => 2,
+            Grand::class        => 1_000,
+            GreatGross::class   => 1_728,
+            GreatHundred::class => 120,
+            Gross::class        => 144,
+            HalfDozen::class    => 6,
+            HatTrick::class     => 3,
+            Large::class        => 1_000,
+            Myriad::class       => 10_000,
+            Pair::class         => 2,
+            Quartet::class      => 4,
+            Score::class        => 20,
+            SmallGross::class   => 120,
+            Trio::class         => 3,
+            Unit::class         => 1,
+        ],
         Area::class   => [
             Acre::class           => 4_046_873,
             Bovate::class         => 60,

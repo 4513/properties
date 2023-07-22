@@ -11,6 +11,7 @@ use MiBo\Properties\Contracts\NumericalProperty;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Exceptions\DivisionByZeroException;
 use MiBo\Properties\Exceptions\IncompatiblePropertyError;
+use MiBo\Properties\Quantities\Amount;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\ElectricCurrent;
@@ -63,6 +64,12 @@ class PropertyCalc
      * @var array<class-string<\MiBo\Properties\Contracts\Quantity>, \Closure(\MiBo\Properties\Contracts\NumericalProperty,\MiBo\Properties\Contracts\NumericalProperty): ?\MiBo\Properties\Contracts\NumericalProperty> $productResolvers
      */
     public static array $productResolvers = [];
+
+    /**
+     * @phpcs:ignore Generic.Files.LineLength.TooLong
+     * @var array<class-string<\MiBo\Properties\Contracts\NumericalProperty>, array<\Closure(\MiBo\Properties\Contracts\NumericalProperty,\MiBo\Properties\Contracts\NumericalProperty): ?\MiBo\Properties\Contracts\NumericalProperty>> $incompleteProductResolvers
+     */
+    public static array $incompleteProductResolvers = [];
 
     /**
      * Adds two or more quantities using addition.
@@ -349,6 +356,26 @@ class PropertyCalc
             }
         }
 
+        if ($toProduct) {
+            throw new ValueError(
+                "No resolver found for merging {$first::getQuantityClassName()} and {$second::getQuantityClassName()}!"
+            );
+        }
+
+        foreach (self::$incompleteProductResolvers[$second::getQuantityClassName()] ?? [] as $callback) {
+            $result = $callback($first, $second);
+
+            if ($result === null) {
+                continue;
+            }
+
+            if (!$result instanceof NumericalProperty) {
+                throw new TypeError("Incomplete resolver return an unknown property type!");
+            }
+
+            return $result;
+        }
+
         throw new ValueError(
             "No resolver found for merging {$first::getQuantityClassName()} and {$second::getQuantityClassName()}!"
         );
@@ -375,6 +402,14 @@ class PropertyCalc
                 }
             }
         }
+
+//        self::$incompleteProductResolvers[Amount::class][] = function(
+//            NumericalProperty $first,
+//            \MiBo\Properties\Amount $second
+//        ): ?NumericalProperty
+//        {
+//
+//        }
     }
 
     /**
