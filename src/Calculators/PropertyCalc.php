@@ -11,6 +11,7 @@ use MiBo\Properties\Contracts\NumericalProperty;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Exceptions\DivisionByZeroException;
 use MiBo\Properties\Exceptions\IncompatiblePropertyError;
+use MiBo\Properties\PerUnit;
 use MiBo\Properties\Quantities\Amount;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
@@ -376,9 +377,7 @@ class PropertyCalc
             return $result;
         }
 
-        throw new ValueError(
-            "No resolver found for merging {$first::getQuantityClassName()} and {$second::getQuantityClassName()}!"
-        );
+        return new PerUnit($first, $second);
     }
 
     /**
@@ -388,7 +387,7 @@ class PropertyCalc
      *
      * @return void
      */
-    protected static function compileEquations(bool $force = false): void
+    public static function compileEquations(bool $force = false): void
     {
         if ($force === false && !empty(self::$equations)) {
             return;
@@ -402,14 +401,6 @@ class PropertyCalc
                 }
             }
         }
-
-//        self::$incompleteProductResolvers[Amount::class][] = function(
-//            NumericalProperty $first,
-//            \MiBo\Properties\Amount $second
-//        ): ?NumericalProperty
-//        {
-//
-//        }
     }
 
     /**

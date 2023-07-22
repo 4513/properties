@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Tests\Core\Traits;
 
+use MiBo\Properties\Quantities\Amount;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\ElectricCurrent;
@@ -13,6 +14,7 @@ use MiBo\Properties\Quantities\Mass;
 use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
+use MiBo\Properties\Units\Amount\Piece;
 use MiBo\Properties\Units\AmountOfSubstance\Mole;
 use MiBo\Properties\Units\Area\SquareMeter;
 use MiBo\Properties\Units\ElectricCurrent\Ampere;
@@ -49,6 +51,7 @@ class QuantityRelatedUnitTest extends TestCase
      * @covers \MiBo\Properties\Traits\UnitForThermodynamicTemperature::getQuantityClassName
      * @covers \MiBo\Properties\Traits\UnitForTime::getQuantityClassName
      * @covers \MiBo\Properties\Traits\UnitForVolume::getQuantityClassName
+     * @covers \MiBo\Properties\Traits\UnitForAmount::getQuantityClassName
      *
      * @return void
      */
@@ -75,6 +78,7 @@ class QuantityRelatedUnitTest extends TestCase
             Kelvin::class => ThermodynamicTemperature::class,
             Second::class => Time::class,
             CubicMeter::class => Volume::class,
+            Piece::class => Amount::class,
         ];
     }
 }

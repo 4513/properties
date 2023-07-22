@@ -1,8 +1,20 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MiBo\Properties\Units\PerUnit;
+
+use MiBo\Properties\Contracts\NumericalUnit;
+use MiBo\Properties\Traits\NotAcceptedBySIUnit;
+use MiBo\Properties\Traits\NotAstronomicalUnit;
+use MiBo\Properties\Traits\NotEnglishUnit;
+use MiBo\Properties\Traits\NotImperialUnit;
+use MiBo\Properties\Traits\NotInternationalSystemUnit;
+use MiBo\Properties\Traits\NotMetricUnit;
+use MiBo\Properties\Traits\NotUSCustomaryUnit;
+use MiBo\Properties\Traits\UnitForAmount;
+use MiBo\Properties\Traits\UnitHelper;
+use ValueError;
 
 /**
  * Class PerNotSpecified
@@ -11,11 +23,145 @@ namespace MiBo\Properties\Units\PerUnit;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since x.x
+ * @since 1.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-class PerNotSpecified
+class PerNotSpecified implements NumericalUnit
 {
+    use NotInternationalSystemUnit;
+    use NotImperialUnit;
+    use NotMetricUnit;
+    use NotAstronomicalUnit;
+    use NotUSCustomaryUnit;
+    use NotEnglishUnit;
+    use UnitHelper;
+    use NotAcceptedBySIUnit;
+    use UnitForAmount;
 
+    protected string $name = "{dividend} per {divisorValue}{divisor}";
+
+    protected string $symbol = "{dividend}/{divisorValue}{divisor}";
+
+    protected int|float $divisorMultiplier = 1;
+
+    protected NumericalUnit $dividend;
+
+    protected NumericalUnit $divisor;
+
+    public function __construct(NumericalUnit $dividend, NumericalUnit $divisor)
+    {
+        $this->dividend = $dividend;
+        $this->divisor  = $divisor;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param \MiBo\Properties\Contracts\NumericalUnit|null $dividend
+     * @param \MiBo\Properties\Contracts\NumericalUnit|null $divisor
+     *
+     * @return ($dividend is null ? never : ($divisor is null ? never : static))
+     */
+    public static function get(NumericalUnit $dividend = null, NumericalUnit $divisor = null): static
+    {
+        if ($dividend === null || $divisor === null) {
+            throw new ValueError("This unit requires both, dividend and divisor to be present.");
+        }
+
+        if (empty(self::$instances[static::class][$dividend::class . "-" . $dividend::class])) {
+            /** @phpstan-ignore-next-line static construct */
+            self::$instances[static::class][$dividend::class . "-" . $dividend::class] = new static(
+                $dividend,
+                $divisor
+            );
+        }
+
+        /** @phpstan-ignore-next-line */
+        return self::$instances[static::class][$dividend::class . "-" . $dividend::class];
+    }
+
+    /**
+     * Dividend in the unit.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalUnit
+     */
+    public function getDividend(): NumericalUnit
+    {
+        return $this->dividend;
+    }
+
+    /**
+     * Divisor in the unit.
+     *
+     * @return \MiBo\Properties\Contracts\NumericalUnit
+     */
+    public function getDivisor(): NumericalUnit
+    {
+        return $this->divisor;
+    }
+
+    /**
+     * Set the value of divisorMultiplier.
+     *
+     * @param float|int $divisorMultiplier
+     */
+    public function setDivisorMultiplier(float|int $divisorMultiplier): void
+    {
+        $this->divisorMultiplier = $divisorMultiplier;
+    }
+
+    /**
+     * Get the value of divisorMultiplier.
+     *
+     * @return float|int
+     */
+    public function getDivisorMultiplier(): float|int
+    {
+        return $this->divisorMultiplier;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName(): string
+    {
+        return str_replace(
+            [
+                "{dividend}",
+                "{divisorValue}",
+                "{divisor}",
+            ],
+            [
+                $this->dividend->getName(),
+                $this->divisorMultiplier === 1 || $this->divisorMultiplier === 1.0 ?
+                    "" :
+                    $this->divisorMultiplier . " ",
+                $this->divisor->getSymbol(),
+            ],
+            $this->name
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSymbol(): string
+    {
+        return str_replace(
+            [
+                "{dividend}",
+                "{divisorValue}",
+                "{divisor}",
+            ],
+            [
+                $this->dividend->getName(),
+                $this->divisorMultiplier === 1 || $this->divisorMultiplier === 1.0 ?
+                    "" :
+                    $this->divisorMultiplier . " ",
+                $this->divisor->getSymbol(),
+            ],
+            $this->name
+        );
+    }
 }
