@@ -17,5 +17,12 @@ namespace MiBo\Properties\Contracts;
  */
 interface PrinterAwareInterface
 {
+    /**
+     * Set a printer.
+     *
+     * @param \MiBo\Properties\Contracts\PrinterInterface $printer
+     *
+     * @return void
+     */
     public function setPrinter(PrinterInterface $printer): void;
 }

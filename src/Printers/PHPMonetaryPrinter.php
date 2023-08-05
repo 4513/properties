@@ -6,6 +6,7 @@ namespace MiBo\Properties\Printers;
 
 use MiBo\Properties\Contracts\NumericalProperty;
 use MiBo\Properties\Contracts\PrinterInterface;
+use function PHPStan\dumpType;
 
 /**
  * Class PHPMonetaryPrinter
@@ -28,7 +29,12 @@ class PHPMonetaryPrinter implements PrinterInterface
     public function printProperty(NumericalProperty $property): string
     {
         $locale = localeconv();
-        $value  = number_format($property->getValue(), 0, $locale["mon_decimal_point"], $locale["mon_thousands_sep"]);
+        $value  = number_format(
+            $property->getValue(),
+            (int) $locale["frac_digits"],
+            $locale["mon_decimal_point"],
+            $locale["mon_thousands_sep"]
+        );
         $unit   = $locale["currency_symbol"];
 
         return $this->print($value, $unit);
