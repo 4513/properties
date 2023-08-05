@@ -34,6 +34,8 @@ class NumericalPropertyTest extends TestCase
      * @covers ::add
      * @covers ::getValue
      * @covers ::getNumericalValue
+     * @covers \MiBo\Properties\Property::__construct
+     * @covers \MiBo\Properties\Property::getUnit
      *
      * @return void
      */

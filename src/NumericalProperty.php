@@ -8,8 +8,10 @@ use MiBo\Properties\Calculators\PropertyCalc;
 use MiBo\Properties\Calculators\UnitConvertor;
 use MiBo\Properties\Contracts\NumericalProperty as ContractNumericalProperty;
 use MiBo\Properties\Contracts\NumericalUnit;
+use MiBo\Properties\Contracts\PrinterAwareInterface;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Exceptions\IncompatiblePropertyError;
+use MiBo\Properties\Traits\PrinterAwareTrait;
 
 /**
  * Class NumericalProperty
@@ -26,8 +28,10 @@ use MiBo\Properties\Exceptions\IncompatiblePropertyError;
  *
  * @phpstan-ignore-next-line
  */
-abstract class NumericalProperty extends Property implements ContractNumericalProperty
+abstract class NumericalProperty extends Property implements ContractNumericalProperty, PrinterAwareInterface
 {
+    use PrinterAwareTrait;
+
     private Value $numericalValue;
 
     /**
@@ -165,7 +169,11 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
     {
         return [
             "value" => $this->getValue(),
-            "unit"  => $this->getUnit(),
+            "unit"  => [
+                "name"   => $this->getUnit()->getName(),
+                "symbol" => $this->getUnit()->getSymbol(),
+                "class"  => $this->getUnit(),
+            ],
         ];
     }
 
