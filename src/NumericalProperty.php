@@ -32,8 +32,8 @@ use MiBo\Properties\Traits\PrinterAwareTrait;
  */
 abstract class NumericalProperty extends Property implements
     ContractNumericalProperty,
-    PrinterAwareInterface
-//    NumericalComparableProperty
+    PrinterAwareInterface,
+    NumericalComparableProperty
 {
     use PrinterAwareTrait;
     use ComparesNumericalValueTrait;
