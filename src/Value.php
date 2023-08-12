@@ -417,6 +417,66 @@ final class Value
     }
 
     /**
+     * Rounds the value.
+     *
+     * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
+     * @param int<1, 4> $mode PHP Rounding mode.
+     *
+     * @return static
+     */
+    public function round(int $precision, int $mode = PHP_ROUND_HALF_UP): static
+    {
+        if ($this->infinityMode === true) {
+            return $this;
+        }
+
+        $exp              = $this->getMinExp();
+        $currentValue     = $this->getValue($exp);
+        $this->values     = [$exp => round($currentValue, $precision + $exp, $mode)];
+        $this->calculated = null;
+
+        return $this;
+    }
+
+    /**
+     * Rounds the value away from zero.
+     *
+     * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
+     *
+     * @return static
+     */
+    public function ceil(int $precision): static
+    {
+        if ($this->infinityMode === true) {
+            return $this;
+        }
+
+        $this->values     = [-$precision => ceil($this->getValue(-$precision))];
+        $this->calculated = null;
+
+        return $this;
+    }
+
+    /**
+     * Rounds the value towards zero.
+     *
+     * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
+     *
+     * @return static
+     */
+    public function floor(int $precision): static
+    {
+        if ($this->infinityMode === true) {
+            return $this;
+        }
+
+        $this->values     = [-$precision => floor($this->getValue(-$precision))];
+        $this->calculated = null;
+
+        return $this;
+    }
+
+    /**
      * Returns all values to be part of the final result.
      *
      * @return array<int, int|float> Values of value.
