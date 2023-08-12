@@ -322,7 +322,7 @@ interface NumericalComparableProperty extends ComparableProperty
      *
      * @param int $precision The optional number of decimal digits to round to. Defaults to 0. If negative, it will
      *     round to a multiple of 10.
-     * @param int $mode One of PHP_ROUND_HALF_UP, PHP_ROUND_HALF_DOWN, PHP_ROUND_HALF_EVEN,
+     * @param int<1, 4> $mode One of PHP_ROUND_HALF_UP, PHP_ROUND_HALF_DOWN, PHP_ROUND_HALF_EVEN,
      *     or PHP_ROUND_HALF_ODD.
      *
      * @return static Same instance with the rounded value.

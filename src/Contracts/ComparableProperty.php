@@ -14,8 +14,11 @@ namespace MiBo\Properties\Contracts;
  * @since 1.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
+ *
+ * @phpcs:ignore
+ * @extends \MiBo\Properties\Contracts\Property<\MiBo\Properties\Contracts\Unit, mixed>
  */
-interface ComparableProperty
+interface ComparableProperty extends Property
 {
     /**
      * Checks that the value is same as of the given property.

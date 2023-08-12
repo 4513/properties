@@ -7,6 +7,7 @@ namespace MiBo\Properties\Traits;
 use MiBo\Properties\Contracts\ComparableProperty;
 use MiBo\Properties\Contracts\NumericalComparableProperty;
 use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Exceptions\IncompatiblePropertyError;
 use MiBo\Properties\NumericalProperty;
 
 /**
@@ -383,14 +384,19 @@ trait ComparesNumericalValueTrait
      */
     public function is(ComparableProperty|int|float $property, bool $strict = false): bool
     {
+        if ($property instanceof ComparableProperty && !$property instanceof NumericalComparableProperty) {
+            throw new IncompatiblePropertyError("Cannot compare numerical property with non-numerical property");
+        }
+
         return $strict === false ?
             $this->hasSameValueAs(
-                $property instanceof ComparableProperty ?
+                /** @phpstan-ignore-next-line */
+                $property instanceof NumericalComparableProperty ?
                     $property->convertToUnit($this->getUnit()) :
                     $property
             ) :
             $this->hasSameValueAs($property) &&
-            (!$property instanceof ComparableProperty || $this->getUnit()->is($property->getUnit()));
+            (!$property instanceof NumericalComparableProperty || $this->getUnit()->is($property->getUnit()));
     }
 
     /**
@@ -413,6 +419,8 @@ trait ComparesNumericalValueTrait
 
     /**
      * @inheritDoc
+     *
+     * @return \MiBo\Properties\Contracts\NumericalComparableProperty
      */
     abstract public function convertToUnit(Unit $unit): NumericalProperty;
 }
