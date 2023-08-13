@@ -330,7 +330,7 @@ interface NumericalComparableProperty extends ComparableProperty
     public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): static;
 
     /**
-     * Rounds the value away from zero.
+     * Rounds the value up.
      *
      * @param int $precision The optional number of decimal digits to round to. Defaults to 0. If negative, it will
      *    round to a multiple of 10.
@@ -340,7 +340,7 @@ interface NumericalComparableProperty extends ComparableProperty
     public function ceil(int $precision = 0): static;
 
     /**
-     * Rounds the value towards zero.
+     * Rounds the value down.
      *
      * @param int $precision The optional number of decimal digits to round to. Defaults to 0. If negative, it will
      *   round to a multiple of 10.

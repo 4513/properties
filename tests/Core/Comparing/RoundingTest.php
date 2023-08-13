@@ -74,7 +74,7 @@ class RoundingTest extends TestCase
      * @covers ::floor
      *
      * @param int|float $expectedResult
-     * @param \MiBo\Properties\Value $valueToCeil
+     * @param \MiBo\Properties\Value $valueToFloor
      * @param int $precision
      *
      * @return void
@@ -83,11 +83,40 @@ class RoundingTest extends TestCase
      */
     public function testFloor(
         int|float $expectedResult,
-        Value $valueToCeil,
+        Value $valueToFloor,
         int $precision
     ): void
     {
-        $this->assertSame($expectedResult, $valueToCeil->floor($precision)->getValue());
+        $this->assertSame($expectedResult, $valueToFloor->floor($precision)->getValue());
+    }
+
+    /**
+     * @small
+     *
+     * @covers ::round
+     * @covers ::ceil
+     * @covers ::floor
+     *
+     * @return void
+     */
+    public function testOnInfinity(): void
+    {
+        $value                  = new Value(1);
+        $value::$preferInfinity = true;
+        $value->divide(0);
+
+        $this->assertTrue($value->isInfinite());
+        $this->assertTrue($value->round()->ceil()->floor()->isInfinite());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function tearDown(): void
+    {
+        Value::$preferInfinity = false;
+
+        parent::tearDown();
     }
 
     /**

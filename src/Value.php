@@ -424,7 +424,7 @@ final class Value
      *
      * @return static
      */
-    public function round(int $precision, int $mode = PHP_ROUND_HALF_UP): static
+    public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): static
     {
         if ($this->infinityMode === true) {
             return $this;
@@ -439,13 +439,13 @@ final class Value
     }
 
     /**
-     * Rounds the value away from zero.
+     * Rounds the value up.
      *
      * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
      *
      * @return static
      */
-    public function ceil(int $precision): static
+    public function ceil(int $precision = 0): static
     {
         if ($this->infinityMode === true) {
             return $this;
@@ -458,13 +458,13 @@ final class Value
     }
 
     /**
-     * Rounds the value towards zero.
+     * Rounds the value down.
      *
      * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
      *
      * @return static
      */
-    public function floor(int $precision): static
+    public function floor(int $precision = 0): static
     {
         if ($this->infinityMode === true) {
             return $this;
