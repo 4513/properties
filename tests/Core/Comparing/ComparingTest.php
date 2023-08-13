@@ -343,8 +343,8 @@ class ComparingTest extends TestCase
     /**
      * @small
      *
-     * @covers ::isInfinity
-     * @covers ::isNotInfinity
+     * @covers ::isInfinite
+     * @covers ::isNotInfinite
      * @covers ::isFinite
      * @covers ::isNotFinite
      *
