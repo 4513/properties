@@ -24,6 +24,8 @@ final class Pure implements Quantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "pure";
+
     /**
      * @inheritDoc
      */

@@ -24,6 +24,8 @@ final class Time implements Quantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "time";
+
     /**
      * @inheritDoc
      */

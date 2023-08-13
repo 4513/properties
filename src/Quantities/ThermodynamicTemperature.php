@@ -25,6 +25,8 @@ class ThermodynamicTemperature implements Quantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "thermodynamic-temperature";
+
     /**
      * @inheritDoc
      */

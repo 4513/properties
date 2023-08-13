@@ -24,6 +24,8 @@ class Mass implements Quantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "mass";
+
     /**
      * @inheritDoc
      */

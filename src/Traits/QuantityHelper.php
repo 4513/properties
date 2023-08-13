@@ -50,4 +50,12 @@ trait QuantityHelper
     }
 
     abstract protected static function getInitialUnit(): Unit;
+
+    /**
+     * @return string Name of the quantity used for translations.
+     */
+    public static function getNameForTranslation(): string
+    {
+        return static::$quantityName ?? static::class;
+    }
 }

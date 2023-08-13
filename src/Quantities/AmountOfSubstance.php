@@ -24,6 +24,8 @@ class AmountOfSubstance implements Quantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "amount-of-substance";
+
     /**
      * @inheritDoc
      */

@@ -24,6 +24,8 @@ final class Area implements DerivedQuantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "area";
+
     public static function getDimensionSymbol(): ?string
     {
         return "A";

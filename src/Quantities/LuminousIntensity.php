@@ -25,6 +25,8 @@ class LuminousIntensity implements Quantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "luminous-intensity";
+
     /**
      * @inheritDoc
      */

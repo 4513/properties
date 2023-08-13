@@ -92,4 +92,16 @@ class PrinterTest extends TestCase
         $value->setPrinter(new PHPMonetaryPrinter());
         $this->assertSame("$100.00", $value->print());
     }
+
+    /**
+     * @small
+     *
+     * @covers \MiBo\Properties\Quantities\Length::getNameForTranslation
+     *
+     * @return void
+     */
+    public function testNameOfQuantity(): void
+    {
+        $this->assertSame("length", \MiBo\Properties\Quantities\Length::getNameForTranslation());
+    }
 }

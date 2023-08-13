@@ -25,6 +25,8 @@ class PerUnit implements Quantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "per-unit";
+
     /**
      * @inheritDoc
      */

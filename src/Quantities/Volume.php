@@ -24,6 +24,8 @@ class Volume implements DerivedQuantity
 {
     use QuantityHelper;
 
+    protected static string $quantityName = "volume";
+
     /**
      * @inheritDoc
      */
