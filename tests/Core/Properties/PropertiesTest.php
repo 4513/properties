@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Tests\Core\Properties;
 
+use MiBo\Properties\Amount;
 use MiBo\Properties\AmountOfSubstance;
 use MiBo\Properties\Area;
 use MiBo\Properties\ElectricCurrent;
 use MiBo\Properties\Length;
 use MiBo\Properties\LuminousIntensity;
 use MiBo\Properties\Mass;
+use MiBo\Properties\PerUnit;
 use MiBo\Properties\Pure;
 use MiBo\Properties\ThermodynamicTemperature;
 use MiBo\Properties\Time;
@@ -32,6 +34,7 @@ class PropertiesTest extends TestCase
     /**
      * @small
      *
+     * @covers \MiBo\Properties\Amount::getQuantityClassName
      * @covers \MiBo\Properties\AmountOfSubstance::getQuantityClassName
      * @covers \MiBo\Properties\AmountOfSubstance::getDefaultISUnit
      * @covers \MiBo\Properties\Area::getQuantityClassName
@@ -45,6 +48,7 @@ class PropertiesTest extends TestCase
      * @covers \MiBo\Properties\Mass::getQuantityClassName
      * @covers \MiBo\Properties\Mass::getDefaultISUnit
      * @covers \MiBo\Properties\Pure::getQuantityClassName
+     * @covers \MiBo\Properties\PerUnit::getQuantityClassName
      * @covers \MiBo\Properties\ThermodynamicTemperature::getQuantityClassName
      * @covers \MiBo\Properties\ThermodynamicTemperature::getDefaultISUnit
      * @covers \MiBo\Properties\Time::getQuantityClassName
@@ -57,6 +61,10 @@ class PropertiesTest extends TestCase
     public function test(): void
     {
         $list = [
+            Amount::class => [
+                "",
+                \MiBo\Properties\Quantities\Amount::class,
+            ],
             AmountOfSubstance::class => [
                 "Mole",
                 \MiBo\Properties\Quantities\AmountOfSubstance::class,
@@ -81,6 +89,10 @@ class PropertiesTest extends TestCase
                 "Gram",
                 \MiBo\Properties\Quantities\Mass::class,
             ],
+            PerUnit::class => [
+                "",
+                \MiBo\Properties\Quantities\PerUnit::class,
+            ],
             Pure::class => [
                 "Pure",
                 \MiBo\Properties\Quantities\Pure::class,
@@ -102,7 +114,7 @@ class PropertiesTest extends TestCase
         foreach ($list as $property => $data) {
             $this->assertSame($data[1], $property::getQuantityClassName());
 
-            if ($property === Pure::class) {
+            if (!method_exists($property, "getDefaultISUnit")) {
                 continue;
             }
 
