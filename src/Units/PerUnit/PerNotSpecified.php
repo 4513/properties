@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace MiBo\Properties\Units\PerUnit;
 
 use MiBo\Properties\Contracts\NumericalUnit;
+use MiBo\Properties\Contracts\Unit;
+use MiBo\Properties\Quantities\PerUnit;
 use MiBo\Properties\Traits\NotAcceptedBySIUnit;
 use MiBo\Properties\Traits\NotAstronomicalUnit;
 use MiBo\Properties\Traits\NotEnglishUnit;
@@ -12,7 +14,6 @@ use MiBo\Properties\Traits\NotImperialUnit;
 use MiBo\Properties\Traits\NotInternationalSystemUnit;
 use MiBo\Properties\Traits\NotMetricUnit;
 use MiBo\Properties\Traits\NotUSCustomaryUnit;
-use MiBo\Properties\Traits\UnitForAmount;
 use MiBo\Properties\Traits\UnitHelper;
 use ValueError;
 
@@ -35,9 +36,10 @@ class PerNotSpecified implements NumericalUnit
     use NotAstronomicalUnit;
     use NotUSCustomaryUnit;
     use NotEnglishUnit;
-    use UnitHelper;
+    use UnitHelper {
+        is as contractIs;
+    }
     use NotAcceptedBySIUnit;
-    use UnitForAmount;
 
     protected string $name = "{dividend} per {divisorValue}{divisor}";
 
@@ -69,16 +71,16 @@ class PerNotSpecified implements NumericalUnit
             throw new ValueError("This unit requires both, dividend and divisor to be present.");
         }
 
-        if (empty(self::$instances[static::class][$dividend::class . "-" . $dividend::class])) {
+        if (empty(self::$instances[static::class][$dividend::class . "-" . $divisor::class])) {
             /** @phpstan-ignore-next-line static construct */
-            self::$instances[static::class][$dividend::class . "-" . $dividend::class] = new static(
+            self::$instances[static::class][$dividend::class . "-" . $divisor::class] = new static(
                 $dividend,
                 $divisor
             );
         }
 
         /** @phpstan-ignore-next-line */
-        return self::$instances[static::class][$dividend::class . "-" . $dividend::class];
+        return self::$instances[static::class][$dividend::class . "-" . $divisor::class];
     }
 
     /**
@@ -137,7 +139,7 @@ class PerNotSpecified implements NumericalUnit
                 $this->divisorMultiplier === 1 || $this->divisorMultiplier === 1.0 ?
                     "" :
                     $this->divisorMultiplier . " ",
-                $this->divisor->getSymbol(),
+                $this->divisor->getName(),
             ],
             $this->name
         );
@@ -155,13 +157,32 @@ class PerNotSpecified implements NumericalUnit
                 "{divisor}",
             ],
             [
-                $this->dividend->getName(),
+                $this->dividend->getSymbol(),
                 $this->divisorMultiplier === 1 || $this->divisorMultiplier === 1.0 ?
                     "" :
                     $this->divisorMultiplier . " ",
                 $this->divisor->getSymbol(),
             ],
-            $this->name
+            $this->symbol
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getQuantityClassName(): string
+    {
+        return PerUnit::class;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function is(Unit $unit): bool
+    {
+        return $this->contractIs($unit) &&
+            $unit instanceof self &&
+            $this->dividend->is($unit->getDividend()) &&
+            $this->divisor->is($unit->getDivisor());
     }
 }

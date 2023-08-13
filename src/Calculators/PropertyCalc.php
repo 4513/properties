@@ -285,7 +285,7 @@ class PropertyCalc
                     continue;
                 }
 
-                $firstHalf = preg_replace("/(\/.*)/", "", $equation);
+                $firstHalf = preg_replace("/([\*\/].*)/", "", $equation);
 
                 if ($firstHalf === null) {
                     // @phpstan-ignore-next-line class-string
@@ -309,14 +309,16 @@ class PropertyCalc
                 /** @var \MiBo\Properties\Contracts\Quantity $secondQuantity */
                 $secondQuantity = $second::getQuantityClassName();
 
-                $parsed = preg_replace(
+                /** @var string $secondHalf */
+                $secondHalf = preg_replace("/(.*[\*\/])/", "", $equation);
+                $parsed     = preg_replace(
                     "/\(\%{$secondQuantity::getDimensionSymbol()}\%\)/",
                     "{$second->getValue()}",
-                    $equation,
+                    $secondHalf,
                     1
                 );
 
-                if ($parsed === $equation) {
+                if ($parsed === $secondHalf) {
                     continue;
                 }
 

@@ -47,6 +47,26 @@ class QuantityTest extends TestCase
     /**
      * @small
      *
+     * @covers \MiBo\Properties\Quantities\Area::getEquations
+     * @covers \MiBo\Properties\Quantities\Volume::getEquations
+     *
+     * @return void
+     */
+    public function testDerived(): void
+    {
+        $list = [
+            Volume::class => [Area::class . " * " . Length::class],
+            Area::class   => [Length::class . " * " . Length::class],
+        ];
+
+        foreach ($list as $quantity => $equation) {
+            $this->assertSame($equation, $quantity::getEquations());
+        }
+    }
+
+    /**
+     * @small
+     *
      * @covers ::getDefaultUnit
      * @covers \MiBo\Properties\Quantities\AmountOfSubstance::getDimensionSymbol
      * @covers \MiBo\Properties\Quantities\AmountOfSubstance::getInitialUnit
