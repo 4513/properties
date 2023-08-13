@@ -54,7 +54,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
      */
     public function getValue(): int|float
     {
-        return $this->numericalValue->getValue();
+        return $this->getNumericalValue()->getValue();
     }
 
     /**
@@ -62,7 +62,7 @@ abstract class NumericalProperty extends Property implements ContractNumericalPr
      */
     public function getBaseValue(): int|float
     {
-        return $this->numericalValue->getValue($this->getUnit()->getMultiplier());
+        return $this->getNumericalValue()->getValue($this->getUnit()->getMultiplier());
     }
 
     /**
