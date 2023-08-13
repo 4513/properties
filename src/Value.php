@@ -55,6 +55,8 @@ final class Value
     /** @var positive-int */
     private int $base;
 
+    private int|float|null $calculated = null;
+
     /**
      * @param int|float $value Value to initialize.
      * @param int $exp Exponent of value. Default 0.
@@ -100,6 +102,7 @@ final class Value
         if (self::$preferInfinity === true && is_infinite($value)) {
             $this->infinityMode = true;
             $this->values       = [0 => INF];
+            $this->calculated   = INF;
 
             return $this;
         }
@@ -118,7 +121,8 @@ final class Value
             return $this;
         }
 
-        $value *= $this->multiplier;
+        $value           *= $this->multiplier;
+        $this->calculated = null;
 
         if (!isset($this->values[$exp])) {
             $this->values[$exp] = $value;
@@ -217,6 +221,7 @@ final class Value
         if (self::$preferInfinity === true && is_float($value) && is_infinite($value)) {
             $this->infinityMode = true;
             $this->values       = [0 => INF];
+            $this->calculated   = INF;
 
             return $this;
         }
@@ -232,7 +237,8 @@ final class Value
 
         // We try to multiply by zero. That means we can return zero.
         if ($value === 0 || $value === 0.0) {
-            $this->values = [];
+            $this->values     = [];
+            $this->calculated = 0;
 
             return $this;
         }
@@ -242,7 +248,8 @@ final class Value
             return $this;
         }
 
-        $trueValue = $value * 10 ** $exp;
+        $trueValue        = $value * 10 ** $exp;
+        $this->calculated = null;
 
         if ($this->hasPrecision() && $trueValue < 1 && $trueValue > -1) {
             $this->multiply(100);
@@ -343,6 +350,7 @@ final class Value
             if (self::$preferInfinity === true) {
                 $this->infinityMode = true;
                 $this->values       = [0 => INF];
+                $this->calculated   = INF;
 
                 return $this;
             }
@@ -353,8 +361,8 @@ final class Value
         if (is_infinite($value)) {
             if (self::$preferInfinity === true) {
                 $this->infinityMode = true;
-                $this->values       = [];
-                $this->values[0]    = 0;
+                $this->values       = [0 => 0];
+                $this->calculated   = 0;
 
                 return $this;
             }
@@ -372,6 +380,7 @@ final class Value
 
         if ($this->hasPrecision()) {
             $currentValue     = $this->getValue();
+            $this->calculated = null;
             [
                 $newValue,
                 $exp,
@@ -382,6 +391,7 @@ final class Value
             return $this;
         }
 
+        $this->calculated  = null;
         $this->multiplier *= $value;
 
         return $this;
@@ -402,6 +412,66 @@ final class Value
         foreach ($value->getValues() as $innerExp => $val) {
             $this->divide($val, $innerExp - $exp);
         }
+
+        return $this;
+    }
+
+    /**
+     * Rounds the value.
+     *
+     * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
+     * @param int<1, 4> $mode PHP Rounding mode.
+     *
+     * @return static
+     */
+    public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): static
+    {
+        if ($this->infinityMode === true) {
+            return $this;
+        }
+
+        $exp              = $this->getMinExp();
+        $currentValue     = $this->getValue($exp);
+        $this->values     = [$exp => round($currentValue, $precision + $exp, $mode)];
+        $this->calculated = null;
+
+        return $this;
+    }
+
+    /**
+     * Rounds the value up.
+     *
+     * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
+     *
+     * @return static
+     */
+    public function ceil(int $precision = 0): static
+    {
+        if ($this->infinityMode === true) {
+            return $this;
+        }
+
+        $this->values     = [-$precision => ceil($this->getValue(-$precision))];
+        $this->calculated = null;
+
+        return $this;
+    }
+
+    /**
+     * Rounds the value down.
+     *
+     * @param int $precision Precision to round to. Negative values represent digits before the decimal point.
+     *
+     * @return static
+     */
+    public function floor(int $precision = 0): static
+    {
+        if ($this->infinityMode === true) {
+            return $this;
+        }
+
+        $this->values     = [-$precision => floor($this->getValue(-$precision))];
+        $this->calculated = null;
 
         return $this;
     }
@@ -430,18 +500,23 @@ final class Value
             return $this->values[0];
         }
 
-        ksort($this->values);
-
-        $value   = 0;
         $minExp  = $this->getMinExp();
         $expDiff = $minExp < 0 ? -$minExp : 0;
 
-        foreach ($this->values as $exp => $val) {
-            $value += $val * 10 ** ($exp + $expDiff);
+        if ($this->calculated === null) {
+            ksort($this->values);
+
+            $value = 0;
+
+            foreach ($this->values as $exp => $val) {
+                $value += $val * 10 ** ($exp + $expDiff);
+            }
+
+            $this->calculated = $value;
         }
 
-        $earlyResult1 = $value / 10 ** ($expDiff + $requestedExp);
-        $earlyResult2 = $value * 10 ** (- $requestedExp - $expDiff);
+        $earlyResult1 = $this->calculated / 10 ** ($expDiff + $requestedExp);
+        $earlyResult2 = $this->calculated * 10 ** (- $requestedExp - $expDiff);
 
         if ((float) ((int) $earlyResult2) === $earlyResult2
             || ((float) ((int) $earlyResult1) === $earlyResult1) && (int) $earlyResult1 !== 0

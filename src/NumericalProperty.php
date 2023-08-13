@@ -6,11 +6,13 @@ namespace MiBo\Properties;
 
 use MiBo\Properties\Calculators\PropertyCalc;
 use MiBo\Properties\Calculators\UnitConvertor;
+use MiBo\Properties\Contracts\NumericalComparableProperty;
 use MiBo\Properties\Contracts\NumericalProperty as ContractNumericalProperty;
 use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\Contracts\PrinterAwareInterface;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Exceptions\IncompatiblePropertyError;
+use MiBo\Properties\Traits\ComparesNumericalValueTrait;
 use MiBo\Properties\Traits\PrinterAwareTrait;
 
 /**
@@ -28,9 +30,13 @@ use MiBo\Properties\Traits\PrinterAwareTrait;
  *
  * @phpstan-ignore-next-line
  */
-abstract class NumericalProperty extends Property implements ContractNumericalProperty, PrinterAwareInterface
+abstract class NumericalProperty extends Property implements
+    ContractNumericalProperty,
+    PrinterAwareInterface,
+    NumericalComparableProperty
 {
     use PrinterAwareTrait;
+    use ComparesNumericalValueTrait;
 
     private Value $numericalValue;
 
