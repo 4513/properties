@@ -117,7 +117,7 @@ final class Value
         } else if (is_float($value)) {
             $tmpValue = (int) number_format($value * 10 ** self::$floatExp, 0, '', '');
 
-            if ($tmpValue !== PHP_INT_MAX) {
+            if ($tmpValue !== PHP_INT_MAX && $tmpValue !== PHP_INT_MIN) {
                 $value = $tmpValue;
                 $exp  -= self::$floatExp;
             }
