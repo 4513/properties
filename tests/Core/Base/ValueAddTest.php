@@ -189,6 +189,11 @@ class ValueAddTest extends TestCase
                 "start"    => [-1, 10],
                 "add"      => [0, 9],
             ],
+            [
+                "expected" => 10001,
+                "start"    => [0, 1],
+                "add"      => [0, 10000.0],
+            ],
         ];
 
         foreach ($list as $data) {

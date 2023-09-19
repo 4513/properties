@@ -7,7 +7,7 @@ namespace MiBo\Properties;
 use MiBo\Properties\Exceptions\BaseMismatchError;
 use MiBo\Properties\Exceptions\CalculationWithInfinityException;
 use MiBo\Properties\Exceptions\DivisionByZeroException;
-use ValueError;
+use function is_float;
 use const PHP_FLOAT_DIG;
 
 /**
@@ -112,9 +112,15 @@ final class Value
             $exp,
         ] = $this->preparePrecision($value, $exp);
 
-        if (is_float($value)) {
-            $value = (int) ($value * 10 ** self::$floatExp);
-            $exp  -= self::$floatExp;
+        if (is_float($value) && !preg_match('/([\.][\d]+)/', (string) $value)) {
+            $value = (int) $value;
+        } else if (is_float($value)) {
+            $tmpValue = (int) number_format($value * 10 ** self::$floatExp, 0, '', '');
+
+            if ($tmpValue !== PHP_INT_MAX) {
+                $value = $tmpValue;
+                $exp  -= self::$floatExp;
+            }
         }
 
         if ($value === 0) {
