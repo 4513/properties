@@ -38,7 +38,7 @@ class USPint implements NumericalUnit
     use UnitHelper;
     use UnitForVolume;
 
-    protected string $name = "pint";
+    protected string $name = "US pint";
 
     protected string $symbol = "pt";
 

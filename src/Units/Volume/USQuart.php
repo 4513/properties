@@ -38,7 +38,7 @@ class USQuart implements NumericalUnit
     use UnitHelper;
     use UnitForVolume;
 
-    protected string $name = "quart";
+    protected string $name = "US quart";
 
     protected string $symbol = "qt";
 

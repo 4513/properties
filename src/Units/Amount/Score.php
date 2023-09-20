@@ -38,7 +38,7 @@ class Score implements NumericalUnit
     use NotAcceptedBySIUnit;
     use UnitForAmount;
 
-    protected string $name = "dozen";
+    protected string $name = "score";
 
-    protected string $symbol = "doz";
+    protected string $symbol = "";
 }

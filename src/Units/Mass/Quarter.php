@@ -40,7 +40,7 @@ class Quarter implements NumericalUnit
 
     protected string $name = "quarter";
 
-    protected string $symbol = "gr";
+    protected string $symbol = "qr";
 
     protected int $multiplier = -8;
 }

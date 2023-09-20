@@ -38,7 +38,7 @@ class USFluidOunce implements NumericalUnit
     use UnitHelper;
     use UnitForVolume;
 
-    protected string $name = "fluid ounce";
+    protected string $name = "US fluid ounce";
 
     protected string $symbol = "fl oz";
 

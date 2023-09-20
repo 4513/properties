@@ -42,7 +42,7 @@ class Point implements NumericalUnit
 
     protected string $name = "point";
 
-    protected string $symbol = "rd";
+    protected string $symbol = "pt";
 
     protected int $multiplier = -9;
 }

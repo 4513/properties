@@ -38,7 +38,7 @@ class USHundredweight implements NumericalUnit
     use UnitForMass;
     use NotAcceptedBySIUnit;
 
-    protected string $name = "hundredweight";
+    protected string $name = "US hundredweight";
 
     protected string $symbol = "cwt";
 

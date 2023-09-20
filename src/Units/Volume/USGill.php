@@ -38,7 +38,7 @@ class USGill implements NumericalUnit
     use UnitHelper;
     use UnitForVolume;
 
-    protected string $name = "gill";
+    protected string $name = "US gill";
 
     protected string $symbol = "gi";
 

@@ -38,7 +38,7 @@ class ShortTon implements NumericalUnit
     use UnitForMass;
     use NotAcceptedBySIUnit;
 
-    protected string $name = "ton";
+    protected string $name = "short ton";
 
     protected string $symbol = "short ton";
 

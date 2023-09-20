@@ -38,7 +38,7 @@ class USGallon implements NumericalUnit
     use UnitHelper;
     use UnitForVolume;
 
-    protected string $name = "gallon";
+    protected string $name = "US gallon";
 
     protected string $symbol = "gal";
 

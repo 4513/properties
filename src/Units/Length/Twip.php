@@ -43,9 +43,9 @@ class Twip implements NumericalUnit
     use UnitHelper;
     use UnitForLength;
 
-    protected string $name = "meter";
+    protected string $name = "twip";
 
-    protected string $symbol = "m";
+    protected string $symbol = "";
 
     protected int $multiplier = -10;
 }
