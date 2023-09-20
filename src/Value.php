@@ -8,6 +8,7 @@ use MiBo\Properties\Exceptions\BaseMismatchError;
 use MiBo\Properties\Exceptions\CalculationWithInfinityException;
 use MiBo\Properties\Exceptions\DivisionByZeroException;
 use function is_float;
+use function is_int;
 use const PHP_FLOAT_DIG;
 
 /**

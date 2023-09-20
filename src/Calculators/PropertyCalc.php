@@ -12,7 +12,6 @@ use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Exceptions\DivisionByZeroException;
 use MiBo\Properties\Exceptions\IncompatiblePropertyError;
 use MiBo\Properties\PerUnit;
-use MiBo\Properties\Quantities\Amount;
 use MiBo\Properties\Quantities\AmountOfSubstance;
 use MiBo\Properties\Quantities\Area;
 use MiBo\Properties\Quantities\ElectricCurrent;
@@ -25,6 +24,8 @@ use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
 use TypeError;
 use ValueError;
+use function count;
+use function in_array;
 
 /**
  * Class PropertyMath

@@ -9,6 +9,8 @@ use MiBo\Properties\Contracts\NumericalComparableProperty;
 use MiBo\Properties\Contracts\Unit;
 use MiBo\Properties\Exceptions\IncompatiblePropertyError;
 use MiBo\Properties\NumericalProperty;
+use function is_float;
+use function is_int;
 
 /**
  * Trait ComparesNumericalValueTrait
