@@ -40,9 +40,10 @@ trait UnitHelper
      */
     public function getMultiplier(): int
     {
+        // @phpstan-ignore-next-line
         $multiplier = $this->multiplier ?? 0;
 
-        /** @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         if (method_exists($this, "getMultiplierPrefix")) {
             $multiplier += $this->getMultiplierPrefix();
         }
