@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace MiBo\Properties\Tests\Core\Properties;
 
 use MiBo\Properties\Length;
+use MiBo\Properties\Traits\InternationSystemProperty;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,21 +20,13 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Traits\InternationSystemProperty
  */
+#[CoversClass(InternationSystemProperty::class)]
+#[Small]
 class ISHelperTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::__callStatic
-     * @covers ::getClassToCreate
-     *
-     * @return void
-     */
     public function testCreateFromStatic(): void
     {
-        $this->assertSame("nanometer", Length::NANO(0)->getUnit()->getName());
+        self::assertSame("nanometer", Length::NANO(0)->getUnit()->getName());
     }
 }

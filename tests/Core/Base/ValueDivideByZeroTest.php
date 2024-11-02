@@ -6,6 +6,8 @@ namespace MiBo\Properties\Tests\Base;
 
 use MiBo\Properties\Exceptions\DivisionByZeroException;
 use MiBo\Properties\Value;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,18 +20,11 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Value
  */
+#[CoversClass(Value::class)]
+#[Small]
 class ValueDivideByZeroTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::divide
-     *
-     * @return void
-     */
     public function testZero(): void
     {
         $value = new Value(10);

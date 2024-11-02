@@ -15,6 +15,7 @@ use MiBo\Properties\Quantities\PerUnit;
 use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
+use MiBo\Properties\Traits\QuantityHelper;
 use MiBo\Properties\Units\Amount\Piece;
 use MiBo\Properties\Units\AmountOfSubstance\Mole;
 use MiBo\Properties\Units\Area\SquareMeter;
@@ -27,6 +28,8 @@ use MiBo\Properties\Units\Pure\NoUnit;
 use MiBo\Properties\Units\ThermodynamicTemperature\Kelvin;
 use MiBo\Properties\Units\Time\Second;
 use MiBo\Properties\Units\Volume\CubicMeter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,19 +42,24 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Traits\QuantityHelper
  */
+#[CoversClass(QuantityHelper::class)]
+#[CoversClass(Area::class)]
+#[CoversClass(Volume::class)]
+#[CoversClass(AmountOfSubstance::class)]
+#[CoversClass(Area::class)]
+#[CoversClass(ElectricCurrent::class)]
+#[CoversClass(Length::class)]
+#[CoversClass(LuminousIntensity::class)]
+#[CoversClass(Mass::class)]
+#[CoversClass(ThermodynamicTemperature::class)]
+#[CoversClass(Time::class)]
+#[CoversClass(Volume::class)]
+#[CoversClass(Amount::class)]
+#[CoversClass(PerUnit::class)]
+#[Small]
 class QuantityTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers \MiBo\Properties\Quantities\Area::getEquations
-     * @covers \MiBo\Properties\Quantities\Volume::getEquations
-     *
-     * @return void
-     */
     public function testDerived(): void
     {
         $list = [
@@ -60,50 +68,10 @@ class QuantityTest extends TestCase
         ];
 
         foreach ($list as $quantity => $equation) {
-            $this->assertSame($equation, $quantity::getEquations());
+            self::assertSame($equation, $quantity::getEquations());
         }
     }
 
-    /**
-     * @small
-     *
-     * @covers ::getDefaultUnit
-     * @covers \MiBo\Properties\Quantities\AmountOfSubstance::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\AmountOfSubstance::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\AmountOfSubstance::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\Area::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\Area::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\Area::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\ElectricCurrent::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\ElectricCurrent::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\ElectricCurrent::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\Length::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\Length::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\Length::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\LuminousIntensity::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\LuminousIntensity::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\LuminousIntensity::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\Mass::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\Mass::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\Mass::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\ThermodynamicTemperature::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\ThermodynamicTemperature::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\ThermodynamicTemperature::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\Time::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\Time::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\Time::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\Volume::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\Volume::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\Volume::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\Amount::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\Amount::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\Amount::getDefaultProperty
-     * @covers \MiBo\Properties\Quantities\PerUnit::getDimensionSymbol
-     * @covers \MiBo\Properties\Quantities\PerUnit::getInitialUnit
-     * @covers \MiBo\Properties\Quantities\PerUnit::getDefaultProperty
-     *
-     * @return void
-     */
     public function test(): void
     {
         $list = [
@@ -176,9 +144,9 @@ class QuantityTest extends TestCase
         ];
 
         foreach ($list as $item) {
-            $this->assertSame($item[1], $item[0]::getDimensionSymbol());
-            $this->assertSame($item[2]::class, $item[0]::getDefaultUnit()::class);
-            $this->assertSame($item[3], $item[0]::getDefaultProperty());
+            self::assertSame($item[1], $item[0]::getDimensionSymbol());
+            self::assertSame($item[2]::class, $item[0]::getDefaultUnit()::class);
+            self::assertSame($item[3], $item[0]::getDefaultProperty());
         }
     }
 }

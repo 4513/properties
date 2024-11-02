@@ -10,6 +10,8 @@ use MiBo\Properties\Units\Area\Are;
 use MiBo\Properties\Units\Area\DecAre;
 use MiBo\Properties\Units\Area\HectAre;
 use MiBo\Properties\Units\Pure\NoUnit;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,23 +25,18 @@ use PHPUnit\Framework\TestCase;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
+#[CoversClass(NoUnit::class)]
+#[CoversClass(Are::class)]
+#[CoversClass(HectAre::class)]
+#[CoversClass(DecAre::class)]
+#[Small]
 class NotTraitedUnitsTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers \MiBo\Properties\Units\Pure\NoUnit::getQuantityClassName
-     * @covers \MiBo\Properties\Units\Area\Are::getQuantityClassName
-     * @covers \MiBo\Properties\Units\Area\HectAre::getName
-     * @covers \MiBo\Properties\Units\Area\DecAre::getName
-     *
-     * @return void
-     */
     public function test(): void
     {
-        $this->assertSame(Pure::class, NoUnit::getQuantityClassName());
-        $this->assertSame(Area::class, Are::getQuantityClassName());
-        $this->assertSame("hectare", HectAre::get()->getName());
-        $this->assertSame("decare", DecAre::get()->getName());
+        self::assertSame(Pure::class, NoUnit::getQuantityClassName());
+        self::assertSame(Area::class, Are::getQuantityClassName());
+        self::assertSame("hectare", HectAre::get()->getName());
+        self::assertSame("decare", DecAre::get()->getName());
     }
 }

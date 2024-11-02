@@ -17,6 +17,9 @@ use MiBo\Properties\Units\Length\MilliMeter;
 use MiBo\Properties\Units\Volume\CubicMeter;
 use MiBo\Properties\Value;
 use MiBo\Properties\Volume;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -32,143 +35,66 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \MiBo\Properties\NumericalProperty
  */
+#[CoversClass(NumericalProperty::class)]
+#[Small]
 class ComparingTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::isLessThan
-     * @covers ::isNotGreaterThanOrEqualTo
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $first
-     * @param \MiBo\Properties\NumericalProperty $second
-     *
-     * @return void
-     *
-     * @dataProvider comparingIsSmallerThanProvider
-     */
+    #[DataProvider('comparingIsSmallerThanProvider')]
     public function testIsSmallerThan(
         bool $expectedResult,
         NumericalProperty $first,
         NumericalProperty $second
     ): void
     {
-        $this->assertSame($expectedResult, $first->isLessThan($second));
-        $this->assertSame($expectedResult, $first->isNotGreaterThanOrEqualTo($second));
+        self::assertSame($expectedResult, $first->isLessThan($second));
+        self::assertSame($expectedResult, $first->isNotGreaterThanOrEqualTo($second));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isNotLessThan
-     * @covers ::isGreaterThanOrEqualTo
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $first
-     * @param \MiBo\Properties\NumericalProperty $second
-     *
-     * @return void
-     *
-     * @dataProvider comparingIsSmallerThanProvider
-     */
+    #[DataProvider('comparingIsSmallerThanProvider')]
     public function testIsNotSmallerThan(
         bool $expectedResult,
         NumericalProperty $first,
         NumericalProperty $second
     ): void
     {
-        $this->assertSame(!$expectedResult, $first->isNotLessThan($second));
-        $this->assertSame(!$expectedResult, $first->isGreaterThanOrEqualTo($second));
+        self::assertSame(!$expectedResult, $first->isNotLessThan($second));
+        self::assertSame(!$expectedResult, $first->isGreaterThanOrEqualTo($second));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isGreaterThan
-     * @covers ::isNotLessThanOrEqualTo
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $first
-     * @param \MiBo\Properties\NumericalProperty $second
-     *
-     * @return void
-     *
-     * @dataProvider comparingIsBiggerThanProvider
-     */
+    #[DataProvider('comparingIsBiggerThanProvider')]
     public function testIsBiggerThan(
         bool $expectedResult,
         NumericalProperty $first,
         NumericalProperty $second
     ): void
     {
-        $this->assertSame($expectedResult, $first->isGreaterThan($second));
-        $this->assertSame($expectedResult, $first->isNotLessThanOrEqualTo($second));
+        self::assertSame($expectedResult, $first->isGreaterThan($second));
+        self::assertSame($expectedResult, $first->isNotLessThanOrEqualTo($second));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isNotGreaterThan
-     * @covers ::isLessThanOrEqualTo
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $first
-     * @param \MiBo\Properties\NumericalProperty $second
-     *
-     * @return void
-     *
-     * @dataProvider comparingIsBiggerThanProvider
-     */
+    #[DataProvider('comparingIsBiggerThanProvider')]
     public function testIsNotBiggerThan(
         bool $expectedResult,
         NumericalProperty $first,
         NumericalProperty $second
     ): void
     {
-        $this->assertSame(!$expectedResult, $first->isNotGreaterThan($second));
-        $this->assertSame(!$expectedResult, $first->isLessThanOrEqualTo($second));
+        self::assertSame(!$expectedResult, $first->isNotGreaterThan($second));
+        self::assertSame(!$expectedResult, $first->isLessThanOrEqualTo($second));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isEqualTo
-     * @covers ::isNotEqualTo
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $first
-     * @param \MiBo\Properties\NumericalProperty $second
-     *
-     * @return void
-     *
-     * @dataProvider sameValuesProvider
-     */
+    #[DataProvider('sameValuesProvider')]
     public function testEquivalence(
         bool $expectedResult,
         NumericalProperty $first,
         NumericalProperty $second
     ): void
     {
-        $this->assertSame($expectedResult, $first->isEqualTo($second));
-        $this->assertSame(!$expectedResult, $first->isNotEqualTo($second));
+        self::assertSame($expectedResult, $first->isEqualTo($second));
+        self::assertSame(!$expectedResult, $first->isNotEqualTo($second));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isBetween
-     * @covers ::isNotBetween
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $firstLim
-     * @param \MiBo\Properties\NumericalProperty $checkedValue
-     * @param \MiBo\Properties\NumericalProperty $secondLim
-     *
-     * @return void
-     *
-     * @dataProvider betweenProvider
-     */
+    #[DataProvider('betweenProvider')]
     public function testBetween(
         bool $expectedResult,
         NumericalProperty $firstLim,
@@ -176,25 +102,11 @@ class ComparingTest extends TestCase
         NumericalProperty $secondLim
     ): void
     {
-        $this->assertSame($expectedResult, $checkedValue->isBetween($firstLim, $secondLim));
-        $this->assertSame(!$expectedResult, $checkedValue->isNotBetween($firstLim, $secondLim));
+        self::assertSame($expectedResult, $checkedValue->isBetween($firstLim, $secondLim));
+        self::assertSame(!$expectedResult, $checkedValue->isNotBetween($firstLim, $secondLim));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isBetweenOrEqualTo
-     * @covers ::isNotBetweenOrEqualTo
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $firstLim
-     * @param \MiBo\Properties\NumericalProperty $checkedValue
-     * @param \MiBo\Properties\NumericalProperty $secondLim
-     *
-     * @return void
-     *
-     * @dataProvider betweenOrEqualProvider
-     */
+    #[DataProvider('betweenOrEqualProvider')]
     public function testBetweenOrEqual(
         bool $expectedResult,
         NumericalProperty $firstLim,
@@ -202,339 +114,160 @@ class ComparingTest extends TestCase
         NumericalProperty $secondLim
     ): void
     {
-        $this->assertSame($expectedResult, $checkedValue->isBetweenOrEqualTo($firstLim, $secondLim));
-        $this->assertSame(!$expectedResult, $checkedValue->isNotBetweenOrEqualTo($firstLim, $secondLim));
+        self::assertSame($expectedResult, $checkedValue->isBetweenOrEqualTo($firstLim, $secondLim));
+        self::assertSame(!$expectedResult, $checkedValue->isNotBetweenOrEqualTo($firstLim, $secondLim));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isPositive
-     * @covers ::isNotPositive
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     *
-     * @return void
-     *
-     * @dataProvider positiveValuesProvider
-     */
+    #[DataProvider('positiveValuesProvider')]
     public function testPositives(bool $expectedResult, NumericalProperty $property): void
     {
-        $this->assertSame($expectedResult, $property->isPositive());
-        $this->assertSame(!$expectedResult, $property->isNotPositive());
-        $this->assertSame($expectedResult, $property->isNotNegative() && !$property->isZero());
+        self::assertSame($expectedResult, $property->isPositive());
+        self::assertSame(!$expectedResult, $property->isNotPositive());
+        self::assertSame($expectedResult, $property->isNotNegative() && !$property->isZero());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isNegative
-     * @covers ::isNotNegative
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     *
-     * @return void
-     *
-     * @dataProvider negativeValuesProvider
-     */
+    #[DataProvider('negativeValuesProvider')]
     public function testNegatives(bool $expectedResult, NumericalProperty $property): void
     {
-        $this->assertSame($expectedResult, $property->isNegative());
-        $this->assertSame(!$expectedResult, $property->isNotNegative());
-        $this->assertSame($expectedResult, $property->isNotPositive() && !$property->isZero());
+        self::assertSame($expectedResult, $property->isNegative());
+        self::assertSame(!$expectedResult, $property->isNotNegative());
+        self::assertSame($expectedResult, $property->isNotPositive() && !$property->isZero());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isZero
-     * @covers ::isNotZero
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     *
-     * @return void
-     *
-     * @dataProvider zeroValuesProvider
-     */
+    #[DataProvider('zeroValuesProvider')]
     public function testZeros(bool $expectedResult, NumericalProperty $property): void
     {
-        $this->assertSame($expectedResult, $property->isZero());
-        $this->assertSame(!$expectedResult, $property->isNotZero());
-        $this->assertSame($expectedResult, $property->isNotPositive() && $property->isNotNegative());
+        self::assertSame($expectedResult, $property->isZero());
+        self::assertSame(!$expectedResult, $property->isNotZero());
+        self::assertSame($expectedResult, $property->isNotPositive() && $property->isNotNegative());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isInteger
-     * @covers ::isNotInteger
-     * @covers ::isFloat
-     * @covers ::isNotFloat
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     *
-     * @return void
-     *
-     * @dataProvider typesProvider
-     */
+    #[DataProvider('typesProvider')]
     public function testTypes(bool $expectedResult, NumericalProperty $property): void
     {
-        $this->assertSame($expectedResult, $property->isInteger());
-        $this->assertSame($expectedResult, $property->isNotFloat());
-        $this->assertSame(!$expectedResult, $property->isNotInteger());
-        $this->assertSame(!$expectedResult, $property->isFloat());
+        self::assertSame($expectedResult, $property->isInteger());
+        self::assertSame($expectedResult, $property->isNotFloat());
+        self::assertSame(!$expectedResult, $property->isNotInteger());
+        self::assertSame(!$expectedResult, $property->isFloat());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isEven
-     * @covers ::isNotEven
-     * @covers ::isOdd
-     * @covers ::isNotOdd
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     *
-     * @return void
-     *
-     * @dataProvider evenNumbersProvider
-     */
+    #[DataProvider('evenNumbersProvider')]
     public function testEvenOrOdd(bool $expectedResult, NumericalProperty $property): void
     {
-        $this->assertSame($expectedResult, $property->isEven());
-        $this->assertSame(!$expectedResult, $property->isOdd());
-        $this->assertSame($expectedResult, $property->isNotOdd());
-        $this->assertSame(!$expectedResult, $property->isNotEven());
+        self::assertSame($expectedResult, $property->isEven());
+        self::assertSame(!$expectedResult, $property->isOdd());
+        self::assertSame($expectedResult, $property->isNotOdd());
+        self::assertSame(!$expectedResult, $property->isNotEven());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isEven
-     * @covers ::isNotEven
-     * @covers ::isOdd
-     * @covers ::isNotOdd
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     *
-     * @return void
-     *
-     * @dataProvider evenOrOddOnDecimalsProvider
-     */
+    #[DataProvider('evenOrOddOnDecimalsProvider')]
     public function testDecimalsEventOrOdd(bool $expectedResult, NumericalProperty $property): void
     {
         if ($expectedResult === true) {
-            $this->assertTrue($property->isEven() || $property->isOdd());
-            $this->assertFalse($property->isNotEven() && $property->isNotOdd());
+            self::assertTrue($property->isEven() || $property->isOdd());
+            self::assertFalse($property->isNotEven() && $property->isNotOdd());
 
             return;
         }
 
-        $this->assertFalse($property->isEven());
-        $this->assertFalse($property->isOdd());
+        self::assertFalse($property->isEven());
+        self::assertFalse($property->isOdd());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isInfinite
-     * @covers ::isNotInfinite
-     * @covers ::isFinite
-     * @covers ::isNotFinite
-     *
-     * @param bool $expectedResult
-     * @param \Closure(): \MiBo\Properties\NumericalProperty $property
-     *
-     * @return void
-     *
-     * @dataProvider infiniteNumbersProvider
-     */
+    #[DataProvider('infiniteNumbersProvider')]
     public function testInfinity(bool $expectedResult, Closure $property): void
     {
         $property = $property();
 
-        $this->assertSame($expectedResult, $property->isInfinite());
-        $this->assertSame($expectedResult, $property->isNotFinite());
-        $this->assertSame(!$expectedResult, $property->isFinite());
-        $this->assertSame(!$expectedResult, $property->isNotInfinite());
+        self::assertSame($expectedResult, $property->isInfinite());
+        self::assertSame($expectedResult, $property->isNotFinite());
+        self::assertSame(!$expectedResult, $property->isFinite());
+        self::assertSame(!$expectedResult, $property->isNotInfinite());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::isPositive
-     * @covers ::isNegative
-     * @covers ::negate
-     * @covers ::abs
-     *
-     * @param bool $isPositive
-     * @param array<\MiBo\Properties\NumericalProperty> $properties
-     *
-     * @return void
-     *
-     * @dataProvider servePositiveValues
-     */
+    #[DataProvider('servePositiveValues')]
     public function testAbsoluteAndNegations(
         bool $isPositive,
         array $properties
     ): void
     {
         foreach ($properties as $property) {
-            $this->assertSame($isPositive, $property->isPositive());
+            self::assertSame($isPositive, $property->isPositive());
 
             $clone = clone $property;
 
             if ($isPositive) {
-                $this->assertTrue($property->isEqualTo($clone->abs()));
+                self::assertTrue($property->isEqualTo($clone->abs()));
             }
 
-            $this->assertTrue($property->negate()->negate()->isEqualTo($clone));
+            self::assertTrue($property->negate()->negate()->isEqualTo($clone));
             $property->abs();
-            $this->assertTrue($property->isPositive());
+            self::assertTrue($property->isPositive());
             $property->negate();
-            $this->assertTrue($property->isNegative());
+            self::assertTrue($property->isNegative());
             $property->negate();
-            $this->assertTrue($property->isPositive());
+            self::assertTrue($property->isPositive());
         }
     }
 
-    /**
-     * @small
-     *
-     * @covers ::hasSameValueAs
-     * @covers ::hasNotSameValueAs
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     * @param \MiBo\Properties\NumericalProperty $otherProperty
-     *
-     * @return void
-     *
-     * @dataProvider serveSameValue
-     */
+    #[DataProvider('serveSameValue')]
     public function testSameValue(
         bool $expectedResult,
         NumericalProperty $property,
         NumericalProperty $otherProperty
     ): void
     {
-        $this->assertSame($expectedResult, $property->hasSameValueAs($otherProperty));
-        $this->assertSame(!$expectedResult, $property->hasNotSameValueAs($otherProperty));
+        self::assertSame($expectedResult, $property->hasSameValueAs($otherProperty));
+        self::assertSame(!$expectedResult, $property->hasNotSameValueAs($otherProperty));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::is
-     * @covers ::isNot
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     * @param \MiBo\Properties\NumericalProperty $otherProperty
-     *
-     * @return void
-     *
-     * @dataProvider checkIsProvider
-     */
+    #[DataProvider('checkIsProvider')]
     public function testSameValueWithConversion(
         bool $expectedResult,
         NumericalProperty $property,
         NumericalProperty $otherProperty
     ): void
     {
-        $this->assertSame($expectedResult, $property->is($otherProperty));
-        $this->assertSame(!$expectedResult, $property->isNot($otherProperty));
+        self::assertSame($expectedResult, $property->is($otherProperty));
+        self::assertSame(!$expectedResult, $property->isNot($otherProperty));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::is
-     * @covers ::isNot
-     *
-     * @param bool $expectedResult
-     * @param \MiBo\Properties\NumericalProperty $property
-     * @param \MiBo\Properties\NumericalProperty $otherProperty
-     *
-     * @return void
-     *
-     * @dataProvider checkIsStrictProvider
-     */
+    #[DataProvider('checkIsStrictProvider')]
     public function testSameValueWithConversionStrict(
         bool $expectedResult,
         NumericalProperty $property,
         NumericalProperty $otherProperty
     ): void
     {
-        $this->assertSame($expectedResult, $property->is($otherProperty, true));
-        $this->assertSame(!$expectedResult, $property->isNot($otherProperty, true));
+        self::assertSame($expectedResult, $property->is($otherProperty, true));
+        self::assertSame(!$expectedResult, $property->isNot($otherProperty, true));
     }
 
-    /**
-     * @small
-     *
-     * @covers ::round
-     *
-     * @param int<1, 4> $mode
-     * @param int $precision
-     * @param array<\MiBo\Properties\NumericalProperty[]> $values
-     *
-     * @return void
-     *
-     * @dataProvider toRoundProvider
-     */
+    #[DataProvider('toRoundProvider')]
     public function testRounding(int $mode, int $precision, array $values): void
     {
         foreach ($values as $properties) {
-            $this->assertTrue(
+            self::assertTrue(
                 $properties[0]->round($precision, $mode)->isEqualTo($properties[1])
             );
         }
     }
 
-    /**
-     * @small
-     *
-     * @covers ::floor
-     *
-     * @param int $precision
-     * @param array $values
-     *
-     * @return void
-     *
-     * @dataProvider toFloorProvider
-     */
+    #[DataProvider('toFloorProvider')]
     public function testFlooring(int $precision, array $values): void
     {
         foreach ($values as $properties) {
-            $this->assertTrue(
+            self::assertTrue(
                 $properties[0]->floor($precision)->isEqualTo($properties[1])
             );
         }
     }
 
-    /**
-     * @small
-     *
-     * @covers ::ceil
-     *
-     * @param int $precision
-     * @param array $values
-     *
-     * @return void
-     *
-     * @dataProvider toCeilProvider
-     */
+    #[DataProvider('toCeilProvider')]
     public function testCeiling(int $precision, array $values): void
     {
         foreach ($values as $properties) {
-            $this->assertTrue(
+            self::assertTrue(
                 $properties[0]->ceil($precision)->isEqualTo($properties[1])
             );
         }

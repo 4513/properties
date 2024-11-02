@@ -20,6 +20,8 @@ use MiBo\Properties\Units\ThermodynamicTemperature\Kelvin;
 use MiBo\Properties\Units\Time\Minute;
 use MiBo\Properties\Units\Time\Second;
 use MiBo\Properties\Value;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -32,32 +34,18 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Calculators\UnitConvertor
  */
+#[CoversClass(UnitConvertor::class)]
+#[Small]
 class UnitConvertorTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::convert
-     *
-     * @return void
-     */
     public function testConvertAlreadyConverted(): void
     {
         $property = new Length(1, Meter::get());
 
-        $this->assertSame($property->getValue(), UnitConvertor::convert($property, Meter::get())->getValue());
+        self::assertSame($property->getValue(), UnitConvertor::convert($property, Meter::get())->getValue());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::convert
-     *
-     * @return void
-     */
     public function testConvertToForbiddenUnit(): void
     {
         $property = new Length(1, Meter::get());
@@ -67,36 +55,21 @@ class UnitConvertorTest extends TestCase
         UnitConvertor::convert($property, Kelvin::get());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::convert
-     *
-     * @return void
-     */
     public function testConvertSimple(): void
     {
         $property = new Time(60, Second::get());
 
         $converted = UnitConvertor::convert($property, Minute::get());
 
-        $this->assertSame(1, $converted->getValue());
+        self::assertSame(1, $converted->getValue());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::convert
-     * @covers ::convertT
-     *
-     * @return void
-     */
     public function testConvertComplex(): void
     {
         $property = new ThermodynamicTemperature(new Value(27_315, -2), Kelvin::get());
 
         $converted = UnitConvertor::convert($property, DegreeCelsius::get());
 
-        $this->assertSame(0, $converted->getValue());
+        self::assertSame(0, $converted->getValue());
     }
 }

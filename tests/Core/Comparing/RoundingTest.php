@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace MiBo\Properties\Tests\Comparing;
 
 use MiBo\Properties\Value;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,25 +20,12 @@ use PHPUnit\Framework\TestCase;
  * @since 1.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Value
  */
+#[CoversClass(Value::class)]
+#[Small]
 class RoundingTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::round
-     *
-     * @param int|float $expectedResult
-     * @param \MiBo\Properties\Value $valueToRound
-     * @param int $precision
-     * @param int $mode
-     *
-     * @return void
-     *
-     * @dataProvider roundingProvider
-     */
+    #[DataProvider('roundingProvider')]
     public function testRounding(
         int|float $expectedResult,
         Value $valueToRound,
@@ -43,70 +33,37 @@ class RoundingTest extends TestCase
         int $mode
     ): void
     {
-        $this->assertSame($expectedResult, $valueToRound->round($precision, $mode)->getValue());
+        self::assertSame($expectedResult, $valueToRound->round($precision, $mode)->getValue());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::ceil
-     *
-     * @param int|float $expectedResult
-     * @param \MiBo\Properties\Value $valueToCeil
-     * @param int $precision
-     *
-     * @return void
-     *
-     * @dataProvider ceilingProvider
-     */
+    #[DataProvider('ceilingProvider')]
     public function testCeil(
         int|float $expectedResult,
         Value $valueToCeil,
         int $precision
     ): void
     {
-        $this->assertSame($expectedResult, $valueToCeil->ceil($precision)->getValue());
+        self::assertSame($expectedResult, $valueToCeil->ceil($precision)->getValue());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::floor
-     *
-     * @param int|float $expectedResult
-     * @param \MiBo\Properties\Value $valueToFloor
-     * @param int $precision
-     *
-     * @return void
-     *
-     * @dataProvider flooringProvider
-     */
+    #[DataProvider('flooringProvider')]
     public function testFloor(
         int|float $expectedResult,
         Value $valueToFloor,
         int $precision
     ): void
     {
-        $this->assertSame($expectedResult, $valueToFloor->floor($precision)->getValue());
+        self::assertSame($expectedResult, $valueToFloor->floor($precision)->getValue());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::round
-     * @covers ::ceil
-     * @covers ::floor
-     *
-     * @return void
-     */
     public function testOnInfinity(): void
     {
         $value                  = new Value(1);
         $value::$preferInfinity = true;
         $value->divide(0);
 
-        $this->assertTrue($value->isInfinite());
-        $this->assertTrue($value->round()->ceil()->floor()->isInfinite());
+        self::assertTrue($value->isInfinite());
+        self::assertTrue($value->round()->ceil()->floor()->isInfinite());
     }
 
     /**

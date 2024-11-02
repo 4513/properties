@@ -12,6 +12,8 @@ use MiBo\Properties\Time;
 use MiBo\Properties\Units\Length\DeciMeter;
 use MiBo\Properties\Units\Length\Meter;
 use MiBo\Properties\Units\Time\Second;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,19 +26,11 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Calculators\PropertyCalc
  */
+#[CoversClass(PropertyCalc::class)]
+#[Small]
 class PropertyCalcMergeTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::add
-     * @covers ::merge
-     *
-     * @return void
-     */
     public function testAdd(): void
     {
         $property1 = new Length(1, Meter::get());
@@ -44,17 +38,9 @@ class PropertyCalcMergeTest extends TestCase
         $property3 = new Length(10, DeciMeter::get());
         $result    = PropertyCalc::add($property1, $property2, $property3);
 
-        $this->assertSame(4, $result->getValue());
+        self::assertSame(4, $result->getValue());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::add
-     * @covers ::merge
-     *
-     * @return void
-     */
     public function testAddWithException(): void
     {
         $property1 = new Length(1, Meter::get());
@@ -66,14 +52,6 @@ class PropertyCalcMergeTest extends TestCase
         PropertyCalc::add($property1, $property2, $property3);
     }
 
-    /**
-     * @small
-     *
-     * @covers ::subtract
-     * @covers ::merge
-     *
-     * @return void
-     */
     public function testSubtract(): void
     {
         $property1 = new Length(10, Meter::get());
@@ -81,17 +59,9 @@ class PropertyCalcMergeTest extends TestCase
         $property3 = new Length(10, DeciMeter::get());
         $result    = PropertyCalc::subtract($property1, $property2, $property3);
 
-        $this->assertSame(7, $result->getValue());
+        self::assertSame(7, $result->getValue());
     }
 
-    /**
-     * @small
-     *
-     * @covers ::subtract
-     * @covers ::merge
-     *
-     * @return void
-     */
     public function testSubtractWithException(): void
     {
         $property1 = new Length(10, Meter::get());

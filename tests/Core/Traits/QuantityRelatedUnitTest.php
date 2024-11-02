@@ -14,6 +14,16 @@ use MiBo\Properties\Quantities\Mass;
 use MiBo\Properties\Quantities\ThermodynamicTemperature;
 use MiBo\Properties\Quantities\Time;
 use MiBo\Properties\Quantities\Volume;
+use MiBo\Properties\Traits\UnitForAmount;
+use MiBo\Properties\Traits\UnitForAmountOfSubstance;
+use MiBo\Properties\Traits\UnitForArea;
+use MiBo\Properties\Traits\UnitForElectricCurrent;
+use MiBo\Properties\Traits\UnitForLength;
+use MiBo\Properties\Traits\UnitForLuminousIntensity;
+use MiBo\Properties\Traits\UnitForMass;
+use MiBo\Properties\Traits\UnitForThermodynamicTemperature;
+use MiBo\Properties\Traits\UnitForTime;
+use MiBo\Properties\Traits\UnitForVolume;
 use MiBo\Properties\Units\Amount\Piece;
 use MiBo\Properties\Units\AmountOfSubstance\Mole;
 use MiBo\Properties\Units\Area\SquareMeter;
@@ -24,6 +34,8 @@ use MiBo\Properties\Units\Mass\KiloGram;
 use MiBo\Properties\Units\ThermodynamicTemperature\Kelvin;
 use MiBo\Properties\Units\Time\Second;
 use MiBo\Properties\Units\Volume\CubicMeter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,28 +49,23 @@ use PHPUnit\Framework\TestCase;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
+#[CoversClass(UnitForAmountOfSubstance::class)]
+#[CoversClass(UnitForArea::class)]
+#[CoversClass(UnitForElectricCurrent::class)]
+#[CoversClass(UnitForLength::class)]
+#[CoversClass(UnitForLuminousIntensity::class)]
+#[CoversClass(UnitForMass::class)]
+#[CoversClass(UnitForThermodynamicTemperature::class)]
+#[CoversClass(UnitForTime::class)]
+#[CoversClass(UnitForVolume::class)]
+#[CoversClass(UnitForAmount::class)]
+#[Small]
 class QuantityRelatedUnitTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers \MiBo\Properties\Traits\UnitForAmountOfSubstance::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForArea::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForElectricCurrent::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForLength::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForLuminousIntensity::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForMass::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForThermodynamicTemperature::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForTime::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForVolume::getQuantityClassName
-     * @covers \MiBo\Properties\Traits\UnitForAmount::getQuantityClassName
-     *
-     * @return void
-     */
     public function test(): void
     {
         foreach ($this->getList() as $unit => $quantity) {
-            $this->assertSame($quantity, $unit::get()::getQuantityClassName());
+            self::assertSame($quantity, $unit::get()::getQuantityClassName());
         }
     }
 

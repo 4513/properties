@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace MiBo\Properties\Tests\Base;
 
 use MiBo\Properties\Value;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,21 +19,11 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Value
  */
+#[CoversClass(Value::class)]
+#[Small]
 class ValueTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::__construct
-     * @covers ::getValues
-     * @covers ::getMinExp
-     * @covers ::getBase
-     *
-     * @return void
-     */
     public function testBasics(): void
     {
         $list = [
@@ -44,17 +36,17 @@ class ValueTest extends TestCase
         foreach ($list as $expected => $values) {
             $value = new Value($values[1], $values[0]);
 
-            $this->assertSame($expected, $value->getValue());
+            self::assertSame($expected, $value->getValue());
 
             $expected !== 0 ?
-                $this->assertSame([$values[0] => $values[1]], $value->getValues()) :
-                $this->assertSame([], $value->getValues());
+                self::assertSame([$values[0] => $values[1]], $value->getValues()) :
+                self::assertSame([], $value->getValues());
 
             $expected !== 0 ?
-                $this->assertSame($values[0], $value->getMinExp()) :
-                $this->assertSame(0, $value->getMinExp());
+                self::assertSame($values[0], $value->getMinExp()) :
+                self::assertSame(0, $value->getMinExp());
 
-            $this->assertSame(10, $value->getBase());
+            self::assertSame(10, $value->getBase());
         }
     }
 }

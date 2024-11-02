@@ -6,6 +6,26 @@ namespace MiBo\Properties\Tests\Core\Units;
 
 use MiBo\Properties\Contracts\NumericalUnit;
 use MiBo\Properties\NumericalProperty;
+use MiBo\Properties\Prefixes\Atto;
+use MiBo\Properties\Prefixes\Centi;
+use MiBo\Properties\Prefixes\Deca;
+use MiBo\Properties\Prefixes\Deci;
+use MiBo\Properties\Prefixes\Exa;
+use MiBo\Properties\Prefixes\Femto;
+use MiBo\Properties\Prefixes\Giga;
+use MiBo\Properties\Prefixes\Hecto;
+use MiBo\Properties\Prefixes\Kilo;
+use MiBo\Properties\Prefixes\Mega;
+use MiBo\Properties\Prefixes\Micro;
+use MiBo\Properties\Prefixes\Milli;
+use MiBo\Properties\Prefixes\Nano;
+use MiBo\Properties\Prefixes\Peta;
+use MiBo\Properties\Prefixes\Pico;
+use MiBo\Properties\Prefixes\Tera;
+use MiBo\Properties\Prefixes\Yocto;
+use MiBo\Properties\Prefixes\Yotta;
+use MiBo\Properties\Prefixes\Zepto;
+use MiBo\Properties\Prefixes\Zetta;
 use MiBo\Properties\Units\Length\AttoMeter;
 use MiBo\Properties\Units\Length\CentiMeter;
 use MiBo\Properties\Units\Length\DecaMeter;
@@ -27,6 +47,8 @@ use MiBo\Properties\Units\Length\YoctoMeter;
 use MiBo\Properties\Units\Length\YottaMeter;
 use MiBo\Properties\Units\Length\ZeptoMeter;
 use MiBo\Properties\Units\Length\ZettaMeter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,74 +62,29 @@ use PHPUnit\Framework\TestCase;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
+#[CoversClass(Atto::class)]
+#[CoversClass(Centi::class)]
+#[CoversClass(Deca::class)]
+#[CoversClass(Deci::class)]
+#[CoversClass(Exa::class)]
+#[CoversClass(Femto::class)]
+#[CoversClass(Giga::class)]
+#[CoversClass(Hecto::class)]
+#[CoversClass(Kilo::class)]
+#[CoversClass(Mega::class)]
+#[CoversClass(Micro::class)]
+#[CoversClass(Milli::class)]
+#[CoversClass(Nano::class)]
+#[CoversClass(Peta::class)]
+#[CoversClass(Pico::class)]
+#[CoversClass(Tera::class)]
+#[CoversClass(Yocto::class)]
+#[CoversClass(Yotta::class)]
+#[CoversClass(Zepto::class)]
+#[CoversClass(Zetta::class)]
+#[Small]
 class SIUnitTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers \MiBo\Properties\Prefixes\Atto::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Atto::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Atto::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Centi::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Centi::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Centi::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Deca::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Deca::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Deca::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Deci::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Deci::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Deci::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Exa::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Exa::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Exa::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Femto::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Femto::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Femto::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Giga::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Giga::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Giga::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Hecto::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Hecto::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Hecto::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Kilo::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Kilo::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Kilo::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Mega::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Mega::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Mega::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Micro::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Micro::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Micro::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Milli::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Milli::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Milli::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Nano::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Nano::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Nano::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Peta::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Peta::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Peta::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Pico::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Pico::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Pico::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Tera::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Tera::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Tera::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Yocto::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Yocto::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Yocto::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Yotta::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Yotta::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Yotta::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Zepto::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Zepto::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Zepto::getNamePrefix
-     * @covers \MiBo\Properties\Prefixes\Zetta::getSymbolPrefix
-     * @covers \MiBo\Properties\Prefixes\Zetta::getMultiplierPrefix
-     * @covers \MiBo\Properties\Prefixes\Zetta::getNamePrefix
-     *
-     * @return void
-     */
     public function test(): void
     {
         $defaultName = "meter";
@@ -243,7 +220,7 @@ class SIUnitTest extends TestCase
         ];
 
         foreach ($list as $item) {
-            $this->assertProperties(
+            self::assertProperties(
                 ($item["class"])::get(),
                 $defaultName,
                 $defaultSymbol,
@@ -264,7 +241,7 @@ class SIUnitTest extends TestCase
      *
      * @return void
      */
-    private function assertProperties(
+    private static function assertProperties(
         NumericalUnit $property,
         string $defaultName,
         string $defaultSymbol,
@@ -273,8 +250,8 @@ class SIUnitTest extends TestCase
         string $name
     ): void
     {
-        $this->assertSame($multiplier, $property->getMultiplier());
-        $this->assertSame($name . $defaultName, $property->getName());
-        $this->assertSame($symbol . $defaultSymbol, $property->getSymbol());
+        self::assertSame($multiplier, $property->getMultiplier());
+        self::assertSame($name . $defaultName, $property->getName());
+        self::assertSame($symbol . $defaultSymbol, $property->getSymbol());
     }
 }

@@ -16,6 +16,8 @@ use MiBo\Properties\Pure;
 use MiBo\Properties\ThermodynamicTemperature;
 use MiBo\Properties\Time;
 use MiBo\Properties\Volume;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,35 +31,21 @@ use PHPUnit\Framework\TestCase;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
+#[CoversClass(Amount::class)]
+#[CoversClass(AmountOfSubstance::class)]
+#[CoversClass(Area::class)]
+#[CoversClass(ElectricCurrent::class)]
+#[CoversClass(Length::class)]
+#[CoversClass(LuminousIntensity::class)]
+#[CoversClass(Mass::class)]
+#[CoversClass(Pure::class)]
+#[CoversClass(PerUnit::class)]
+#[CoversClass(ThermodynamicTemperature::class)]
+#[CoversClass(Time::class)]
+#[CoversClass(Volume::class)]
+#[Small]
 class PropertiesTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers \MiBo\Properties\Amount::getQuantityClassName
-     * @covers \MiBo\Properties\AmountOfSubstance::getQuantityClassName
-     * @covers \MiBo\Properties\AmountOfSubstance::getDefaultISUnit
-     * @covers \MiBo\Properties\Area::getQuantityClassName
-     * @covers \MiBo\Properties\Area::getDefaultISUnit
-     * @covers \MiBo\Properties\ElectricCurrent::getQuantityClassName
-     * @covers \MiBo\Properties\ElectricCurrent::getDefaultISUnit
-     * @covers \MiBo\Properties\Length::getQuantityClassName
-     * @covers \MiBo\Properties\Length::getDefaultISUnit
-     * @covers \MiBo\Properties\LuminousIntensity::getQuantityClassName
-     * @covers \MiBo\Properties\LuminousIntensity::getDefaultISUnit
-     * @covers \MiBo\Properties\Mass::getQuantityClassName
-     * @covers \MiBo\Properties\Mass::getDefaultISUnit
-     * @covers \MiBo\Properties\Pure::getQuantityClassName
-     * @covers \MiBo\Properties\PerUnit::getQuantityClassName
-     * @covers \MiBo\Properties\ThermodynamicTemperature::getQuantityClassName
-     * @covers \MiBo\Properties\ThermodynamicTemperature::getDefaultISUnit
-     * @covers \MiBo\Properties\Time::getQuantityClassName
-     * @covers \MiBo\Properties\Time::getDefaultISUnit
-     * @covers \MiBo\Properties\Volume::getQuantityClassName
-     * @covers \MiBo\Properties\Volume::getDefaultISUnit
-     *
-     * @return void
-     */
     public function test(): void
     {
         $list = [
@@ -112,13 +100,13 @@ class PropertiesTest extends TestCase
         ];
 
         foreach ($list as $property => $data) {
-            $this->assertSame($data[1], $property::getQuantityClassName());
+            self::assertSame($data[1], $property::getQuantityClassName());
 
             if (!method_exists($property, "getDefaultISUnit")) {
                 continue;
             }
 
-            $this->assertSame($data[0], $property::getDefaultISUnit());
+            self::assertSame($data[0], $property::getDefaultISUnit());
         }
     }
 }

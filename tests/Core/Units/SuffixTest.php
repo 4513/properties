@@ -8,6 +8,8 @@ use MiBo\Properties\Area;
 use MiBo\Properties\Units\Area\SquareMeter;
 use MiBo\Properties\Units\Volume\CubicMeter;
 use MiBo\Properties\Volume;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,37 +23,24 @@ use PHPUnit\Framework\TestCase;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
+#[CoversClass(SquareMeter::class)]
+#[CoversClass(CubicMeter::class)]
+#[Small]
 class SuffixTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers \MiBo\Properties\Units\Area\SquareMeter::getSymbolSuffix
-     * @covers \MiBo\Properties\Units\Area\SquareMeter::getNameSuffix
-     *
-     * @return void
-     */
     public function testSquare(): void
     {
         $property = new Area(1, SquareMeter::get());
 
-        $this->assertSame("m²", $property->getUnit()->getSymbol());
-        $this->assertSame("square meter", $property->getUnit()->getName());
+        self::assertSame("m²", $property->getUnit()->getSymbol());
+        self::assertSame("square meter", $property->getUnit()->getName());
     }
 
-    /**
-     * @small
-     *
-     * @covers \MiBo\Properties\Units\Volume\CubicMeter::getSymbolSuffix
-     * @covers \MiBo\Properties\Units\Volume\CubicMeter::getNameSuffix
-     *
-     * @return void
-     */
     public function testCubic(): void
     {
         $property = new Volume(1, CubicMeter::get());
 
-        $this->assertSame("m³", $property->getUnit()->getSymbol());
-        $this->assertSame("cubic meter", $property->getUnit()->getName());
+        self::assertSame("m³", $property->getUnit()->getSymbol());
+        self::assertSame("cubic meter", $property->getUnit()->getName());
     }
 }

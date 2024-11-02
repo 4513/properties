@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace MiBo\Properties\Tests\Base;
 
 use MiBo\Properties\Value;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,18 +19,11 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Value
  */
+#[CoversClass(Value::class)]
+#[Small]
 class ValueMultiplyTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::multiply
-     *
-     * @return void
-     */
     public function testSimpleInt(): void
     {
         $list = [
@@ -42,22 +37,15 @@ class ValueMultiplyTest extends TestCase
             $value = new Value($values[0]);
             $value->multiply($values[1]);
 
-            $this->assertIsInt($value->getValue());
-            $this->assertSame($expected, $value->getValue());
+            self::assertIsInt($value->getValue());
+            self::assertSame($expected, $value->getValue());
 
             $expected === 0 ?
-                $this->assertSame([], $value->getValues()) :
-                $this->assertSame([0 => $expected], $value->getValues());
+                self::assertSame([], $value->getValues()) :
+                self::assertSame([0 => $expected], $value->getValues());
         }
     }
 
-    /**
-     * @small
-     *
-     * @covers ::multiply
-     *
-     * @return void
-     */
     public function testSimpleIntWithExp(): void
     {
         /** @var array<array{expected: int, start: array{0: int, 1: int}, add: array{0: int, 1: int}}> $list */
@@ -98,21 +86,14 @@ class ValueMultiplyTest extends TestCase
             $value = new Value($data["start"][1], $data["start"][0]);
             $value->multiply($data["add"][1], $data["add"][0]);
 
-            $this->assertSame($data["expected"], $value->getValue());
+            self::assertSame($data["expected"], $value->getValue());
 
             is_int($data["expected"]) ?
-                $this->assertIsInt($value->getValue()) :
-                $this->assertIsFloat($value->getValue());
+                self::assertIsInt($value->getValue()) :
+                self::assertIsFloat($value->getValue());
         }
     }
 
-    /**
-     * @small
-     *
-     * @covers ::multiply
-     *
-     * @return void
-     */
     public function testSimpleFloat(): void
     {
         /** @var array<array{expected: int, start: array{0: int, 1: int}, add: array{0: int, 1: int}}> $list */
@@ -143,23 +124,14 @@ class ValueMultiplyTest extends TestCase
             $value = new Value($data["start"][1], $data["start"][0]);
             $value->multiply($data["add"][1], $data["add"][0]);
 
-            $this->assertSame($data["expected"], $value->getValue());
+            self::assertSame($data["expected"], $value->getValue());
 
             is_int($data["expected"]) ?
-                $this->assertIsInt($value->getValue()) :
-                $this->assertIsFloat($value->getValue());
+                self::assertIsInt($value->getValue()) :
+                self::assertIsFloat($value->getValue());
         }
     }
 
-    /**
-     * @small
-     *
-     * @covers ::multiply
-     * @covers ::multiplySelf
-     * @covers ::checkBaseBeforeOperation
-     *
-     * @return void
-     */
     public function testMultiplySelf(): void
     {
         /** @var array<array{expected: int, start: array{0: int, 1: int}, add: array{0: int, 1: int}}> $list */
@@ -202,11 +174,11 @@ class ValueMultiplyTest extends TestCase
 
             $value1->multiply($value2);
 
-            $this->assertSame($data["expected"], $value1->getValue());
+            self::assertSame($data["expected"], $value1->getValue());
 
             is_int($data["expected"]) ?
-                $this->assertIsInt($value1->getValue()) :
-                $this->assertIsFloat($value1->getValue());
+                self::assertIsInt($value1->getValue()) :
+                self::assertIsFloat($value1->getValue());
         }
     }
 }

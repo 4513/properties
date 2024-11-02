@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace MiBo\Properties\Tests\Core\Quantities;
 
 use MiBo\Properties\Quantities\Volume;
+use MiBo\Properties\Traits\QuantityHelper;
 use MiBo\Properties\Units\Volume\CubicMeter;
 use MiBo\Properties\Units\Volume\Liter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,28 +22,20 @@ use PHPUnit\Framework\TestCase;
  * @since 0.1
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
- *
- * @coversDefaultClass \MiBo\Properties\Traits\QuantityHelper
  */
+#[CoversClass(QuantityHelper::class)]
+#[Small]
 class QuantityHelperTest extends TestCase
 {
-    /**
-     * @small
-     *
-     * @covers ::getDefaultUnit
-     * @covers ::setDefaultUnit
-     *
-     * @return void
-     */
     public function test(): void
     {
         $current = Volume::getDefaultUnit();
 
         $previous = Volume::setDefaultUnit(Liter::get());
 
-        $this->assertSame($current::class, $previous::class);
+        self::assertSame($current::class, $previous::class);
 
-        $this->assertSame(Liter::class, Volume::getDefaultUnit()::class);
+        self::assertSame(Liter::class, Volume::getDefaultUnit()::class);
 
         Volume::setDefaultUnit($previous);
     }
