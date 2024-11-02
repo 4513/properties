@@ -79,8 +79,8 @@
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="b2134878-7ef5-4225-920e-6289b104c635" name="docker.feo.cz/feo/php-arm:8.1 (project level)" home="docker://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker81" DOCKER_IMAGE_NAME="docker.feo.cz/feo/php-arm:8.1" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
+      <interpreter id="b2134878-7ef5-4225-920e-6289b104c635" name="docker.feo.cz/feo/php-arm:8.1 (project level)" home="docker://DATA" auto="false" debugger_id="php.debugger.XDebug">
+        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker81" DOCKER_IMAGE_NAME="docker.feo.cz/feo/php-arm:8.1" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
       </interpreter>
     </interpreters>
   </component>
@@ -150,7 +150,7 @@
       </interpreter>
     </phpInfoCache>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.2">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
   <component name="PhpStan">

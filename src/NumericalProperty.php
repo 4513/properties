@@ -101,6 +101,7 @@ abstract class NumericalProperty extends Property implements
 
         foreach ($this->convertedValues as $convertedValue) {
             if ($convertedValue['unit']->is($unit)) {
+                /** @phpstan-var \MiBo\Properties\NumericalProperty */
                 return $convertedValue['value'];
             }
         }

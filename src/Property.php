@@ -33,7 +33,7 @@ abstract class Property implements PropertyContract
     /** @var TUnit */
     protected Unit $unit;
 
-    /** @var array<array{value: self, unit: \MiBo\Properties\Contracts\Unit}> */
+    /** @var array<array{value: self<TUnit, TValue>, unit: \MiBo\Properties\Contracts\Unit}> */
     protected array $convertedValues = [];
 
     /**

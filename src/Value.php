@@ -51,7 +51,7 @@ final class Value
 
     private bool $infinityMode = false;
 
-    private ?int $precision;
+    private int|float|null $precision;
 
     /** @var positive-int */
     private int $base;
@@ -61,14 +61,14 @@ final class Value
     /**
      * @param int|float $value Value to initialize.
      * @param int $exp Exponent of value. Default 0.
-     * @param int|null $precision Precision of value. Default null, meaning, that the value is a float by
+     * @param int|float|null $precision Precision of value. Default null, meaning, that the value is a float by
      *      default.
      * @param positive-int $base Base of value. Default 10.
      */
     public function __construct(
         int|float $value,
         int $exp = 0,
-        ?int $precision = null,
+        int|float|null $precision = null,
         int $base = 10
     )
     {
@@ -623,8 +623,7 @@ final class Value
 
         $tmpValue = $value * 10 ** $exp;
         $int      = is_int($tmpValue);
-        $rounded  = round($tmpValue, $this->precision);
-        $rounded  = $int ? (int) $rounded : $rounded;
+        $rounded  = $this->roundValue($tmpValue, $int, $this->precision);
 
         if ($rounded === $tmpValue) {
             return [
@@ -637,5 +636,23 @@ final class Value
             $this->precision <= 0 ? (int) $rounded : $rounded,
             0,
         ];
+    }
+
+    private function roundValue(int|float $tmpValue, bool $asInt, int|float $precision): int|float
+    {
+        $intRound = is_int($precision) || round($precision) === $precision;
+
+        if ($intRound) {
+            $rounded = round($tmpValue, (int) $precision);
+
+            return $asInt ? (int) $rounded : $rounded;
+        }
+
+        $ratio    = 1 / (float) preg_replace('/^-?\d+\./', '0.', (string) $precision);
+        $tmpValue = $tmpValue * $ratio;
+        $tmpValue = round($tmpValue, (int) $precision);
+        $tmpValue = $tmpValue / $ratio;
+
+        return $asInt ? (int) $tmpValue : $tmpValue;
     }
 }
