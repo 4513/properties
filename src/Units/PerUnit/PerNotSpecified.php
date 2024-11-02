@@ -71,6 +71,7 @@ class PerNotSpecified implements NumericalUnit
             throw new ValueError("This unit requires both, dividend and divisor to be present.");
         }
 
+        // @phpstan-ignore-next-line accessing offset on object
         if (empty(self::$instances[static::class][$dividend::class . "-" . $divisor::class])) {
             /** @phpstan-ignore-next-line static construct */
             self::$instances[static::class][$dividend::class . "-" . $divisor::class] = new static(
