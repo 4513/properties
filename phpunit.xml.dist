@@ -4,6 +4,9 @@
     <testsuite name="Core Tests">
       <directory suffix=".php">./tests/Core/</directory>
     </testsuite>
+    <testsuite name="V2">
+      <directory suffix=".php">./tests/V2/</directory>
+    </testsuite>
   </testsuites>
   <coverage/>
   <source>

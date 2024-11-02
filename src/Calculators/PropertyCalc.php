@@ -201,7 +201,7 @@ class PropertyCalc
         $quantity = null;
         $mainProp = null;
 
-        if (count($properties) === 0) {
+        if (\count($properties) === 0) {
             throw new InvalidArgumentException('Cannot merge zero quantities.');
         }
 
@@ -427,7 +427,7 @@ class PropertyCalc
             }
         }
 
-        if (count($equationParts) === 3) {
+        if (\count($equationParts) === 3) {
             switch ($equationParts[1]) {
                 case "*":
                     $equations[$equationParts[0]][] = $quantity . " / " . $equationParts[2];

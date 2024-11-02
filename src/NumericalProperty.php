@@ -80,6 +80,31 @@ abstract class NumericalProperty extends Property implements
             throw new IncompatiblePropertyError("Property's unit must be compatible with the property!");
         }
 
+        if ($unit->is($this->unit)) {
+            return $this;
+        }
+
+        foreach ($this->convertedValues as $key => $convertedValue) {
+            if ($convertedValue['unit']->is($this->unit)) {
+                unset($this->convertedValues[$key]);
+
+                break;
+            }
+        }
+
+        $clone = clone $this;
+
+        $this->convertedValues[] = [
+            'value' => $clone,
+            'unit'  => $clone->unit,
+        ];
+
+        foreach ($this->convertedValues as $convertedValue) {
+            if ($convertedValue['unit']->is($unit)) {
+                return $convertedValue['value'];
+            }
+        }
+
         $this->numericalValue = UnitConvertor::convert($this, $unit);
         $this->unit           = $unit;
 
@@ -95,6 +120,8 @@ abstract class NumericalProperty extends Property implements
      */
     public function add(ContractNumericalProperty|float|int $value): static
     {
+        $this->convertedValues = [];
+
         if ($value instanceof ContractNumericalProperty) {
             /** @var static */
             return PropertyCalc::add($this, $value);
@@ -114,6 +141,8 @@ abstract class NumericalProperty extends Property implements
      */
     public function subtract(ContractNumericalProperty|float|int $value): static
     {
+        $this->convertedValues = [];
+
         if ($value instanceof ContractNumericalProperty) {
             /** @var static */
             return PropertyCalc::subtract($this, $value);
@@ -190,6 +219,7 @@ abstract class NumericalProperty extends Property implements
      */
     public function __clone(): void
     {
-        $this->numericalValue = clone $this->numericalValue;
+        $this->numericalValue  = clone $this->numericalValue;
+        $this->convertedValues = [];
     }
 }

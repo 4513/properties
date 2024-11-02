@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MiBo\Properties;
 
-use InvalidArgumentException;
 use MiBo\Properties\Contracts\Property as PropertyContract;
 use MiBo\Properties\Contracts\Quantity;
 use MiBo\Properties\Contracts\Unit;
@@ -33,6 +32,9 @@ abstract class Property implements PropertyContract
 
     /** @var TUnit */
     protected Unit $unit;
+
+    /** @var array<array{value: self, unit: \MiBo\Properties\Contracts\Unit}> */
+    protected array $convertedValues = [];
 
     /**
      * @param TValue $value
@@ -123,5 +125,11 @@ abstract class Property implements PropertyContract
         $this->value = $value;
 
         return $this;
+    }
+
+    public function __clone(): void
+    {
+        $this->value = clone $this->value;
+        $this->unit  = clone $this->unit;
     }
 }
