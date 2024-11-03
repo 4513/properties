@@ -14,10 +14,19 @@ use UnexpectedValueException;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since 1.1
+ * @since x.x
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-class CalculationWithInfinityException extends UnexpectedValueException implements InfinityException
+final class CalculationWithInfinityException extends UnexpectedValueException implements InfinityException
 {
+    public static function alreadyInfinity(): self
+    {
+        return new self('The value is already either infinity or almost zero. Cannot calculate with it.');
+    }
+
+    public static function infinityProvided(): self
+    {
+        return new self('The provided value is infinity. Cannot calculate with it.');
+    }
 }

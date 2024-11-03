@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Contracts;
 
+use Throwable;
+
 /**
- * Class InfinityException
+ * Class CalculationException
  *
  * @package MiBo\Properties\Contracts
  *
@@ -15,6 +17,6 @@ namespace MiBo\Properties\Contracts;
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-interface InfinityException extends CalculationException
+interface CalculationException extends Throwable
 {
 }

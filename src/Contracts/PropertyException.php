@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Contracts;
 
+use Throwable;
+
 /**
- * Interface PropertyException
- *
- * This Exception Interface covers all Exceptions thrown by this (Properties) package.
+ * Class PropertyException
  *
  * @package MiBo\Properties\Contracts
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since 1.1
+ * @since 2.0
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-interface PropertyException extends PropertyError
+interface PropertyException extends Throwable
 {
 }

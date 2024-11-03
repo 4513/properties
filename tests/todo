@@ -1,0 +1,3 @@
+Infinity:
+- add inf
+- add negative inf and assert

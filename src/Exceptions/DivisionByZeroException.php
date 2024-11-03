@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MiBo\Properties\Exceptions;
 
-use MiBo\Properties\Contracts\PropertyException;
-use UnexpectedValueException;
+use LogicException;
+use MiBo\Properties\Contracts\CalculationException;
 
 /**
  * Class DivisionByZeroException
@@ -14,10 +14,14 @@ use UnexpectedValueException;
  *
  * @author Michal Boris <michal.boris27@gmail.com>
  *
- * @since 1.1
+ * @since 1.0
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise.
  */
-class DivisionByZeroException extends UnexpectedValueException implements PropertyException
+final class DivisionByZeroException extends LogicException implements CalculationException
 {
+    public static function divisionByZero(): self
+    {
+        return new self('Division by zero is not allowed.');
+    }
 }
