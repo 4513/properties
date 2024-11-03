@@ -98,12 +98,16 @@ final class Value
 
         //  If the client wants to use an infinity mode enabled and the value is infinite, then we set
         // the current value as an infinity.
-        if (self::$preferInfinity === true && is_infinite($value)) {
+        if (self::$preferInfinity === true && is_float($value) && is_infinite($value)) {
             $this->infinityMode = true;
             $this->values       = [0 => $value];
             $this->calculated   = $value;
 
             return $this;
+        }
+
+        if (is_float($value) && is_infinite($value)) {
+            throw CalculationWithInfinityException::infinityProvided();
         }
 
         [
@@ -190,12 +194,16 @@ final class Value
             throw CalculationWithInfinityException::alreadyInfinity();
         }
 
-        if (self::$preferInfinity === true && is_infinite($value)) {
+        if (self::$preferInfinity === true && is_float($value) && is_infinite($value)) {
             $this->infinityMode = true;
             $this->values       = [0 => $value];
             $this->calculated   = $value;
 
             return $this;
+        }
+
+        if (is_float($value) && is_infinite($value)) {
+            throw CalculationWithInfinityException::infinityProvided();
         }
 
         // Empty object equals to 0. Multiplying by 0 equals to 0.
@@ -353,7 +361,7 @@ final class Value
      * @return int|float
      */
     #[Pure]
-    public function getValue(int $requestedExp = 0, int|float|null $precision = 5): int|float
+    public function getValue(int $requestedExp = 0, int|float|null $precision = null): int|float
     {
         // The value is either infinity or 0.
         if ($this->infinityMode === true) {
@@ -392,8 +400,9 @@ final class Value
         }
 
         $precision ??= $this->precision;
+        $precision ??= 5;
 
-        if ($precision === null || $precision >= PHP_FLOAT_DIG) {
+        if ($precision >= PHP_FLOAT_DIG) {
             return $calculateResult;
         }
 

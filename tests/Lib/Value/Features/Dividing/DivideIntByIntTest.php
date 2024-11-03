@@ -29,7 +29,7 @@ use PHPUnit\Framework\TestCase;
 final class DivideIntByIntTest extends TestCase
 {
     #[DataProvider('getData')]
-    public function testAdding(int $a, int $b, int $expectedResult): void
+    public function testDivide(int $a, int $b, int $expectedResult): void
     {
         $value = new Value($a);
 
@@ -39,7 +39,7 @@ final class DivideIntByIntTest extends TestCase
     }
 
     #[DataProvider('getData')]
-    public function testAddingReversed(int $a, int $expectedResult, int $b): void
+    public function testDivideReversed(int $a, int $expectedResult, int $b): void
     {
         $value = new Value($a);
 
@@ -49,7 +49,7 @@ final class DivideIntByIntTest extends TestCase
     }
 
     #[DataProvider('getData')]
-    public function testAddingValue(int $a, int $b, int $expectedResult): void
+    public function testDivideValue(int $a, int $b, int $expectedResult): void
     {
         $value = new Value($a);
 
@@ -83,6 +83,15 @@ final class DivideIntByIntTest extends TestCase
         $value->divide(10);
 
         self::assertSame(0, $value->getValue());
+    }
+
+    public function testDivideByOne(): void
+    {
+        $value = new Value(10.11);
+
+        $value->divide(1);
+
+        self::assertSame(10.11, $value->getValue());
     }
 
     public static function getData(): Generator

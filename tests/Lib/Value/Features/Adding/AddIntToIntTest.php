@@ -46,6 +46,28 @@ final class AddIntToIntTest extends TestCase
         self::assertSame($expectedResult, $value->getValue());
     }
 
+    #[DataProvider('getData')]
+    public function testAddingWithSameExp(int $expectedResult, int $a, int $b): void
+    {
+        $value = new Value($a, 2);
+
+        $value->add($b, 2);
+
+        self::assertSame($expectedResult * 10 ** 2, $value->getValue());
+    }
+
+    #[DataProvider('getData')]
+    public function testWithAddingDifferentExp(int $expectedResult, int $a, int $b): void
+    {
+        $expectedResult = $expectedResult - $b + ($b * 10 ** 2);
+
+        $value = new Value($a);
+
+        $value->add($b, 2);
+
+        self::assertSame($expectedResult, $value->getValue());
+    }
+
     public static function getData(): Generator
     {
         foreach (require __DIR__ . '/../../../../Data/add-two-int.php' as $data) {

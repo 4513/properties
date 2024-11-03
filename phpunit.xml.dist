@@ -2,16 +2,20 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./vendor/autoload.php" colors="true" enforceTimeLimit="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true">
   <testsuites>
     <testsuite name="ValueFeatures">
-      <directory suffix="Test.php">./tests/Value/Features</directory>
+      <directory suffix="Test.php">./tests/Lib/Value/Features</directory>
     </testsuite>
     <testsuite name="ValueFeatureMain">
-      <directory suffix="Test.php">./tests/Value/Features/Adding</directory>
-      <directory suffix="Test.php">./tests/Value/Features/Dividing</directory>
-      <directory suffix="Test.php">./tests/Value/Features/Multiplying</directory>
-      <directory suffix="Test.php">./tests/Value/Features/Subtracting</directory>
+      <directory suffix="Test.php">./tests/Lib/Value/Features/Adding</directory>
+      <directory suffix="Test.php">./tests/Lib/Value/Features/Dividing</directory>
+      <directory suffix="Test.php">./tests/Lib/Value/Features/Multiplying</directory>
+      <directory suffix="Test.php">./tests/Lib/Value/Features/Subtracting</directory>
+    </testsuite>
+    <testsuite name="ValueFeatureInfinity">
+      <directory suffix="Test.php">./tests/Lib/Value/Features/Infinity</directory>
     </testsuite>
     <testsuite name="ValueFeaturePrecision">
-      <directory suffix="Test.php">./tests/Value/Features/Precision</directory>
+      <directory suffix="Test.php">./tests/Lib/Value/Features/Precision</directory>
+      <directory suffix="Test.php">./tests/Lib/Value/Features/SteppedPrecision</directory>
     </testsuite>
   </testsuites>
   <coverage/>
